@@ -274,25 +274,24 @@
 
     <!-- Score summary-->
     <div class="flex w-full justify-end mt-12">
-      <div id="score-summary" class="inline-flex justify-center items-center ml-auto width-auto">
+      <div id="score-summary" class="inline-flex justify-center items-center ml-auto w-screen md:w-auto">
         <div
-          class="bg-[#666666] h-24 flex items-center justify-center text-white text-[12px] md:text-base font-semibold whitespace-nowrap px-4 md:px-8 rounded-l-lg">
+          class="bg-[#666666] h-24 flex items-center justify-center text-white text-[12px] md:text-base font-semibold whitespace-nowrap px-2 md:px-8 rounded-l-lg">
           総合スコア
         </div>
-        <div class="flex items-center justify-center border border-[#BDBDBD] h-24 px-2 md:px-5">
+        <div class="flex items-center justify-center border border-[#BDBDBD] h-24 px-2 md:px-5 w-full md:w-auto">
           <!-- Row section: Score -->
-          <div id="earnedScore" class="text-[#212121] text-[40px] md:text-5xl mr-2">
-
+          <div id="earnedScore" class="text-[#212121] text-[34px] md:text-5xl mr-2">
           </div>
           <!-- Column section: Remaining text -->
           <div class="flex flex-col mt-9 justify-center">
             <div id="totalScore" class="font-medium text-[16px] md:text-xl text-[#212121]">/ </div>
-            <div id="passScore" class="font-normal text-[14px] md:text-sm whitespace-nowrap text-[#212121]">（合格点 点）
+            <div id="passScore" class="font-normal text-[12px] md:text-sm whitespace-nowrap text-[#212121]">（合格点 点）
             </div>
           </div>
         </div>
         <div id="passStatus"
-          class="flex items-center text-[#FF1986] font-semibold text-[24px] whitespace-nowrap md:text-3xl justify-center border-r border-t border-b border-[#BDBDBD] rounded-r-lg px-5 h-24">
+          class="flex items-center text-[#FF1986] font-semibold text-[24px] whitespace-nowrap md:text-3xl justify-center border-r border-t border-b border-[#BDBDBD] rounded-r-lg px-3 md:px-5 h-24">
         </div>
       </div>
     </div>
@@ -336,8 +335,8 @@
 
     // Call api
     async function getExamReportData() {
-      const urlApi = getPathApi()
-      if (urlApi === null) return
+      // const urlApi = getPathApi()
+      // if (urlApi === null) return
 
       const username = document.getElementById('username')
       const courseTitle = document.getElementById('courseTitle') // Including start date
@@ -347,13 +346,87 @@
       const passStatus = document.getElementById('passStatus')
       const authCookie = getCookie('Authorization') || 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyNiIsInNjcCI6InVzZXIiLCJhdWQiOm51bGwsImlhdCI6MTcyOTgyMTYwMSwiZXhwIjoxNzMyNDEzNjAxLCJqdGkiOiJkYTdjNTMzYS1kNTdjLTRmYTQtYmU0OS00MTI4NjcyNWQ2Y2QifQ.bAEDtZr5zsUfhHElC-O0tpzrZSFyWSfYHECdrtIV4Bc';
       try {
-        const response = await fetch(urlApi, {
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + authCookie
+        // const response = await fetch(urlApi, {
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //     "Authorization": "Bearer " + authCookie
+        //   },
+        // })
+        // const responseJson = await response.json()
+        const responseJson = {
+          "exam": {
+            "totalScore": 38,
+            "totalEarnedScore": 12,
+            "passScore": 20,
+            "isPass": false,
+            "startDate": "2024年12月12日",
+            "finishDate": "2024年12月12日",
+            "course": {
+              "id": 9942,
+              "title": "試験"
+            },
+            "lecture": {
+              "id": 311363,
+              "title": "exam custom report"
+            },
+            "quizzes": [
+              {
+                "id": 181738,
+                "isCorrect": false,
+                "maxScore": 0,
+                "earnedScore": 0,
+                "tagName": "基礎"
+              },
+              {
+                "id": 181739,
+                "isCorrect": false,
+                "maxScore": 0,
+                "earnedScore": 0,
+                "tagName": "応用"
+              },
+              {
+                "id": 181740,
+                "isCorrect": false,
+                "maxScore": 0,
+                "earnedScore": 0,
+                "tagName": "実践"
+              },
+              {
+                "id": 181741,
+                "isCorrect": false,
+                "maxScore": 0,
+                "earnedScore": 0,
+                "tagName": "空間把握"
+              },
+              {
+                "id": 181742,
+                "isCorrect": false,
+                "maxScore": 0,
+                "earnedScore": 0,
+                "tagName": "判断推理"
+              },
+              {
+                "id": 181743,
+                "isCorrect": true,
+                "maxScore": 5,
+                "earnedScore": 10,
+                "tagName": "資料解釈"
+              },
+              {
+                "id": 181744,
+                "isCorrect": true,
+                "maxScore": 7,
+                "earnedScore": 14,
+                "tagName": "数的推理"
+              }
+            ]
           },
-        })
-        const responseJson = await response.json()
+          "user": {
+            "username": "hl11113",
+            "nickname": "hl11113",
+            "groups": []
+          }
+        }
 
         if (responseJson != null && responseJson.exam != null && responseJson.user != null) {
           const exam = responseJson.exam
