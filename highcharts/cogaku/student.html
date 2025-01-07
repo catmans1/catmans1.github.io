@@ -6,7 +6,7 @@
   <meta content="noindex, nofollow" name="robots">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>Cogaku</title>
-  <!-- selectize -->
+
   <!-- Favicon -->
   <link rel="icon" href="data:,">
 
@@ -19,11 +19,20 @@
   <script defer src="https://assets.share-wis.com/libs/font-awesome/6.6.0/fontawesome.min.js"></script>
 
   <!-- Highcharts -->
-  <script src="https://assets.share-wis.com/libs/highcharts@11/highcharts.js"></script>
-  <script src="https://assets.share-wis.com/libs/highcharts@11/accessibility.js"></script>
+  <script src="https://assets.share-wis.com/libs/highcharts@12/highcharts.js"></script>
+  <script src="https://assets.share-wis.com/libs/highcharts@12/highcharts-more.js"></script>
+  <script src="https://assets.share-wis.com/libs/highcharts@12/accessibility.js"></script>
 
   <!-- Tailwind CSS -->
   <script src="https://assets.share-wis.com/libs/tailwindcss@3/tailwindcss.js"></script>
+
+  <!-- selectize -->
+  <!-- <script src="https://assets.share-wis.com/libs/selectize@0.15.2/selectize.min.js"></script> -->
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.default.min.css">
+  <script src="https://assets.share-wis.com/libs/jquery-3.6.0.min.js"></script> <!-- jQuery (required for Selectize) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js"></script>
+  <!-- <link href="https://assets.share-wis.com/libs/selectize@0.15.2/selectize.default.min.css" rel="stylesheet"> -->
 
   <style>
     body {
@@ -31,24 +40,13 @@
       color: #212121;
     }
 
-    /* table {
-      border-radius: 8px;
-      overflow: hidden;
-      width: 100%;
-      table-layout: auto;
-      border-spacing: 0;
-    }
-
-    th,
-    td {
-      border: 1px solid #D4D4D8;
-      text-align: center;
-      padding-top: 5px;
-      padding-bottom: 5px;
-    } */
-
     .loading-container {
       visibility: visible;
+    }
+
+    .selectize-dropdown-content .selected {
+      background-color: #00ABC9;
+      color: #fff
     }
   </style>
 </head>
@@ -93,22 +91,42 @@
     </div>
 
     <!-- 全国平均表示フィルター -->
-    <div class="border-solid border mt-10 p-5 rounded-lg">
+    <div class="border-solid border mt-10 p-8 rounded-lg">
       <span class="text-[24px] font-semibold">
         全国平均表示フィルター
       </span>
-      <div class="flex justify-center">
-        <div>
-          asdasd
+      <div class="flex justify-start items-end mt-4">
+        <div class="mr-16">
+          <div class="font-[300] text-[12px] text-[#292929]">
+            業種1
+          </div>
+          <select class="w-48" id="industry1-selectize">
+          </select>
         </div>
-        <div>
-          asdasd
+        <div class="mr-16">
+          <div class="font-[300] text-[12px] text-[#292929]">
+            業種2（業種1が「製造の場合」のみ）
+          </div>
+          <select id="industry2-selectize" class="w-48">
+          </select>
         </div>
-        <div>
-          asdasd
+        <div class="mr-16">
+          <div class="font-[300] text-[12px] text-[#292929]">
+            利用目的
+          </div>
+          <select id="purpose-selectize" class="w-48">
+          </select>
         </div>
-        <div>
-          asdasd
+        <div class="">
+          <div class="font-[300] text-[12px] text-[#292929]">
+            試験実施回
+          </div>
+          <select id="test-selectize" class="w-48">
+          </select>
+        </div>
+        <div
+          class="ml-auto bg-[#00ABC9] rounded-lg text-white text-[16px] font-semibold px-5 py-2 cursor-pointer hover:bg-[#00ABC990]">
+          フィルターを適用
         </div>
       </div>
     </div>
@@ -232,15 +250,340 @@
       <i class="fas fa-play-circle"></i>
       <h3 class="text-[24px] font-semibold">分野別</h3>
     </div>
+    <h3 class="text-[24px] font-semibold mt-4">電気電子</h3>
+    <div class="flex mt-5">
+      <div class="w-2/3 p-5 overflow-hidden h-[400px] rounded-lg border">
+        <div id="electric-polarchart" class=""></div>
+      </div>
+      <div class="flex-box w-1/3 pl-14">
+        <div class="overflow-hidden rounded-lg border">
+          <table class="table-auto w-full">
+            <thead>
+              <tr class="h-14 text-[20px] font-[600] text-[#212121]">
+                <th class="w-14 text-center border-r border-b">
+                  A
+                </th>
+                <th class="w-60 px-3 text-left border-b">
+                  電気電子
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="h-14 bg-[#b9b9b933] text-[20px] font-[300] text-[#212121]">
+                <td class="w-14 text-center border-r border-b">
+                  A1
+                </td>
+                <td class="px-3 text-left border-b">
+                  電気回路の基礎
+                </td>
+              </tr>
+              <tr class="h-14 text-[20px] font-[300] text-[#212121]">
+                <td class="w-14 text-center border-r border-b">
+                  A2
+                </td>
+                <td class="px-3 text-left border-b">
+                  電子回路の基礎
+                </td>
+              </tr>
+              <tr class="h-14 bg-[#b9b9b933] text-[20px] font-[300] text-[#212121]">
+                <td class="w-14 text-center border-r border-b">
+                  A3
+                </td>
+                <td class="px-3 text-left border-b">
+                  インターフェース
+                </td>
+              </tr>
+              <tr class="h-14 text-[20px] font-[300] text-[#212121]">
+                <td class="w-14 text-center border-r border-b">
+                  A4
+                </td>
+                <td class="px-3 text-left border-b">
+                  半導体デバイス
+                </td>
+              </tr>
+              <tr class="h-14 bg-[#b9b9b933] text-[20px] font-[300] text-[#212121]">
+                <td class="w-14 text-center border-r">
+                  A5
+                </td>
+                <td class="px-3 text-left">
+                  モータと電力
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <table class="mt-6 w-4/5 table-auto border-separate border-spacing-0 overflow-hidden">
+      <thead>
+        <tr>
+          <th class="px-4 py-2 text-center"></th>
+          <th class="px-4 py-2 text-center"></th>
+          <th class="px-4 py-2 border border-b-0 text-center text-[20px] font-semibold rounded-tl-lg">合計</th>
+          <th class="px-4 py-2 border border-l-0 border-b-0 text-center text-[20px] font-semibold">A1</th>
+          <th class="px-4 py-2 border border-l-0 border-b-0 text-center text-[20px] font-semibold">A2</th>
+          <th class="px-4 py-2 border border-l-0 border-b-0 text-center text-[20px] font-semibold">A3</th>
+          <th class="px-4 py-2 border border-l-0 border-b-0 text-center text-[20px] font-semibold">A4</th>
+          <th class="px-4 py-2 border border-l-0 border-b-0 text-center text-[20px] font-semibold rounded-tr-lg">A5</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Full Score Row -->
+        <tr>
+          <td class=""></td>
+          <td
+            class="px-4 py-2 border border-r-0 border-b-0 bg-[#F5F5F5] text-center text-[20px] font-semibold rounded-tl-lg">
+            満点</td>
+          <td class="px-4 py-2 border border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">60</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">30</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">30</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">30</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">30</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">30</td>
+        </tr>
+        <!-- 全国平均 -->
+        <tr>
+          <th class="px-4 py-2 bg-[#EE4344] border text-[20px] font-semibold text-center text-white rounded-tl-lg"
+            rowspan="2">
+            全国平均
+          </th>
+          <td class="px-4 py-2 border border-r-0 border-b-0 bg-white text-center text-[20px] font-semibold">得点</td>
+          <td class="px-4 py-2 border border-b-0 text-right text-[20px] font-semibold">28.7</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">18.7</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">18.7</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">18.7</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">18.7</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">18.7</td>
+        </tr>
+        <tr>
+          <td class="px-4 py-2 border border-r-0 border-b-0 bg-[#F5F5F5] text-center text-[20px] font-semibold">正解率</td>
+          <td class="px-4 py-2 border border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">47.8</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">47.8</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">47.8</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">47.8</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">47.8</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">47.8</td>
+        </tr>
+        <!-- 貴社平均 -->
+        <tr>
+          <td
+            class="px-4 py-2 border text-[20px] font-semibold bg-[#3B82F6] text-[20px] font-semibold text-center text-white"
+            rowspan="2">貴社平均</td>
+          <td class="px-4 py-2 border border-r-0 border-b-0 bg-white text-center text-[20px] font-semibold">得点</td>
+          <td class="px-4 py-2 border border-b-0 text-right text-[20px] font-semibold">29.1</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">19.1</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">19.1</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">19.1</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">19.1</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">19.1</td>
+        </tr>
+        <tr>
+          <td class="px-4 py-2 border border-r-0 border-b-0 bg-[#F5F5F5] text-center text-[20px] font-semibold">正解率</td>
+          <td class="px-4 py-2 border border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">48.5</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">48.5</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">48.5</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">48.5</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">48.5</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">48.5</td>
+        </tr>
+        <!-- ご本人 -->
+        <tr>
+          <td
+            class="px-4 py-2 border text-[20px] font-semibold bg-[#10B981] text-[20px] font-semibold text-center text-white rounded-bl-lg"
+            rowspan="2">ご本人</td>
+          <td class="px-4 py-2 border border-r-0 border-l-0 border-b-0 bg-white text-center text-[20px] font-semibold">
+            得点</td>
+          <td class="px-4 py-2 border border-b-0 text-right text-[20px] font-semibold">40</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">40</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">20</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">20</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">20</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">20</td>
+        </tr>
+        <tr>
+          <td class="px-4 py-2 border border-r-0 bg-[#F5F5F5] text-center text-[20px] font-semibold">正解率</td>
+          <td class="px-4 py-2 border bg-[#F5F5F5] text-right text-[20px] font-semibold">66.7</td>
+          <td class="px-4 py-2 border border-l-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">66.7</td>
+          <td class="px-4 py-2 border border-l-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">66.7</td>
+          <td class="px-4 py-2 border border-l-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">66.7</td>
+          <td class="px-4 py-2 border border-l-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">66.7</td>
+          <td class="px-4 py-2 border border-l-0 bg-[#F5F5F5] text-right text-[20px] font-semibold rounded-br-lg">66.7
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
-
+    <h3 class="text-[24px] font-semibold mt-6">機械</h3>
+    <div class="flex mt-5">
+      <div class="w-2/3 p-5 overflow-hidden h-[400px] rounded-lg border">
+        <div id="mechanical-polarchart" class=""></div>
+      </div>
+      <div class="flex-box w-1/3 pl-14">
+        <div class="overflow-hidden rounded-lg border">
+          <table class="table-auto w-full">
+            <thead>
+              <tr class="h-14 text-[20px] font-[600] text-[#212121]">
+                <th class="w-14 text-center border-r border-b">
+                  B
+                </th>
+                <th class="w-60 px-3 text-left border-b">
+                  機械
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="h-14 bg-[#b9b9b933] text-[20px] font-[300] text-[#212121]">
+                <td class="w-14 text-center border-r border-b">
+                  B1
+                </td>
+                <td class="px-3 text-left border-b">
+                  機械工学基礎（4力）
+                </td>
+              </tr>
+              <tr class="h-14 text-[20px] font-[300] text-[#212121]">
+                <td class="w-14 text-center border-r border-b">
+                  B2
+                </td>
+                <td class="px-3 text-left border-b">
+                  材料
+                </td>
+              </tr>
+              <tr class="h-14 bg-[#b9b9b933] text-[20px] font-[300] text-[#212121]">
+                <td class="w-14 text-center border-r border-b">
+                  B3
+                </td>
+                <td class="px-3 text-left border-b">
+                  設計・製図
+                </td>
+              </tr>
+              <tr class="h-14 text-[20px] font-[300] text-[#212121]">
+                <td class="w-14 text-center border-r border-b">
+                  B4
+                </td>
+                <td class="px-3 text-left border-b">
+                  機械要素
+                </td>
+              </tr>
+              <tr class="h-14 bg-[#b9b9b933] text-[20px] font-[300] text-[#212121]">
+                <td class="w-14 text-center border-r">
+                  B5
+                </td>
+                <td class="px-3 text-left">
+                  計測制御
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <table class="mt-6 w-4/5 table-auto border-separate border-spacing-0 overflow-hidden">
+      <thead>
+        <tr>
+          <th class="px-4 py-2 text-center"></th>
+          <th class="px-4 py-2 text-center"></th>
+          <th class="px-4 py-2 border border-b-0 text-center text-[20px] font-semibold rounded-tl-lg">合計</th>
+          <th class="px-4 py-2 border border-l-0 border-b-0 text-center text-[20px] font-semibold">A1</th>
+          <th class="px-4 py-2 border border-l-0 border-b-0 text-center text-[20px] font-semibold">A2</th>
+          <th class="px-4 py-2 border border-l-0 border-b-0 text-center text-[20px] font-semibold">A3</th>
+          <th class="px-4 py-2 border border-l-0 border-b-0 text-center text-[20px] font-semibold">A4</th>
+          <th class="px-4 py-2 border border-l-0 border-b-0 text-center text-[20px] font-semibold rounded-tr-lg">A5</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Full Score Row -->
+        <tr>
+          <td class=""></td>
+          <td
+            class="px-4 py-2 border border-r-0 border-b-0 bg-[#F5F5F5] text-center text-[20px] font-semibold rounded-tl-lg">
+            満点</td>
+          <td class="px-4 py-2 border border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">60</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">30</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">30</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">30</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">30</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">30</td>
+        </tr>
+        <!-- 全国平均 -->
+        <tr>
+          <th class="px-4 py-2 bg-[#EE4344] border text-[20px] font-semibold text-center text-white rounded-tl-lg"
+            rowspan="2">
+            全国平均
+          </th>
+          <td class="px-4 py-2 border border-r-0 border-b-0 bg-white text-center text-[20px] font-semibold">得点</td>
+          <td class="px-4 py-2 border border-b-0 text-right text-[20px] font-semibold">28.7</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">18.7</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">18.7</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">18.7</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">18.7</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">18.7</td>
+        </tr>
+        <tr>
+          <td class="px-4 py-2 border border-r-0 border-b-0 bg-[#F5F5F5] text-center text-[20px] font-semibold">正解率</td>
+          <td class="px-4 py-2 border border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">47.8</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">47.8</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">47.8</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">47.8</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">47.8</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">47.8</td>
+        </tr>
+        <!-- 貴社平均 -->
+        <tr>
+          <td
+            class="px-4 py-2 border text-[20px] font-semibold bg-[#3B82F6] text-[20px] font-semibold text-center text-white"
+            rowspan="2">貴社平均</td>
+          <td class="px-4 py-2 border border-r-0 border-b-0 bg-white text-center text-[20px] font-semibold">得点</td>
+          <td class="px-4 py-2 border border-b-0 text-right text-[20px] font-semibold">29.1</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">19.1</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">19.1</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">19.1</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">19.1</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">19.1</td>
+        </tr>
+        <tr>
+          <td class="px-4 py-2 border border-r-0 border-b-0 bg-[#F5F5F5] text-center text-[20px] font-semibold">正解率</td>
+          <td class="px-4 py-2 border border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">48.5</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">48.5</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">48.5</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">48.5</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">48.5</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">48.5</td>
+        </tr>
+        <!-- ご本人 -->
+        <tr>
+          <td
+            class="px-4 py-2 border text-[20px] font-semibold bg-[#10B981] text-[20px] font-semibold text-center text-white rounded-bl-lg"
+            rowspan="2">ご本人</td>
+          <td class="px-4 py-2 border border-r-0 border-l-0 border-b-0 bg-white text-center text-[20px] font-semibold">
+            得点</td>
+          <td class="px-4 py-2 border border-b-0 text-right text-[20px] font-semibold">40</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">40</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">20</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">20</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">20</td>
+          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">20</td>
+        </tr>
+        <tr>
+          <td class="px-4 py-2 border border-r-0 bg-[#F5F5F5] text-center text-[20px] font-semibold">正解率</td>
+          <td class="px-4 py-2 border bg-[#F5F5F5] text-right text-[20px] font-semibold">66.7</td>
+          <td class="px-4 py-2 border border-l-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">66.7</td>
+          <td class="px-4 py-2 border border-l-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">66.7</td>
+          <td class="px-4 py-2 border border-l-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">66.7</td>
+          <td class="px-4 py-2 border border-l-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">66.7</td>
+          <td class="px-4 py-2 border border-l-0 bg-[#F5F5F5] text-right text-[20px] font-semibold rounded-br-lg">66.7
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
+
   <div class="loading-container fixed inset-0 flex items-center justify-center bg-gray-100 bg-opacity-50 z-50"
     id="loadingSpinner">
     <div class="text-4xl text-[#00abc9]">
       <i class="fa fa-spinner fa-spin"></i>
     </div>
   </div>
+
   <script>
     function getCookie(name) {
       const cookies = document.cookie.split(';');
@@ -815,6 +1158,201 @@
       }
     });
 
+    Highcharts.chart('electric-polarchart', {
+      chart: {
+        polar: true,
+        type: 'line'
+      },
+      title: {
+        text: '',
+      },
+      pane: {
+        size: '80%'
+      },
+      xAxis: {
+        categories: [
+          '合計', '電気回路の基礎', '電子回路の基礎', 'インターフェース', '半導体デバイス', 'モータと電力'
+        ],
+        tickmarkPlacement: 'on',
+        lineWidth: 0
+      },
+
+      yAxis: {
+        gridLineInterpolation: 'polygon',
+        lineWidth: 0,
+        min: 0
+      },
+
+      tooltip: {
+        enabled: false
+      },
+
+      legend: {
+        align: 'right',
+        verticalAlign: 'middle',
+        layout: 'vertical'
+      },
+
+      series: [{
+        name: '全国平均',
+        data: [43, 19, 60, 35, 17, 20],
+        pointPlacement: 'on',
+        color: '#EE4344'
+      }, {
+        name: '貴社平均',
+        data: [50, 39, 42, 31, 26, 21],
+        pointPlacement: 'on',
+        color: '#3B82F6'
+      }],
+
+      responsive: {
+        rules: [{
+          condition: {
+            maxWidth: 500
+          },
+          chartOptions: {
+            title: {
+              x: 0
+            },
+            legend: {
+              align: 'center',
+              verticalAlign: 'bottom',
+              layout: 'horizontal'
+            },
+            pane: {
+              size: '70%'
+            }
+          }
+        }]
+      },
+      credits: {
+        enabled: false
+      }
+    });
+
+    Highcharts.chart('mechanical-polarchart', {
+      chart: {
+        polar: true,
+        type: 'line'
+      },
+      title: {
+        text: '',
+      },
+      pane: {
+        size: '80%'
+      },
+      xAxis: {
+        categories: [
+          '合計', '電気回路の基礎', '電子回路の基礎', 'インターフェース', '半導体デバイス', 'モータと電力'
+        ],
+        tickmarkPlacement: 'on',
+        lineWidth: 0
+      },
+
+      yAxis: {
+        gridLineInterpolation: 'polygon',
+        lineWidth: 0,
+        min: 0
+      },
+
+      tooltip: {
+        enabled: false
+      },
+
+      legend: {
+        align: 'right',
+        verticalAlign: 'middle',
+        layout: 'vertical'
+      },
+
+      series: [{
+        name: '全国平均',
+        data: [43, 19, 60, 35, 17, 20],
+        pointPlacement: 'on',
+        color: '#EE4344'
+      }, {
+        name: '貴社平均',
+        data: [50, 39, 42, 31, 26, 21],
+        pointPlacement: 'on',
+        color: '#3B82F6'
+      }],
+
+      responsive: {
+        rules: [{
+          condition: {
+            maxWidth: 500
+          },
+          chartOptions: {
+            title: {
+              x: 0
+            },
+            legend: {
+              align: 'center',
+              verticalAlign: 'bottom',
+              layout: 'horizontal'
+            },
+            pane: {
+              size: '70%'
+            }
+          }
+        }]
+      },
+      credits: {
+        enabled: false
+      }
+    });
+
+    // Init Selectize
+    function initializeSelectize() {
+      const options = [
+        { value: '', text: 'すべて' },
+        { value: 1, text: "Awesome" },
+        { value: 2, text: "Beast" },
+        { value: 3, text: "Compatible" },
+        { value: 4, text: "Thomas Edison" },
+        { value: 5, text: "Nikola" },
+        { value: 6, text: "Selectize" },
+        { value: 7, text: "Javascript" }
+      ];
+
+      const selectElement = document.getElementById('industry1-selectize');
+      options.forEach(option => {
+        const newOption = document.createElement('option');
+        newOption.value = option.value;
+        newOption.textContent = option.text;
+        selectElement.appendChild(newOption);
+      });
+      $('#industry1-selectize').selectize();
+
+      const selectElement2 = document.getElementById('industry2-selectize');
+      options.forEach(option => {
+        const newOption = document.createElement('option');
+        newOption.value = option.value;
+        newOption.textContent = option.text;
+        selectElement2.appendChild(newOption);
+      });
+      $('#industry2-selectize').selectize();
+
+      const purposeElement = document.getElementById('purpose-selectize');
+      options.forEach(option => {
+        const newOption = document.createElement('option');
+        newOption.value = option.value;
+        newOption.textContent = option.text;
+        purposeElement.appendChild(newOption);
+      });
+      $('#purpose-selectize').selectize();
+
+      const testElement = document.getElementById('test-selectize');
+      options.forEach(option => {
+        const newOption = document.createElement('option');
+        newOption.value = option.value;
+        newOption.textContent = option.text;
+        testElement.appendChild(newOption);
+      });
+      $('#test-selectize').selectize();
+
+    }
+    initializeSelectize()
   </script>
 
 </body>
