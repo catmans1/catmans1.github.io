@@ -28,11 +28,11 @@
 
   <!-- selectize -->
   <!-- <script src="https://assets.share-wis.com/libs/selectize@0.15.2/selectize.min.js"></script> -->
-  <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.default.min.css">
+  <!-- <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.default.min.css"> -->
   <script src="https://assets.share-wis.com/libs/jquery-3.6.0.min.js"></script> <!-- jQuery (required for Selectize) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js"></script>
-  <!-- <link href="https://assets.share-wis.com/libs/selectize@0.15.2/selectize.default.min.css" rel="stylesheet"> -->
+  <link href="https://assets.share-wis.com/libs/selectize@0.15.2/selectize.default.min.css" rel="stylesheet">
 
   <style>
     body {
@@ -97,10 +97,33 @@
       </span>
       <div class="flex justify-start items-end mt-4">
         <div class="mr-16">
+          <select name="cars" id="cars">
+            <option value="any">any</option>
+            <option value></option>
+            <option value="volvo">Volvo</option>
+            <option value="saab">Saab</option>
+            <option value="opel">Opel</option>
+            <option value="audi">Audi</option>
+          </select>
+        </div>
+        <div class="mr-16">
           <div class="font-[300] text-[12px] text-[#292929]">
             業種1
           </div>
           <select class="w-48" id="industry1-selectize">
+            <option value="">すべて</option>
+            <option value="1">製造</option>
+            <option value="2">労働者派遣</option>
+            <option value="3">機械機器メンテナンス</option>
+            <option value="4">ソフトウェア・システムサービス</option>
+            <option value="5">通信・ネットワーク</option>
+            <option value="6">商社・卸売</option>
+            <option value="7">電気・ガス・エネルギー関連</option>
+            <option value="8">建設</option>
+            <option value="9">学校</option>
+            <option value="10">金融</option>
+            <option value="11">保険</option>
+            <option value="12">その他</option>
           </select>
         </div>
         <div class="mr-16">
@@ -108,6 +131,21 @@
             業種2（業種1が「製造の場合」のみ）
           </div>
           <select id="industry2-selectize" class="w-48">
+            <option value="">すべて</option>
+            <option value="1">機械</option>
+            <option value="2">電気・電子機器</option>
+            <option value="3">輸送用機器</option>
+            <option value="4">精密機器</option>
+            <option value="5">情報通信機器</option>
+            <option value="6">化学</option>
+            <option value="7">鉄鋼</option>
+            <option value="8">電子部品・デバイス・電子回路</option>
+            <option value="9">金属製品</option>
+            <option value="10">石油製品・石炭製品</option>
+            <option value="11">プラスチック製品</option>
+            <option value="12">繊維製品</option>
+            <option value="13">食料品</option>
+            <option value="14">その他の製造業</option>
           </select>
         </div>
         <div class="mr-16">
@@ -115,6 +153,10 @@
             利用目的
           </div>
           <select id="purpose-selectize" class="w-48">
+            <option value="">すべて</option>
+            <option value="1">機械</option>
+            <option value="2">電気・電子機器</option>
+            <option value="3">輸送用機器</option>
           </select>
         </div>
         <div class="">
@@ -122,6 +164,9 @@
             試験実施回
           </div>
           <select id="test-selectize" class="w-48">
+            <option value="">すべて</option>
+            <option value="1">1回目</option>
+            <option value="2">2回目</option>
           </select>
         </div>
         <div
@@ -1304,55 +1349,91 @@
 
     // Init Selectize
     function initializeSelectize() {
-      const options = [
-        { value: '', text: 'すべて' },
-        { value: 1, text: "Awesome" },
-        { value: 2, text: "Beast" },
-        { value: 3, text: "Compatible" },
-        { value: 4, text: "Thomas Edison" },
-        { value: 5, text: "Nikola" },
-        { value: 6, text: "Selectize" },
-        { value: 7, text: "Javascript" }
-      ];
+      $('#industry1-selectize').selectize({
+        onChange: function (value) {
+          const industry2 = $('#industry2-selectize')[0].selectize;
 
-      const selectElement = document.getElementById('industry1-selectize');
-      options.forEach(option => {
-        const newOption = document.createElement('option');
-        newOption.value = option.value;
-        newOption.textContent = option.text;
-        selectElement.appendChild(newOption);
+          if (value === '1') {
+            // Enable industry2 if "製造" is selected
+            industry2.enable();
+          } else {
+            // Disable and clear industry2 otherwise
+            industry2.disable();
+            industry2.clear();
+          }
+        }
       });
-      $('#industry1-selectize').selectize();
+      $('#industry2-selectize').selectize({
+        // Disable industry2 by default
+        onInitialize: function () {
+          this.disable();
+        },
+      });
 
-      const selectElement2 = document.getElementById('industry2-selectize');
-      options.forEach(option => {
-        const newOption = document.createElement('option');
-        newOption.value = option.value;
-        newOption.textContent = option.text;
-        selectElement2.appendChild(newOption);
-      });
-      $('#industry2-selectize').selectize();
-
-      const purposeElement = document.getElementById('purpose-selectize');
-      options.forEach(option => {
-        const newOption = document.createElement('option');
-        newOption.value = option.value;
-        newOption.textContent = option.text;
-        purposeElement.appendChild(newOption);
-      });
       $('#purpose-selectize').selectize();
-
-      const testElement = document.getElementById('test-selectize');
-      options.forEach(option => {
-        const newOption = document.createElement('option');
-        newOption.value = option.value;
-        newOption.textContent = option.text;
-        testElement.appendChild(newOption);
-      });
       $('#test-selectize').selectize();
 
     }
     initializeSelectize()
+
+    const select = document.getElementById("cars");
+    const defaultValue = "any"; // Store the default value
+    let anyOption;
+
+    // Function to add the "any" option back
+    function addAnyOption() {
+      anyOption = select.querySelector('option[value="any"]');
+      if (!anyOption) {
+        // Create the "any" option element dynamically
+        var opt = document.createElement('option');
+        opt.value = "any";
+        opt.innerHTML = "any";
+        opt.selected = true; // Ensure it is selected
+        select.insertBefore(opt, select.firstChild); // Insert at the top of the list
+      }
+    }
+
+    // Ensure the select starts with "any" as the selected option
+    select.value = defaultValue;
+
+    // Remove "any" option initially on focus
+    select.addEventListener("focus", function () {
+      console.log("focus")
+      anyOption = select.querySelector('option[value="any"]'); // Re-fetch the option
+      if (anyOption) {
+        anyOption.remove(); // Remove the "any" option to hide it
+      }
+    });
+
+    let eventGet = ""
+
+    // Handle the case where the user selects the empty option
+    select.addEventListener("change", function () {
+      console.log("change")
+      if (eventGet === "mouseout") {
+        eventGet = "change"
+        return
+      }
+      if (select.value === "") {
+        // If the empty option is selected, restore "any" and set it as the value
+        select.value = defaultValue; // Set value to "any"
+        addAnyOption(); // Add the "any" option back dynamically
+      }
+    });
+
+    select.addEventListener("mouseout", function () {
+      console.log("mouseout")
+      if (eventGet === "change") {
+        eventGet = "mouseout"
+        return
+      }
+      if (!select.value) {
+        addAnyOption(); // Add the "any" option back dynamically
+        select.value = defaultValue; // Set value to "any"
+      }
+    });
+
+
   </script>
 
 </body>

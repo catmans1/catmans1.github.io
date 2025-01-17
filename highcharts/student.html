@@ -335,8 +335,8 @@
 
     // Call api
     async function getExamReportData() {
-      // const urlApi = getPathApi()
-      // if (urlApi === null) return
+      const urlApi = getPathApi()
+      if (urlApi === null) return
 
       const username = document.getElementById('username')
       const courseTitle = document.getElementById('courseTitle') // Including start date
@@ -344,89 +344,15 @@
       const totalScore = document.getElementById('totalScore')
       const passScore = document.getElementById('passScore')
       const passStatus = document.getElementById('passStatus')
-      const authCookie = getCookie('Authorization') || 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyNiIsInNjcCI6InVzZXIiLCJhdWQiOm51bGwsImlhdCI6MTcyOTgyMTYwMSwiZXhwIjoxNzMyNDEzNjAxLCJqdGkiOiJkYTdjNTMzYS1kNTdjLTRmYTQtYmU0OS00MTI4NjcyNWQ2Y2QifQ.bAEDtZr5zsUfhHElC-O0tpzrZSFyWSfYHECdrtIV4Bc';
+      const authCookie = getCookie('Authorization') || '';
       try {
-        // const response = await fetch(urlApi, {
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //     "Authorization": "Bearer " + authCookie
-        //   },
-        // })
-        // const responseJson = await response.json()
-        const responseJson = {
-          "exam": {
-            "totalScore": 38,
-            "totalEarnedScore": 12,
-            "passScore": 20,
-            "isPass": false,
-            "startDate": "2024年12月12日",
-            "finishDate": "2024年12月12日",
-            "course": {
-              "id": 9942,
-              "title": "試験"
-            },
-            "lecture": {
-              "id": 311363,
-              "title": "exam custom report"
-            },
-            "quizzes": [
-              {
-                "id": 181738,
-                "isCorrect": false,
-                "maxScore": 0,
-                "earnedScore": 0,
-                "tagName": "基礎"
-              },
-              {
-                "id": 181739,
-                "isCorrect": false,
-                "maxScore": 0,
-                "earnedScore": 0,
-                "tagName": "応用"
-              },
-              {
-                "id": 181740,
-                "isCorrect": false,
-                "maxScore": 0,
-                "earnedScore": 0,
-                "tagName": "実践"
-              },
-              {
-                "id": 181741,
-                "isCorrect": false,
-                "maxScore": 0,
-                "earnedScore": 0,
-                "tagName": "空間把握"
-              },
-              {
-                "id": 181742,
-                "isCorrect": false,
-                "maxScore": 0,
-                "earnedScore": 0,
-                "tagName": "判断推理"
-              },
-              {
-                "id": 181743,
-                "isCorrect": true,
-                "maxScore": 5,
-                "earnedScore": 10,
-                "tagName": "資料解釈"
-              },
-              {
-                "id": 181744,
-                "isCorrect": true,
-                "maxScore": 7,
-                "earnedScore": 14,
-                "tagName": "数的推理"
-              }
-            ]
+        const response = await fetch(urlApi, {
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + authCookie
           },
-          "user": {
-            "username": "hl11113",
-            "nickname": "hl11113",
-            "groups": []
-          }
-        }
+        })
+        const responseJson = await response.json()
 
         if (responseJson != null && responseJson.exam != null && responseJson.user != null) {
           const exam = responseJson.exam
