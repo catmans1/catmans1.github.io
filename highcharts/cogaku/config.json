@@ -1,0 +1,849 @@
+{
+  "A1": {
+    "field_identifier": "A",
+    "field_name": "機械",
+    "major_item_identifier": "A1",
+    "major_item_name": "機械工学基礎（4力）",
+    "exam_name": "To-Beエンジニア試験スタンダード"
+  },
+  "A2": {
+    "field_identifier": "A",
+    "field_name": "機械",
+    "major_item_identifier": "A2",
+    "major_item_name": "材料",
+    "exam_name": "To-Beエンジニア試験スタンダード"
+  },
+  "A3": {
+    "field_identifier": "A",
+    "field_name": "機械",
+    "major_item_identifier": "A3",
+    "major_item_name": "設計・製図",
+    "exam_name": "To-Beエンジニア試験スタンダード"
+  },
+  "A4": {
+    "field_identifier": "A",
+    "field_name": "機械",
+    "major_item_identifier": "A4",
+    "major_item_name": "加工",
+    "exam_name": "To-Beエンジニア試験スタンダード"
+  },
+  "A5": {
+    "field_identifier": "A",
+    "field_name": "機械",
+    "major_item_identifier": "A5",
+    "major_item_name": "機械要素",
+    "exam_name": "To-Beエンジニア試験スタンダード"
+  },
+  "A6": {
+    "field_identifier": "A",
+    "field_name": "機械",
+    "major_item_identifier": "A6",
+    "major_item_name": "計測制御",
+    "exam_name": "To-Beエンジニア試験スタンダード"
+  },
+  "B1": {
+    "field_identifier": "B",
+    "field_name": "電気電子",
+    "major_item_identifier": "B1",
+    "major_item_name": "電気回路の基礎",
+    "exam_name": "To-Beエンジニア試験スタンダード"
+  },
+  "B2": {
+    "field_identifier": "B",
+    "field_name": "電気電子",
+    "major_item_identifier": "B2",
+    "major_item_name": "電子回路の基礎",
+    "exam_name": "To-Beエンジニア試験スタンダード"
+  },
+  "B3": {
+    "field_identifier": "B",
+    "field_name": "電気電子",
+    "major_item_identifier": "B3",
+    "major_item_name": "半導体デバイス",
+    "exam_name": "To-Beエンジニア試験スタンダード"
+  },
+  "B4": {
+    "field_identifier": "B",
+    "field_name": "電気電子",
+    "major_item_identifier": "B4",
+    "major_item_name": "インターフェース",
+    "exam_name": "To-Beエンジニア試験スタンダード"
+  },
+  "B5": {
+    "field_identifier": "B",
+    "field_name": "電気電子",
+    "major_item_identifier": "B5",
+    "major_item_name": "モータと電力",
+    "exam_name": "To-Beエンジニア試験スタンダード"
+  },
+  "B6": {
+    "field_identifier": "B",
+    "field_name": "電気電子",
+    "major_item_identifier": "B6",
+    "major_item_name": "センサ技術",
+    "exam_name": "To-Beエンジニア試験スタンダード"
+  },
+  "C1": {
+    "field_identifier": "C",
+    "field_name": "情報",
+    "major_item_identifier": "C1",
+    "major_item_name": "情報の基礎",
+    "exam_name": "To-Beエンジニア試験スタンダード"
+  },
+  "C2": {
+    "field_identifier": "C",
+    "field_name": "情報",
+    "major_item_identifier": "C2",
+    "major_item_name": "プロセッサ",
+    "exam_name": "To-Beエンジニア試験スタンダード"
+  },
+  "C3": {
+    "field_identifier": "C",
+    "field_name": "情報",
+    "major_item_identifier": "C3",
+    "major_item_name": "プログラミング",
+    "exam_name": "To-Beエンジニア試験スタンダード"
+  },
+  "C4": {
+    "field_identifier": "C",
+    "field_name": "情報",
+    "major_item_identifier": "C4",
+    "major_item_name": "システム構成",
+    "exam_name": "To-Beエンジニア試験スタンダード"
+  },
+  "C5": {
+    "field_identifier": "C",
+    "field_name": "情報",
+    "major_item_identifier": "C5",
+    "major_item_name": "システム開発",
+    "exam_name": "To-Beエンジニア試験スタンダード"
+  },
+  "C6": {
+    "field_identifier": "C",
+    "field_name": "情報",
+    "major_item_identifier": "C6",
+    "major_item_name": "ネットワークとマルチメディア",
+    "exam_name": "To-Beエンジニア試験スタンダード"
+  },
+  "D1": {
+    "field_identifier": "D",
+    "field_name": "品質管理基礎",
+    "major_item_identifier": "D1",
+    "major_item_name": "品質",
+    "exam_name": "To-Beエンジニア試験スタンダード"
+  },
+  "D2": {
+    "field_identifier": "D",
+    "field_name": "品質管理基礎",
+    "major_item_identifier": "D2",
+    "major_item_name": "管理",
+    "exam_name": "To-Beエンジニア試験スタンダード"
+  },
+  "D3": {
+    "field_identifier": "D",
+    "field_name": "品質管理基礎",
+    "major_item_identifier": "D3",
+    "major_item_name": "QC的考え方",
+    "exam_name": "To-Beエンジニア試験スタンダード"
+  },
+  "D4": {
+    "field_identifier": "D",
+    "field_name": "品質管理基礎",
+    "major_item_identifier": "D4",
+    "major_item_name": "改善と問題解決",
+    "exam_name": "To-Beエンジニア試験スタンダード"
+  },
+  "D5": {
+    "field_identifier": "D",
+    "field_name": "品質管理基礎",
+    "major_item_identifier": "D5",
+    "major_item_name": "統計的考え方",
+    "exam_name": "To-Beエンジニア試験スタンダード"
+  },
+  "D6": {
+    "field_identifier": "D",
+    "field_name": "品質管理基礎",
+    "major_item_identifier": "D6",
+    "major_item_name": "QC七つ道具",
+    "exam_name": "To-Beエンジニア試験スタンダード"
+  },
+  "E1": {
+    "field_identifier": "E",
+    "field_name": "共通",
+    "major_item_identifier": "E1",
+    "major_item_name": "工業英語",
+    "exam_name": "To-Beエンジニア試験スタンダード"
+  },
+  "E2": {
+    "field_identifier": "E",
+    "field_name": "共通",
+    "major_item_identifier": "E2",
+    "major_item_name": "品質",
+    "exam_name": "To-Beエンジニア試験スタンダード"
+  },
+  "E3": {
+    "field_identifier": "E",
+    "field_name": "共通",
+    "major_item_identifier": "E3",
+    "major_item_name": "技術者の常識",
+    "exam_name": "To-Beエンジニア試験スタンダード"
+  },
+  "F1": {
+    "field_identifier": "F",
+    "field_name": "化学",
+    "major_item_identifier": "F1",
+    "major_item_name": "化学の基礎",
+    "exam_name": "To-Beエンジニア試験スタンダード"
+  },
+  "F2": {
+    "field_identifier": "F",
+    "field_name": "化学",
+    "major_item_identifier": "F2",
+    "major_item_name": "無機化学・セラミックス",
+    "exam_name": "To-Beエンジニア試験スタンダード"
+  },
+  "F3": {
+    "field_identifier": "F",
+    "field_name": "化学",
+    "major_item_identifier": "F3",
+    "major_item_name": "有機化学・高分子化学",
+    "exam_name": "To-Beエンジニア試験スタンダード"
+  },
+  "F4": {
+    "field_identifier": "F",
+    "field_name": "化学",
+    "major_item_identifier": "F4",
+    "major_item_name": "物理化学・電気化学",
+    "exam_name": "To-Beエンジニア試験スタンダード"
+  },
+  "F5": {
+    "field_identifier": "F",
+    "field_name": "化学",
+    "major_item_identifier": "F5",
+    "major_item_name": "分析化学・環境化学",
+    "exam_name": "To-Beエンジニア試験スタンダード"
+  },
+  "F6": {
+    "field_identifier": "F",
+    "field_name": "化学",
+    "major_item_identifier": "F6",
+    "major_item_name": "化学プロセス",
+    "exam_name": "To-Beエンジニア試験スタンダード"
+  },
+  "MA1": {
+    "field_identifier": "MA",
+    "field_name": "メンテナンスの基礎",
+    "major_item_identifier": "MA1",
+    "major_item_name": "保全と安全",
+    "exam_name": "To-Beメンテナンス技術試験"
+  },
+  "MA2": {
+    "field_identifier": "MA",
+    "field_name": "メンテナンスの基礎",
+    "major_item_identifier": "MA2",
+    "major_item_name": "品質",
+    "exam_name": "To-Beメンテナンス技術試験"
+  },
+  "MA3": {
+    "field_identifier": "MA",
+    "field_name": "メンテナンスの基礎",
+    "major_item_identifier": "MA3",
+    "major_item_name": "品質管理",
+    "exam_name": "To-Beメンテナンス技術試験"
+  },
+  "MA4": {
+    "field_identifier": "MA",
+    "field_name": "メンテナンスの基礎",
+    "major_item_identifier": "MA4",
+    "major_item_name": "工場のインフラ",
+    "exam_name": "To-Beメンテナンス技術試験"
+  },
+  "MB1": {
+    "field_identifier": "MB",
+    "field_name": "電気部品と電気回路",
+    "major_item_identifier": "MB1",
+    "major_item_name": "電気部品とその故障",
+    "exam_name": "To-Beメンテナンス技術試験"
+  },
+  "MB2": {
+    "field_identifier": "MB",
+    "field_name": "電気部品と電気回路",
+    "major_item_identifier": "MB2",
+    "major_item_name": "電気回路のメンテナンス",
+    "exam_name": "To-Beメンテナンス技術試験"
+  },
+  "MB3": {
+    "field_identifier": "MB",
+    "field_name": "電気部品と電気回路",
+    "major_item_identifier": "MB3",
+    "major_item_name": "メンテナンスの電気測定",
+    "exam_name": "To-Beメンテナンス技術試験"
+  },
+  "MB4": {
+    "field_identifier": "MB",
+    "field_name": "電気部品と電気回路",
+    "major_item_identifier": "MB4",
+    "major_item_name": "テスタとオシロスコープ",
+    "exam_name": "To-Beメンテナンス技術試験"
+  },
+  "MC1": {
+    "field_identifier": "MC",
+    "field_name": "材料と機械",
+    "major_item_identifier": "MC1",
+    "major_item_name": "保全のための材料工学",
+    "exam_name": "To-Beメンテナンス技術試験"
+  },
+  "MC2": {
+    "field_identifier": "MC",
+    "field_name": "材料と機械",
+    "major_item_identifier": "MC2",
+    "major_item_name": "保全のための機械力学",
+    "exam_name": "To-Beメンテナンス技術試験"
+  },
+  "MC3": {
+    "field_identifier": "MC",
+    "field_name": "材料と機械",
+    "major_item_identifier": "MC3",
+    "major_item_name": "機械要素とメンテナンス",
+    "exam_name": "To-Beメンテナンス技術試験"
+  },
+  "MC4": {
+    "field_identifier": "MC",
+    "field_name": "材料と機械",
+    "major_item_identifier": "MC4",
+    "major_item_name": "機構とメンテナンス",
+    "exam_name": "To-Beメンテナンス技術試験"
+  },
+  "MD1": {
+    "field_identifier": "MD",
+    "field_name": "メカトロニクス",
+    "major_item_identifier": "MD1",
+    "major_item_name": "自動化の仕組み",
+    "exam_name": "To-Beメンテナンス技術試験"
+  },
+  "MD2": {
+    "field_identifier": "MD",
+    "field_name": "メカトロニクス",
+    "major_item_identifier": "MD2",
+    "major_item_name": "センサの知識とメンテナンス",
+    "exam_name": "To-Beメンテナンス技術試験"
+  },
+  "MD3": {
+    "field_identifier": "MD",
+    "field_name": "メカトロニクス",
+    "major_item_identifier": "MD3",
+    "major_item_name": "アクチュエータの知識とメンテナンス",
+    "exam_name": "To-Beメンテナンス技術試験"
+  },
+  "MD4": {
+    "field_identifier": "MD",
+    "field_name": "メカトロニクス",
+    "major_item_identifier": "MD4",
+    "major_item_name": "ロボットと画像処理",
+    "exam_name": "To-Beメンテナンス技術試験"
+  },
+  "ME1": {
+    "field_identifier": "ME",
+    "field_name": "機械の制御",
+    "major_item_identifier": "ME1",
+    "major_item_name": "機械制御の基礎",
+    "exam_name": "To-Beメンテナンス技術試験"
+  },
+  "ME2": {
+    "field_identifier": "ME",
+    "field_name": "機械の制御",
+    "major_item_identifier": "ME2",
+    "major_item_name": "シーケンス制御",
+    "exam_name": "To-Beメンテナンス技術試験"
+  },
+  "ME3": {
+    "field_identifier": "ME",
+    "field_name": "機械の制御",
+    "major_item_identifier": "ME3",
+    "major_item_name": "PLC制御",
+    "exam_name": "To-Beメンテナンス技術試験"
+  },
+  "ME4": {
+    "field_identifier": "ME",
+    "field_name": "機械の制御",
+    "major_item_identifier": "ME4",
+    "major_item_name": "制御と各種言語",
+    "exam_name": "To-Beメンテナンス技術試験"
+  },
+  "AA1": {
+    "field_identifier": "AA",
+    "field_name": "機械",
+    "major_item_identifier": "AA1",
+    "major_item_name": "機械工学",
+    "exam_name": "To-Beエンジニア試験アドバンスト"
+  },
+  "AA2": {
+    "field_identifier": "AA",
+    "field_name": "機械",
+    "major_item_identifier": "AA2",
+    "major_item_name": "材料",
+    "exam_name": "To-Beエンジニア試験アドバンスト"
+  },
+  "AA3": {
+    "field_identifier": "AA",
+    "field_name": "機械",
+    "major_item_identifier": "AA3",
+    "major_item_name": "設計・製図",
+    "exam_name": "To-Beエンジニア試験アドバンスト"
+  },
+  "AA4": {
+    "field_identifier": "AA",
+    "field_name": "機械",
+    "major_item_identifier": "AA4",
+    "major_item_name": "加工",
+    "exam_name": "To-Beエンジニア試験アドバンスト"
+  },
+  "AA5": {
+    "field_identifier": "AA",
+    "field_name": "機械",
+    "major_item_identifier": "AA5",
+    "major_item_name": "機械要素",
+    "exam_name": "To-Beエンジニア試験アドバンスト"
+  },
+  "AA6": {
+    "field_identifier": "AA",
+    "field_name": "機械",
+    "major_item_identifier": "AA6",
+    "major_item_name": "計測技術",
+    "exam_name": "To-Beエンジニア試験アドバンスト"
+  },
+  "AA7": {
+    "field_identifier": "AA",
+    "field_name": "機械",
+    "major_item_identifier": "AA7",
+    "major_item_name": "モータと電力",
+    "exam_name": "To-Beエンジニア試験アドバンスト"
+  },
+  "AA8": {
+    "field_identifier": "AA",
+    "field_name": "機械",
+    "major_item_identifier": "AA8",
+    "major_item_name": "制御技術",
+    "exam_name": "To-Beエンジニア試験アドバンスト"
+  },
+  "AB1": {
+    "field_identifier": "AB",
+    "field_name": "電気電子",
+    "major_item_identifier": "AB1",
+    "major_item_name": "電気回路設計",
+    "exam_name": "To-Beエンジニア試験アドバンスト"
+  },
+  "AB2": {
+    "field_identifier": "AB",
+    "field_name": "電気電子",
+    "major_item_identifier": "AB2",
+    "major_item_name": "デジタル回路設計",
+    "exam_name": "To-Beエンジニア試験アドバンスト"
+  },
+  "AB3": {
+    "field_identifier": "AB",
+    "field_name": "電気電子",
+    "major_item_identifier": "AB3",
+    "major_item_name": "アナログ回路設計",
+    "exam_name": "To-Beエンジニア試験アドバンスト"
+  },
+  "AB4": {
+    "field_identifier": "AB",
+    "field_name": "電気電子",
+    "major_item_identifier": "AB4",
+    "major_item_name": "センサ技術",
+    "exam_name": "To-Beエンジニア試験アドバンスト"
+  },
+  "AB5": {
+    "field_identifier": "AB",
+    "field_name": "電気電子",
+    "major_item_identifier": "AB5",
+    "major_item_name": "モータ駆動技術",
+    "exam_name": "To-Beエンジニア試験アドバンスト"
+  },
+  "AB6": {
+    "field_identifier": "AB",
+    "field_name": "電気電子",
+    "major_item_identifier": "AB6",
+    "major_item_name": "電源回路",
+    "exam_name": "To-Beエンジニア試験アドバンスト"
+  },
+  "AB7": {
+    "field_identifier": "AB",
+    "field_name": "電気電子",
+    "major_item_identifier": "AB7",
+    "major_item_name": "ノイズ対策",
+    "exam_name": "To-Beエンジニア試験アドバンスト"
+  },
+  "AB8": {
+    "field_identifier": "AB",
+    "field_name": "電気電子",
+    "major_item_identifier": "AB8",
+    "major_item_name": "制御プログラミング",
+    "exam_name": "To-Beエンジニア試験アドバンスト"
+  },
+  "AC1": {
+    "field_identifier": "AC",
+    "field_name": "情報",
+    "major_item_identifier": "AC1",
+    "major_item_name": "ディジタル技術",
+    "exam_name": "To-Beエンジニア試験アドバンスト"
+  },
+  "AC2": {
+    "field_identifier": "AC",
+    "field_name": "情報",
+    "major_item_identifier": "AC2",
+    "major_item_name": "プロセッサ",
+    "exam_name": "To-Beエンジニア試験アドバンスト"
+  },
+  "AC3": {
+    "field_identifier": "AC",
+    "field_name": "情報",
+    "major_item_identifier": "AC3",
+    "major_item_name": "プログラミング",
+    "exam_name": "To-Beエンジニア試験アドバンスト"
+  },
+  "AC4": {
+    "field_identifier": "AC",
+    "field_name": "情報",
+    "major_item_identifier": "AC4",
+    "major_item_name": "システム構成",
+    "exam_name": "To-Beエンジニア試験アドバンスト"
+  },
+  "AC5": {
+    "field_identifier": "AC",
+    "field_name": "情報",
+    "major_item_identifier": "AC5",
+    "major_item_name": "組込みシステム開発",
+    "exam_name": "To-Beエンジニア試験アドバンスト"
+  },
+  "AC6": {
+    "field_identifier": "AC",
+    "field_name": "情報",
+    "major_item_identifier": "AC6",
+    "major_item_name": "通信・ネットワーク",
+    "exam_name": "To-Beエンジニア試験アドバンスト"
+  },
+  "AC7": {
+    "field_identifier": "AC",
+    "field_name": "情報",
+    "major_item_identifier": "AC7",
+    "major_item_name": "アプリケーションソフト",
+    "exam_name": "To-Beエンジニア試験アドバンスト"
+  },
+  "AC8": {
+    "field_identifier": "AC",
+    "field_name": "情報",
+    "major_item_identifier": "AC8",
+    "major_item_name": "マルチメディア",
+    "exam_name": "To-Beエンジニア試験アドバンスト"
+  },
+  "BA1": {
+    "field_identifier": "BA",
+    "field_name": "仕事の基本とは",
+    "major_item_identifier": "BA1",
+    "major_item_name": "働く人の心構え",
+    "exam_name": "To-Beベーシック試験"
+  },
+  "BA2": {
+    "field_identifier": "BA",
+    "field_name": "仕事の基本とは",
+    "major_item_identifier": "BA2",
+    "major_item_name": "日本人の仕事の仕方",
+    "exam_name": "To-Beベーシック試験"
+  },
+  "BA3": {
+    "field_identifier": "BA",
+    "field_name": "仕事の基本とは",
+    "major_item_identifier": "BA3",
+    "major_item_name": "5S",
+    "exam_name": "To-Beベーシック試験"
+  },
+  "BA4": {
+    "field_identifier": "BA",
+    "field_name": "仕事の基本とは",
+    "major_item_identifier": "BA4",
+    "major_item_name": "職場の報連相",
+    "exam_name": "To-Beベーシック試験"
+  },
+  "BB1": {
+    "field_identifier": "BB",
+    "field_name": "組織で働くとは",
+    "major_item_identifier": "BB1",
+    "major_item_name": "企業と組織",
+    "exam_name": "To-Beベーシック試験"
+  },
+  "BB2": {
+    "field_identifier": "BB",
+    "field_name": "組織で働くとは",
+    "major_item_identifier": "BB2",
+    "major_item_name": "人・モノ・カネ・情報",
+    "exam_name": "To-Beベーシック試験"
+  },
+  "BB3": {
+    "field_identifier": "BB",
+    "field_name": "組織で働くとは",
+    "major_item_identifier": "BB3",
+    "major_item_name": "職場のリーダーシップ",
+    "exam_name": "To-Beベーシック試験"
+  },
+  "BB4": {
+    "field_identifier": "BB",
+    "field_name": "組織で働くとは",
+    "major_item_identifier": "BB4",
+    "major_item_name": "企業における人材育成",
+    "exam_name": "To-Beベーシック試験"
+  },
+  "BC1": {
+    "field_identifier": "BC",
+    "field_name": "数学Ⅰ",
+    "major_item_identifier": "BC1",
+    "major_item_name": "数学基本",
+    "exam_name": "To-Beベーシック試験"
+  },
+  "BC2": {
+    "field_identifier": "BC",
+    "field_name": "数学Ⅰ",
+    "major_item_identifier": "BC2",
+    "major_item_name": "三角関数",
+    "exam_name": "To-Beベーシック試験"
+  },
+  "BC3": {
+    "field_identifier": "BC",
+    "field_name": "数学Ⅰ",
+    "major_item_identifier": "BC3",
+    "major_item_name": "複素数",
+    "exam_name": "To-Beベーシック試験"
+  },
+  "BC4": {
+    "field_identifier": "BC",
+    "field_name": "数学Ⅰ",
+    "major_item_identifier": "BC4",
+    "major_item_name": "対数",
+    "exam_name": "To-Beベーシック試験"
+  },
+  "BD1": {
+    "field_identifier": "BD",
+    "field_name": "数学Ⅱ",
+    "major_item_identifier": "BD1",
+    "major_item_name": "微分",
+    "exam_name": "To-Beベーシック試験"
+  },
+  "BD2": {
+    "field_identifier": "BD",
+    "field_name": "数学Ⅱ",
+    "major_item_identifier": "BD2",
+    "major_item_name": "積分",
+    "exam_name": "To-Beベーシック試験"
+  },
+  "BD3": {
+    "field_identifier": "BD",
+    "field_name": "数学Ⅱ",
+    "major_item_identifier": "BD3",
+    "major_item_name": "微分方程式",
+    "exam_name": "To-Beベーシック試験"
+  },
+  "BD4": {
+    "field_identifier": "BD",
+    "field_name": "数学Ⅱ",
+    "major_item_identifier": "BD4",
+    "major_item_name": "級数展開とラプラス変換",
+    "exam_name": "To-Beベーシック試験"
+  },
+  "BE1": {
+    "field_identifier": "BE",
+    "field_name": "物理Ⅰ",
+    "major_item_identifier": "BE1",
+    "major_item_name": "物体の運動",
+    "exam_name": "To-Beベーシック試験"
+  },
+  "BE2": {
+    "field_identifier": "BE",
+    "field_name": "物理Ⅰ",
+    "major_item_identifier": "BE2",
+    "major_item_name": "運動の法則",
+    "exam_name": "To-Beベーシック試験"
+  },
+  "BE3": {
+    "field_identifier": "BE",
+    "field_name": "物理Ⅰ",
+    "major_item_identifier": "BE3",
+    "major_item_name": "力学的エネルギー",
+    "exam_name": "To-Beベーシック試験"
+  },
+  "BE4": {
+    "field_identifier": "BE",
+    "field_name": "物理Ⅰ",
+    "major_item_identifier": "BE4",
+    "major_item_name": "電気",
+    "exam_name": "To-Beベーシック試験"
+  },
+  "BF1": {
+    "field_identifier": "BF",
+    "field_name": "物理Ⅱ",
+    "major_item_identifier": "BF1",
+    "major_item_name": "回転座標系力学",
+    "exam_name": "To-Beベーシック試験"
+  },
+  "BF2": {
+    "field_identifier": "BF",
+    "field_name": "物理Ⅱ",
+    "major_item_identifier": "BF2",
+    "major_item_name": "光学",
+    "exam_name": "To-Beベーシック試験"
+  },
+  "BF3": {
+    "field_identifier": "BF",
+    "field_name": "物理Ⅱ",
+    "major_item_identifier": "BF3",
+    "major_item_name": "静電気工学",
+    "exam_name": "To-Beベーシック試験"
+  },
+  "BF4": {
+    "field_identifier": "BF",
+    "field_name": "物理Ⅱ",
+    "major_item_identifier": "BF4",
+    "major_item_name": "磁気工学",
+    "exam_name": "To-Beベーシック試験"
+  },
+  "CA1": {
+    "field_identifier": "CA",
+    "field_name": "仕事の基本とは",
+    "major_item_identifier": "CA1",
+    "major_item_name": "働く人の心構え",
+    "exam_name": "To-Beフォアマン試験"
+  },
+  "CA2": {
+    "field_identifier": "CA",
+    "field_name": "仕事の基本とは",
+    "major_item_identifier": "CA2",
+    "major_item_name": "日本人の仕事の仕方",
+    "exam_name": "To-Beフォアマン試験"
+  },
+  "CA3": {
+    "field_identifier": "CA",
+    "field_name": "仕事の基本とは",
+    "major_item_identifier": "CA3",
+    "major_item_name": "5S",
+    "exam_name": "To-Beフォアマン試験"
+  },
+  "CA4": {
+    "field_identifier": "CA",
+    "field_name": "仕事の基本とは",
+    "major_item_identifier": "CA4",
+    "major_item_name": "職場の報連相",
+    "exam_name": "To-Beフォアマン試験"
+  },
+  "CB1": {
+    "field_identifier": "CB",
+    "field_name": "組織で働くとは",
+    "major_item_identifier": "CB1",
+    "major_item_name": "企業と組織",
+    "exam_name": "To-Beフォアマン試験"
+  },
+  "CB2": {
+    "field_identifier": "CB",
+    "field_name": "組織で働くとは",
+    "major_item_identifier": "CB2",
+    "major_item_name": "人・モノ・カネ・情報",
+    "exam_name": "To-Beフォアマン試験"
+  },
+  "CB3": {
+    "field_identifier": "CB",
+    "field_name": "組織で働くとは",
+    "major_item_identifier": "CB3",
+    "major_item_name": "職場のリーダーシップ",
+    "exam_name": "To-Beフォアマン試験"
+  },
+  "CB4": {
+    "field_identifier": "CB",
+    "field_name": "組織で働くとは",
+    "major_item_identifier": "CB4",
+    "major_item_name": "企業における人材育成",
+    "exam_name": "To-Beフォアマン試験"
+  },
+  "CC1": {
+    "field_identifier": "CC",
+    "field_name": "生産の基本",
+    "major_item_identifier": "CC1",
+    "major_item_name": "生産工程と作業手順",
+    "exam_name": "To-Beフォアマン試験"
+  },
+  "CC2": {
+    "field_identifier": "CC",
+    "field_name": "生産の基本",
+    "major_item_identifier": "CC2",
+    "major_item_name": "作業指示書の活用方法",
+    "exam_name": "To-Beフォアマン試験"
+  },
+  "CC3": {
+    "field_identifier": "CC",
+    "field_name": "生産の基本",
+    "major_item_identifier": "CC3",
+    "major_item_name": "品質管理",
+    "exam_name": "To-Beフォアマン試験"
+  },
+  "CC4": {
+    "field_identifier": "CC",
+    "field_name": "生産の基本",
+    "major_item_identifier": "CC4",
+    "major_item_name": "QC7つ道具",
+    "exam_name": "To-Beフォアマン試験"
+  },
+  "CD1": {
+    "field_identifier": "CD",
+    "field_name": "安全の基本",
+    "major_item_identifier": "CD1",
+    "major_item_name": "安全の考え方",
+    "exam_name": "To-Beフォアマン試験"
+  },
+  "CD2": {
+    "field_identifier": "CD",
+    "field_name": "安全の基本",
+    "major_item_identifier": "CD2",
+    "major_item_name": "工場の安全",
+    "exam_name": "To-Beフォアマン試験"
+  },
+  "CD3": {
+    "field_identifier": "CD",
+    "field_name": "安全の基本",
+    "major_item_identifier": "CD3",
+    "major_item_name": "保全の考え方",
+    "exam_name": "To-Beフォアマン試験"
+  },
+  "CD4": {
+    "field_identifier": "CD",
+    "field_name": "安全の基本",
+    "major_item_identifier": "CD4",
+    "major_item_name": "安全点検の方法",
+    "exam_name": "To-Beフォアマン試験"
+  },
+  "CE1": {
+    "field_identifier": "CE",
+    "field_name": "保全の基本",
+    "major_item_identifier": "CE1",
+    "major_item_name": "電気の基礎",
+    "exam_name": "To-Beフォアマン試験"
+  },
+  "CE2": {
+    "field_identifier": "CE",
+    "field_name": "保全の基本",
+    "major_item_identifier": "CE2",
+    "major_item_name": "自動機械設備の取扱い",
+    "exam_name": "To-Beフォアマン試験"
+  },
+  "CE3": {
+    "field_identifier": "CE",
+    "field_name": "保全の基本",
+    "major_item_identifier": "CE3",
+    "major_item_name": "機械の基礎",
+    "exam_name": "To-Beフォアマン試験"
+  },
+  "CE4": {
+    "field_identifier": "CE",
+    "field_name": "保全の基本",
+    "major_item_identifier": "CE4",
+    "major_item_name": "機械の保全",
+    "exam_name": "To-Beフォアマン試験"
+  }
+}

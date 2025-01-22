@@ -56,8 +56,8 @@
     <h2 class="text-[40px] font-semibold text-center">
       個人成績表
     </h2>
-    <h3 class="text-[24px] font-semibold text-center mb-6">
-      To-Beエンジニア試験（機・電・情・品）
+    <h3 id="lectureTitle" class="text-[24px] font-semibold text-center mb-6">
+
     </h3>
     <div class="overflow-hidden rounded-lg border">
       <table class="table-auto w-full border-collapse">
@@ -76,14 +76,14 @@
         </thead>
         <tbody>
           <tr>
-            <td class="text-[20px] border-r border-t font-medium text-center py-2">
-              C0000001
+            <td id="nickname" class="text-[20px] border-r border-t font-medium text-center py-2">
+
             </td>
-            <td class="text-[20px] border-r border-t font-medium text-center py-2">
-              コガク 太郎
+            <td id="username" class="text-[20px] border-r border-t font-medium text-center py-2">
+
             </td>
-            <td class="text-[20px] border-t font-medium text-center py-2">
-              2024/04/15
+            <td id="finishDate" class="text-[20px] border-t font-medium text-center py-2">
+
             </td>
           </tr>
         </tbody>
@@ -264,12 +264,13 @@
               <div class="border-b text-center py-2 text-[20px] font-semibold">
                 理解度
               </div>
-              <div class="py-4 text-[40px] font-medium">
-                B
+              <div id="passRateAlpha" class="py-4 text-[40px] font-medium">
+
               </div>
             </div>
-            <div class="flex text-center p-3 items-center justify-center text-center text-[20px] font-medium">
-              60.0〜79.9%程度の理解度です。
+            <div id="passRate"
+              class="flex text-center p-3 items-center justify-center text-center text-[20px] font-medium">
+
             </div>
           </div>
         </div>
@@ -285,331 +286,10 @@
       <i class="fas fa-play-circle"></i>
       <h3 class="text-[24px] font-semibold">分野別</h3>
     </div>
-    <h3 class="text-[24px] font-semibold mt-4">電気電子</h3>
-    <div class="flex mt-5">
-      <div class="w-2/3 p-5 overflow-hidden h-[400px] rounded-lg border">
-        <div id="electric-polarchart" class=""></div>
-      </div>
-      <div class="flex-box w-1/3 pl-14">
-        <div class="overflow-hidden rounded-lg border">
-          <table class="table-auto w-full">
-            <thead>
-              <tr class="h-14 text-[20px] font-[600] text-[#212121]">
-                <th class="w-14 text-center border-r border-b">
-                  A
-                </th>
-                <th class="w-60 px-3 text-left border-b">
-                  電気電子
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="h-14 bg-[#b9b9b933] text-[20px] font-[300] text-[#212121]">
-                <td class="w-14 text-center border-r border-b">
-                  A1
-                </td>
-                <td class="px-3 text-left border-b">
-                  電気回路の基礎
-                </td>
-              </tr>
-              <tr class="h-14 text-[20px] font-[300] text-[#212121]">
-                <td class="w-14 text-center border-r border-b">
-                  A2
-                </td>
-                <td class="px-3 text-left border-b">
-                  電子回路の基礎
-                </td>
-              </tr>
-              <tr class="h-14 bg-[#b9b9b933] text-[20px] font-[300] text-[#212121]">
-                <td class="w-14 text-center border-r border-b">
-                  A3
-                </td>
-                <td class="px-3 text-left border-b">
-                  インターフェース
-                </td>
-              </tr>
-              <tr class="h-14 text-[20px] font-[300] text-[#212121]">
-                <td class="w-14 text-center border-r border-b">
-                  A4
-                </td>
-                <td class="px-3 text-left border-b">
-                  半導体デバイス
-                </td>
-              </tr>
-              <tr class="h-14 bg-[#b9b9b933] text-[20px] font-[300] text-[#212121]">
-                <td class="w-14 text-center border-r">
-                  A5
-                </td>
-                <td class="px-3 text-left">
-                  モータと電力
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-    <table class="mt-6 w-4/5 table-auto border-separate border-spacing-0 overflow-hidden">
-      <thead>
-        <tr>
-          <th class="px-4 py-2 text-center"></th>
-          <th class="px-4 py-2 text-center"></th>
-          <th class="px-4 py-2 border border-b-0 text-center text-[20px] font-semibold rounded-tl-lg">合計</th>
-          <th class="px-4 py-2 border border-l-0 border-b-0 text-center text-[20px] font-semibold">A1</th>
-          <th class="px-4 py-2 border border-l-0 border-b-0 text-center text-[20px] font-semibold">A2</th>
-          <th class="px-4 py-2 border border-l-0 border-b-0 text-center text-[20px] font-semibold">A3</th>
-          <th class="px-4 py-2 border border-l-0 border-b-0 text-center text-[20px] font-semibold">A4</th>
-          <th class="px-4 py-2 border border-l-0 border-b-0 text-center text-[20px] font-semibold rounded-tr-lg">A5</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Full Score Row -->
-        <tr>
-          <td class=""></td>
-          <td
-            class="px-4 py-2 border border-r-0 border-b-0 bg-[#F5F5F5] text-center text-[20px] font-semibold rounded-tl-lg">
-            満点</td>
-          <td class="px-4 py-2 border border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">60</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">30</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">30</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">30</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">30</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">30</td>
-        </tr>
-        <!-- 全国平均 -->
-        <tr>
-          <th class="px-4 py-2 bg-[#EE4344] border text-[20px] font-semibold text-center text-white rounded-tl-lg"
-            rowspan="2">
-            全国平均
-          </th>
-          <td class="px-4 py-2 border border-r-0 border-b-0 bg-white text-center text-[20px] font-semibold">得点</td>
-          <td class="px-4 py-2 border border-b-0 text-right text-[20px] font-semibold">28.7</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">18.7</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">18.7</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">18.7</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">18.7</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">18.7</td>
-        </tr>
-        <tr>
-          <td class="px-4 py-2 border border-r-0 border-b-0 bg-[#F5F5F5] text-center text-[20px] font-semibold">正解率</td>
-          <td class="px-4 py-2 border border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">47.8</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">47.8</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">47.8</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">47.8</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">47.8</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">47.8</td>
-        </tr>
-        <!-- 貴社平均 -->
-        <tr>
-          <td
-            class="px-4 py-2 border text-[20px] font-semibold bg-[#3B82F6] text-[20px] font-semibold text-center text-white"
-            rowspan="2">貴社平均</td>
-          <td class="px-4 py-2 border border-r-0 border-b-0 bg-white text-center text-[20px] font-semibold">得点</td>
-          <td class="px-4 py-2 border border-b-0 text-right text-[20px] font-semibold">29.1</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">19.1</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">19.1</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">19.1</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">19.1</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">19.1</td>
-        </tr>
-        <tr>
-          <td class="px-4 py-2 border border-r-0 border-b-0 bg-[#F5F5F5] text-center text-[20px] font-semibold">正解率</td>
-          <td class="px-4 py-2 border border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">48.5</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">48.5</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">48.5</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">48.5</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">48.5</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">48.5</td>
-        </tr>
-        <!-- ご本人 -->
-        <tr>
-          <td
-            class="px-4 py-2 border text-[20px] font-semibold bg-[#10B981] text-[20px] font-semibold text-center text-white rounded-bl-lg"
-            rowspan="2">ご本人</td>
-          <td class="px-4 py-2 border border-r-0 border-l-0 border-b-0 bg-white text-center text-[20px] font-semibold">
-            得点</td>
-          <td class="px-4 py-2 border border-b-0 text-right text-[20px] font-semibold">40</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">40</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">20</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">20</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">20</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">20</td>
-        </tr>
-        <tr>
-          <td class="px-4 py-2 border border-r-0 bg-[#F5F5F5] text-center text-[20px] font-semibold">正解率</td>
-          <td class="px-4 py-2 border bg-[#F5F5F5] text-right text-[20px] font-semibold">66.7</td>
-          <td class="px-4 py-2 border border-l-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">66.7</td>
-          <td class="px-4 py-2 border border-l-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">66.7</td>
-          <td class="px-4 py-2 border border-l-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">66.7</td>
-          <td class="px-4 py-2 border border-l-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">66.7</td>
-          <td class="px-4 py-2 border border-l-0 bg-[#F5F5F5] text-right text-[20px] font-semibold rounded-br-lg">66.7
-          </td>
-        </tr>
-      </tbody>
-    </table>
 
-    <h3 class="text-[24px] font-semibold mt-6">機械</h3>
-    <div class="flex mt-5">
-      <div class="w-2/3 p-5 overflow-hidden h-[400px] rounded-lg border">
-        <div id="mechanical-polarchart" class=""></div>
-      </div>
-      <div class="flex-box w-1/3 pl-14">
-        <div class="overflow-hidden rounded-lg border">
-          <table class="table-auto w-full">
-            <thead>
-              <tr class="h-14 text-[20px] font-[600] text-[#212121]">
-                <th class="w-14 text-center border-r border-b">
-                  B
-                </th>
-                <th class="w-60 px-3 text-left border-b">
-                  機械
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="h-14 bg-[#b9b9b933] text-[20px] font-[300] text-[#212121]">
-                <td class="w-14 text-center border-r border-b">
-                  B1
-                </td>
-                <td class="px-3 text-left border-b">
-                  機械工学基礎（4力）
-                </td>
-              </tr>
-              <tr class="h-14 text-[20px] font-[300] text-[#212121]">
-                <td class="w-14 text-center border-r border-b">
-                  B2
-                </td>
-                <td class="px-3 text-left border-b">
-                  材料
-                </td>
-              </tr>
-              <tr class="h-14 bg-[#b9b9b933] text-[20px] font-[300] text-[#212121]">
-                <td class="w-14 text-center border-r border-b">
-                  B3
-                </td>
-                <td class="px-3 text-left border-b">
-                  設計・製図
-                </td>
-              </tr>
-              <tr class="h-14 text-[20px] font-[300] text-[#212121]">
-                <td class="w-14 text-center border-r border-b">
-                  B4
-                </td>
-                <td class="px-3 text-left border-b">
-                  機械要素
-                </td>
-              </tr>
-              <tr class="h-14 bg-[#b9b9b933] text-[20px] font-[300] text-[#212121]">
-                <td class="w-14 text-center border-r">
-                  B5
-                </td>
-                <td class="px-3 text-left">
-                  計測制御
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-    <table class="mt-6 w-4/5 table-auto border-separate border-spacing-0 overflow-hidden">
-      <thead>
-        <tr>
-          <th class="px-4 py-2 text-center"></th>
-          <th class="px-4 py-2 text-center"></th>
-          <th class="px-4 py-2 border border-b-0 text-center text-[20px] font-semibold rounded-tl-lg">合計</th>
-          <th class="px-4 py-2 border border-l-0 border-b-0 text-center text-[20px] font-semibold">A1</th>
-          <th class="px-4 py-2 border border-l-0 border-b-0 text-center text-[20px] font-semibold">A2</th>
-          <th class="px-4 py-2 border border-l-0 border-b-0 text-center text-[20px] font-semibold">A3</th>
-          <th class="px-4 py-2 border border-l-0 border-b-0 text-center text-[20px] font-semibold">A4</th>
-          <th class="px-4 py-2 border border-l-0 border-b-0 text-center text-[20px] font-semibold rounded-tr-lg">A5</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Full Score Row -->
-        <tr>
-          <td class=""></td>
-          <td
-            class="px-4 py-2 border border-r-0 border-b-0 bg-[#F5F5F5] text-center text-[20px] font-semibold rounded-tl-lg">
-            満点</td>
-          <td class="px-4 py-2 border border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">60</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">30</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">30</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">30</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">30</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">30</td>
-        </tr>
-        <!-- 全国平均 -->
-        <tr>
-          <th class="px-4 py-2 bg-[#EE4344] border text-[20px] font-semibold text-center text-white rounded-tl-lg"
-            rowspan="2">
-            全国平均
-          </th>
-          <td class="px-4 py-2 border border-r-0 border-b-0 bg-white text-center text-[20px] font-semibold">得点</td>
-          <td class="px-4 py-2 border border-b-0 text-right text-[20px] font-semibold">28.7</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">18.7</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">18.7</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">18.7</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">18.7</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">18.7</td>
-        </tr>
-        <tr>
-          <td class="px-4 py-2 border border-r-0 border-b-0 bg-[#F5F5F5] text-center text-[20px] font-semibold">正解率</td>
-          <td class="px-4 py-2 border border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">47.8</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">47.8</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">47.8</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">47.8</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">47.8</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">47.8</td>
-        </tr>
-        <!-- 貴社平均 -->
-        <tr>
-          <td
-            class="px-4 py-2 border text-[20px] font-semibold bg-[#3B82F6] text-[20px] font-semibold text-center text-white"
-            rowspan="2">貴社平均</td>
-          <td class="px-4 py-2 border border-r-0 border-b-0 bg-white text-center text-[20px] font-semibold">得点</td>
-          <td class="px-4 py-2 border border-b-0 text-right text-[20px] font-semibold">29.1</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">19.1</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">19.1</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">19.1</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">19.1</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">19.1</td>
-        </tr>
-        <tr>
-          <td class="px-4 py-2 border border-r-0 border-b-0 bg-[#F5F5F5] text-center text-[20px] font-semibold">正解率</td>
-          <td class="px-4 py-2 border border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">48.5</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">48.5</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">48.5</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">48.5</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">48.5</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">48.5</td>
-        </tr>
-        <!-- ご本人 -->
-        <tr>
-          <td
-            class="px-4 py-2 border text-[20px] font-semibold bg-[#10B981] text-[20px] font-semibold text-center text-white rounded-bl-lg"
-            rowspan="2">ご本人</td>
-          <td class="px-4 py-2 border border-r-0 border-l-0 border-b-0 bg-white text-center text-[20px] font-semibold">
-            得点</td>
-          <td class="px-4 py-2 border border-b-0 text-right text-[20px] font-semibold">40</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">40</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">20</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">20</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">20</td>
-          <td class="px-4 py-2 border border-l-0 border-b-0 text-right text-[20px] font-semibold">20</td>
-        </tr>
-        <tr>
-          <td class="px-4 py-2 border border-r-0 bg-[#F5F5F5] text-center text-[20px] font-semibold">正解率</td>
-          <td class="px-4 py-2 border bg-[#F5F5F5] text-right text-[20px] font-semibold">66.7</td>
-          <td class="px-4 py-2 border border-l-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">66.7</td>
-          <td class="px-4 py-2 border border-l-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">66.7</td>
-          <td class="px-4 py-2 border border-l-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">66.7</td>
-          <td class="px-4 py-2 border border-l-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">66.7</td>
-          <td class="px-4 py-2 border border-l-0 bg-[#F5F5F5] text-right text-[20px] font-semibold rounded-br-lg">66.7
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div id="tags-container"></div>
+
+
   </div>
 
   <div class="loading-container fixed inset-0 flex items-center justify-center bg-gray-100 bg-opacity-50 z-50"
@@ -620,6 +300,7 @@
   </div>
 
   <script>
+    let configData = {}
     function getCookie(name) {
       const cookies = document.cookie.split(';');
       for (let i = 0; i < cookies.length; i++) {
@@ -655,11 +336,15 @@
       // const urlApi = getPathApi()
       // if (urlApi === null) return
 
+      const nickname = document.getElementById('nickname')
       const username = document.getElementById('username')
-      const courseTitle = document.getElementById('courseTitle') // Including start date
+      const finishDate = document.getElementById('finishDate')
+      const lectureTitle = document.getElementById('lectureTitle')
       const earnedScore = document.getElementById('earnedScore')
       const totalScore = document.getElementById('totalScore')
       const passScore = document.getElementById('passScore')
+      const passRateAlpha = document.getElementById('passRateAlpha')
+      const passRate = document.getElementById('passRate')
       const passStatus = document.getElementById('passStatus')
       const authCookie = getCookie('Authorization') || 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyNiIsInNjcCI6InVzZXIiLCJhdWQiOm51bGwsImlhdCI6MTcyOTgyMTYwMSwiZXhwIjoxNzMyNDEzNjAxLCJqdGkiOiJkYTdjNTMzYS1kNTdjLTRmYTQtYmU0OS00MTI4NjcyNWQ2Y2QifQ.bAEDtZr5zsUfhHElC-O0tpzrZSFyWSfYHECdrtIV4Bc';
       try {
@@ -671,104 +356,520 @@
         // })
         // const responseJson = await response.json()
         const responseJson = {
-          "exam": {
-            "totalScore": 38,
-            "totalEarnedScore": 12,
-            "passScore": 20,
-            "isPass": false,
-            "startDate": "2024年12月12日",
-            "finishDate": "2024年12月12日",
+          "metaData": {
+            "input": {
+              "path": {
+                "user_exam_id": 225
+              },
+              "queryParameters": {
+                "organizationID": 1,
+                "courseID": 49,
+                "startDate": "2024-07-01",
+                "endDate": "2024-11-01",
+                "group_internal_values": "00_sharewis,dev,group1"
+              }
+            },
+            "exam": {
+              "id": 82,
+              "startDate": "2025年01月21日",
+              "finishDate": "2025年01月21日",
+              "createdAt": "2025-01-21T20:46:10.000+09:00",
+              "updatedAt": "2025-01-21T21:04:48.000+09:00"
+            },
             "course": {
-              "id": 9942,
-              "title": "試験"
+              "id": 49,
+              "title": "exam course",
+              "createdAt": "2024-07-05T12:14:23.000+09:00",
+              "updatedAt": "2025-01-22T10:16:02.000+09:00"
             },
             "lecture": {
-              "id": 311363,
-              "title": "exam custom report"
+              "id": 117,
+              "title": "To-Beエンジニア試験スタンダード",
+              "type": "ExamLecture",
+              "createdAt": "2025-01-21T20:46:09.000+09:00",
+              "updatedAt": "2025-01-22T10:16:02.000+09:00"
             },
-            "quizzes": [
-              {
-                "id": 181738,
-                "isCorrect": false,
-                "maxScore": 0,
-                "earnedScore": 0,
-                "tagName": "基礎"
-              },
-              {
-                "id": 181739,
-                "isCorrect": false,
-                "maxScore": 0,
-                "earnedScore": 0,
-                "tagName": "応用"
-              },
-              {
-                "id": 181740,
-                "isCorrect": false,
-                "maxScore": 0,
-                "earnedScore": 0,
-                "tagName": "実践"
-              },
-              {
-                "id": 181741,
-                "isCorrect": false,
-                "maxScore": 0,
-                "earnedScore": 0,
-                "tagName": "空間把握"
-              },
-              {
-                "id": 181742,
-                "isCorrect": false,
-                "maxScore": 0,
-                "earnedScore": 0,
-                "tagName": "判断推理"
-              },
-              {
-                "id": 181743,
-                "isCorrect": true,
-                "maxScore": 5,
-                "earnedScore": 10,
-                "tagName": "資料解釈"
-              },
-              {
-                "id": 181744,
-                "isCorrect": true,
-                "maxScore": 7,
-                "earnedScore": 14,
-                "tagName": "数的推理"
-              }
-            ]
+            "user": {
+              "username": "local1",
+              "nickname": "local1"
+            },
+            "userExam": {
+              "id": 225,
+              "createdAt": "2025-01-21T21:09:34.000+09:00",
+              "updatedAt": "2025-01-21T21:29:52.000+09:00"
+            }
           },
-          "user": {
-            "username": "hl11113",
-            "nickname": "hl11113",
-            "groups": []
+          "stats": {
+            "exam": {
+              "maxScore": 115,
+              "earnedScore": 115,
+              "passScore": 92,
+              "isPassed": true,
+              "passRate": 100.0,
+              "failRate": 0.0,
+              "numOfParticipants": 100,
+              "numOfPassedParticipants": 85,
+              "numOfFailedParticipants": 15,
+              "numOfQuizzes": 15,
+              "numOfSections": 3,
+              "numOfQuizTags": 3,
+              "averageScore": 72.5,
+              "standardDeviation": 10.5,
+              "deviationValue": 60,
+              "variance": 110.25,
+              "median": 80,
+              "scoreDistribution": {
+                "60": {
+                  "range": "60%-69%",
+                  "count": 2
+                },
+                "70": {
+                  "range": "70%-79%",
+                  "count": 8
+                },
+                "80": {
+                  "range": "80%-89%",
+                  "count": 18
+                }
+              },
+              "modeScore": "80",
+              "deviationDistribution": {
+                "40": {
+                  "range": "40-49",
+                  "count": 2
+                },
+                "50": {
+                  "range": "50-59",
+                  "count": 5
+                },
+                "60": {
+                  "range": "60-69",
+                  "count": 12
+                }
+              },
+              "modeDeviation": "60",
+              "quartiles": {
+                "minimum": 45,
+                "firstQuartile": 70,
+                "secondQuartile": 82.5,
+                "thirdQuartile": 90,
+                "maximum": 98
+              }
+            },
+            "tags": {
+              "MA|MA1": {
+                "tagName": "MA|MA1",
+                "numOfQuizzes": 9,
+                "maxScore": 9,
+                "earnedScore": 9,
+                "scores": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "standardDeviation": 0.0,
+                "variance": 0.0,
+                "median": 1,
+                "averageScore": 1.0
+              },
+              "MA|MA2": {
+                "tagName": "MA|MA2",
+                "numOfQuizzes": 13,
+                "maxScore": 13,
+                "earnedScore": 13,
+                "scores": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "standardDeviation": 0.0,
+                "variance": 0.0,
+                "median": 1,
+                "averageScore": 1.0
+              },
+              "MA|MA3": {
+                "tagName": "MA|MA3",
+                "numOfQuizzes": 8,
+                "maxScore": 8,
+                "earnedScore": 8,
+                "scores": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "standardDeviation": 0.0,
+                "variance": 0.0,
+                "median": 1.0,
+                "averageScore": 1.0
+              },
+              "MA|MA4": {
+                "tagName": "MA|MA4",
+                "numOfQuizzes": 5,
+                "maxScore": 5,
+                "earnedScore": 5,
+                "scores": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "standardDeviation": 0.0,
+                "variance": 0.0,
+                "median": 1,
+                "averageScore": 1.0
+              },
+              "MB|MB1": {
+                "tagName": "MB|MB1",
+                "numOfQuizzes": 3,
+                "maxScore": 3,
+                "earnedScore": 3,
+                "scores": [
+                  1,
+                  1,
+                  1
+                ],
+                "standardDeviation": 0.0,
+                "variance": 0.0,
+                "median": 1,
+                "averageScore": 1.0
+              },
+              "MB|MB2": {
+                "tagName": "MB|MB2",
+                "numOfQuizzes": 4,
+                "maxScore": 4,
+                "earnedScore": 4,
+                "scores": [
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "standardDeviation": 0.0,
+                "variance": 0.0,
+                "median": 1.0,
+                "averageScore": 1.0
+              },
+              "MB|MB3": {
+                "tagName": "MB|MB3",
+                "numOfQuizzes": 6,
+                "maxScore": 6,
+                "earnedScore": 6,
+                "scores": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "standardDeviation": 0.0,
+                "variance": 0.0,
+                "median": 1.0,
+                "averageScore": 1.0
+              },
+              "MB|MB4": {
+                "tagName": "MB|MB4",
+                "numOfQuizzes": 7,
+                "maxScore": 7,
+                "earnedScore": 7,
+                "scores": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "standardDeviation": 0.0,
+                "variance": 0.0,
+                "median": 1,
+                "averageScore": 1.0
+              },
+              "MC|MC1": {
+                "tagName": "MC|MC1",
+                "numOfQuizzes": 4,
+                "maxScore": 4,
+                "earnedScore": 4,
+                "scores": [
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "standardDeviation": 0.0,
+                "variance": 0.0,
+                "median": 1.0,
+                "averageScore": 1.0
+              },
+              "MC|MC2": {
+                "tagName": "MC|MC2",
+                "numOfQuizzes": 6,
+                "maxScore": 6,
+                "earnedScore": 6,
+                "scores": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "standardDeviation": 0.0,
+                "variance": 0.0,
+                "median": 1.0,
+                "averageScore": 1.0
+              },
+              "MC|MC3": {
+                "tagName": "MC|MC3",
+                "numOfQuizzes": 5,
+                "maxScore": 5,
+                "earnedScore": 5,
+                "scores": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "standardDeviation": 0.0,
+                "variance": 0.0,
+                "median": 1,
+                "averageScore": 1.0
+              },
+              "MC|MC4": {
+                "tagName": "MC|MC4",
+                "numOfQuizzes": 5,
+                "maxScore": 5,
+                "earnedScore": 5,
+                "scores": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "standardDeviation": 0.0,
+                "variance": 0.0,
+                "median": 1,
+                "averageScore": 1.0
+              },
+              "MD|MD1": {
+                "tagName": "MD|MD1",
+                "numOfQuizzes": 6,
+                "maxScore": 6,
+                "earnedScore": 6,
+                "scores": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "standardDeviation": 0.0,
+                "variance": 0.0,
+                "median": 1.0,
+                "averageScore": 1.0
+              },
+              "MD|MD2": {
+                "tagName": "MD|MD2",
+                "numOfQuizzes": 5,
+                "maxScore": 5,
+                "earnedScore": 5,
+                "scores": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "standardDeviation": 0.0,
+                "variance": 0.0,
+                "median": 1,
+                "averageScore": 1.0
+              },
+              "MD|MD3": {
+                "tagName": "MD|MD3",
+                "numOfQuizzes": 6,
+                "maxScore": 6,
+                "earnedScore": 6,
+                "scores": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "standardDeviation": 0.0,
+                "variance": 0.0,
+                "median": 1.0,
+                "averageScore": 1.0
+              },
+              "MD|MD4": {
+                "tagName": "MD|MD4",
+                "numOfQuizzes": 3,
+                "maxScore": 3,
+                "earnedScore": 3,
+                "scores": [
+                  1,
+                  1,
+                  1
+                ],
+                "standardDeviation": 0.0,
+                "variance": 0.0,
+                "median": 1,
+                "averageScore": 1.0
+              },
+              "ME|ME1": {
+                "tagName": "ME|ME1",
+                "numOfQuizzes": 4,
+                "maxScore": 4,
+                "earnedScore": 4,
+                "scores": [
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "standardDeviation": 0.0,
+                "variance": 0.0,
+                "median": 1.0,
+                "averageScore": 1.0
+              },
+              "ME|ME2": {
+                "tagName": "ME|ME2",
+                "numOfQuizzes": 3,
+                "maxScore": 3,
+                "earnedScore": 3,
+                "scores": [
+                  1,
+                  1,
+                  1
+                ],
+                "standardDeviation": 0.0,
+                "variance": 0.0,
+                "median": 1,
+                "averageScore": 1.0
+              },
+              "ME|ME3": {
+                "tagName": "ME|ME3",
+                "numOfQuizzes": 5,
+                "maxScore": 5,
+                "earnedScore": 5,
+                "scores": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "standardDeviation": 0.0,
+                "variance": 0.0,
+                "median": 1,
+                "averageScore": 1.0
+              },
+              "ME|ME4": {
+                "tagName": "ME|ME4",
+                "numOfQuizzes": 8,
+                "maxScore": 8,
+                "earnedScore": 8,
+                "scores": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "standardDeviation": 0.0,
+                "variance": 0.0,
+                "median": 1.0,
+                "averageScore": 1.0
+              }
+            },
+            "sections": {
+              "sections": {
+                "243": {
+                  "sectionID": 243,
+                  "sectionName": "メンテナンスの基礎",
+                  "numOfQuizzes": 20,
+                  "maxScore": 20
+                },
+                "244": {
+                  "sectionID": 244,
+                  "sectionName": "電気部品と電気回路",
+                  "numOfQuizzes": 20,
+                  "maxScore": 20
+                },
+                "245": {
+                  "sectionID": 245,
+                  "sectionName": "材料と機械",
+                  "numOfQuizzes": 20,
+                  "maxScore": 20
+                },
+                "246": {
+                  "sectionID": 246,
+                  "sectionName": "メカトロニクス",
+                  "numOfQuizzes": 20,
+                  "maxScore": 20
+                },
+                "248": {
+                  "sectionID": 248,
+                  "sectionName": "機械の制御",
+                  "numOfQuizzes": 35,
+                  "maxScore": 35
+                }
+              }
+            }
           }
         }
 
-        if (responseJson != null && responseJson.exam != null && responseJson.user != null) {
-          const exam = responseJson.exam
-          const user = responseJson.user
-          if (user.username != null) {
-            username.textContent = user.username + ' さんのスコア表';
-            document.title = user.username + ' さんのスコア表'
-          } else {
-            username.textContent = user.nickname + ' さんのスコア表';
-            document.title = user.nickname + ' さんのスコア表'
+        if (responseJson != null && responseJson.metaData != null && responseJson.stats != null) {
+          const metaData = responseJson.metaData
+          const stats = responseJson.stats
+          if (metaData.user !== null) {
+            const user = metaData.user
+            nickname.textContent = user.nickname
+            username.textContent = user.username
+            document.title = user.username
           }
+          finishDate.textContent = metaData.exam?.finishDate
+          lectureTitle.textContent = metaData.lecture?.title
+          passRateAlpha.textContent = getGrade(stats?.exam?.passRate);
+          passRate.textContent = `${stats?.exam?.passRate}` + '%程度の理解度です。'
 
-          courseTitle.innerHTML = exam.course.title + '<br>受験日：' + exam.startDate;
-          earnedScore.textContent = exam.totalEarnedScore
-          totalScore.textContent = '/ ' + exam.totalScore
-          passScore.textContent = '（合格点' + exam.passScore + '点）'
-          const isPass = false
-          if (exam.isPass) {
-            passStatus.textContent = '合格';
-            passStatus.style.color = '#FF1986';
-          } else {
-            passStatus.textContent = '不合格';
-            passStatus.style.color = '#212121';
-          }
-          updateChart(exam)
+          const tags = Object.values(stats?.tags);
+
+          const groupedTags = groupTagsByPrefix(tags);
+          Object.entries(groupedTags).forEach(([prefix, group]) => {
+            createRadarChart(prefix, group);
+          });
         }
       } catch (error) {
 
@@ -777,273 +878,323 @@
       }
     }
 
-    function updateChart(exam) {
-      const quizzes = exam.quizzes
-      const basic = quizzes.find((quiz) => quiz.tagName?.split("\n")?.includes("基礎")) //基礎
-      const application = quizzes.find((quiz) => quiz.tagName?.split("\n")?.includes("応用")) //応用
-      const practice = quizzes.find((quiz) => quiz.tagName?.split("\n")?.includes("実践")) //実践
-      let basicPercent = Math.round((parseFloat(basic.earnedScore) / parseFloat(basic.maxScore)) * 100)
-      basicPercent = basicPercent > 100 ? 100 : basicPercent
-      let appPercent = Math.round((parseFloat(application.earnedScore) / parseFloat(application.maxScore)) * 100)
-      appPercent = appPercent > 100 ? 100 : appPercent
-      let pracPercent = Math.round((parseFloat(practice.earnedScore) / parseFloat(practice.maxScore)) * 100)
-      pracPercent = pracPercent > 100 ? 100 : pracPercent
-      // Data for the first chart (Accuracy by Category)
+    async function fetchJsonData() {
+      try {
+        const url = 'https://assets.share-wis.com/reports/exams/cogaku/config.json';
+        const response = await fetch(url)
+        configData = await response.json()
+      } catch (error) {
+        console.error('Error fetching the JSON file:', error);
+      }
+    }
 
+    function getGrade(passRate) {
+      if (passRate >= 80) {
+        return 'A';
+      } else if (passRate >= 60) {
+        return 'B';
+      } else if (passRate >= 50) {
+        return 'C';
+      } else {
+        return 'D';
+      }
+    }
 
-      const spatialAwareness = quizzes.find(quiz => quiz.tagName?.split("\n")?.includes("空間把握"));
-      const logicalReasoning = quizzes.find(quiz => quiz.tagName?.split("\n")?.includes("判断推理"));
-      const dataInterpretation = quizzes.find(quiz => quiz.tagName?.split("\n")?.includes("資料解釈"));
-      const numericalReasoning = quizzes.find(quiz => quiz.tagName?.split("\n")?.includes("数的推理"));
+    const tags_container = document.getElementById('tags-container');
+    function createRadarChart(prefix, group) {
+      if (!group || group.length === 0) {
+        console.error("Group data is required to create the radar chart.");
+        return;
+      }
+      const fileName = getFieldName(group[0])
+      const tbodyRows = group
+        .map((item, index) => {
+          const rowClass = index % 2 === 0 ? "bg-[#b9b9b933]" : ""; // Alternating row styles
+          return `
+        <tr class="h-14 text-[20px] font-[300] text-[#212121] ${rowClass}">
+          <td class="w-14 text-center border-r border-b">
+            ${prefix}${index + 1}
+          </td>
+          <td class="px-3 text-left border-b">
+            ${getMajorName(item)}
+          </td>
+        </tr>
+      `;
+        })
+        .join("");
 
-      let spatialAwarenessPercent = Math.round((parseFloat(spatialAwareness.earnedScore) / parseFloat(spatialAwareness.maxScore)) * 100)
-      spatialAwarenessPercent = spatialAwarenessPercent > 100 ? 100 : spatialAwarenessPercent
-      let logicalReasoningPercent = Math.round((parseFloat(logicalReasoning.earnedScore) / parseFloat(logicalReasoning.maxScore)) * 100)
-      logicalReasoningPercent = logicalReasoningPercent > 100 ? 100 : logicalReasoningPercent
-      let dataInterpretationPercent = Math.round((parseFloat(dataInterpretation.earnedScore) / parseFloat(dataInterpretation.maxScore)) * 100)
-      dataInterpretationPercent = dataInterpretationPercent > 100 ? 100 : dataInterpretationPercent
-      let numericalReasoningPercent = Math.round((parseFloat(numericalReasoning.earnedScore) / parseFloat(numericalReasoning.maxScore)) * 100)
-      numericalReasoningPercent = numericalReasoningPercent > 100 ? 100 : numericalReasoningPercent
-      // Data for the second chart (Score per Category)
-      Highcharts.chart('score-chart', {
+      const categories = group.map(item => getTagName(item));
+      const totalEarnedScore = group.reduce((sum, item) => sum + item.earnedScore, 0);
+      const totalAverageScore = group.reduce((sum, item) => sum + item.averageScore, 0);
+      const companyAverage = [totalEarnedScore, ...group.map(item => item.earnedScore)];
+      const nationalAverage = [totalAverageScore, ...group.map(item => item.averageScore)];
+      const totalMaxScore = group.reduce((sum, item) => sum + (item?.maxScore || 0), 0);
+
+      const tableHeaders = ['合計', ...categories].map((header, index) => `
+      <th class="px-4 py-2 border ${index === 0 ? 'rounded-tl-lg' : ''} ${index === categories.length ? 'rounded-tr-lg' : ''} text-center text-[20px] font-semibold">
+        ${header}
+      </th>`).join('');
+
+      const fullScoreRow = `
+      <tr>
+        <td class=""></td>
+        <td class="px-4 py-2 border border-r-0 border-b-0 bg-[#F5F5F5] text-center text-[20px] font-semibold rounded-tl-lg">満点</td>
+        <td class="px-4 py-2 border border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${totalMaxScore}</td>
+        ${Array(4).fill(`<td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${group[0]?.maxScore || 0}</td>`).join('')}
+      </tr>`;
+
+      const tbodyContent = `
+        ${fullScoreRow}
+        ${createScoreRow({
+        label1: '全国平均',
+        label2: '得点',
+        bgColor: 'bg-[#EE4344]',
+        scores: nationalAverage
+      })}
+        ${createScoreRow({
+        label1: '',
+        label2: '正解率',
+        bgColor: 'bg-[#EE4344]',
+        scores: nationalAverage.map(score => (score / 60 * 100).toFixed(1)),
+        isBottom: false,
+        isRoundLeft: false,
+        isPercentage: true
+      })}
+        ${createScoreRow({
+        label1: '貴社平均',
+        label2: '得点',
+        bgColor: 'bg-[#3B82F6]',
+        scores: companyAverage
+      })}
+        ${createScoreRow({
+        label1: '',
+        label2: '正解率',
+        bgColor: 'bg-[#3B82F6]',
+        scores: companyAverage.map(score => (score / 60 * 100).toFixed(1)),
+        isBottom: false,
+        isRoundLeft: false,
+        isPercentage: true
+      })}
+        ${createScoreRow({
+        label1: 'ご本人',
+        label2: '得点',
+        bgColor: 'bg-[#10B981]',
+        scores: companyAverage,
+        isBottom: false,
+        isRoundLeft: true,
+        isPercentage: false
+      })}
+        ${createScoreRow({
+        label1: '',
+        label2: '正解率',
+        bgColor: 'bg-[#10B981]',
+        scores: companyAverage.map(score => (score / 60 * 100).toFixed(1)),
+        isBottom: false,
+        isRoundLeft: true,
+        isPercentage: true,
+        isRoundRight: true
+      })}
+      `;
+
+      const chartHtml = `
+        <h3 class="text-[24px] font-semibold mt-4">${fileName}</h3>
+        <div class="flex mt-5">
+          <div class="w-2/3 p-5 overflow-hidden h-[400px] rounded-lg border">
+            <div id="polarchart-${prefix}"></div>
+          </div>
+          <div class="flex-box w-1/3 pl-14">
+            <div class="overflow-hidden rounded-lg border">
+              <table class="table-auto w-full">
+                <thead>
+                  <tr class="h-14 text-[20px] font-[600] text-[#212121]">
+                    <th class="w-14 text-center border-r border-b">
+                      ${prefix}
+                    </th>
+                    <th class="w-60 px-3 text-left border-b">
+                      ${fileName}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${tbodyRows}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <table class="mt-6 w-4/5 table-auto border-separate border-spacing-0 overflow-hidden">
+          <thead>
+            <tr>
+              <th class="px-4 py-2 text-center"></th>
+              <th class="px-4 py-2 text-center"></th>
+              ${tableHeaders}
+            </tr>
+          </thead>
+          <tbody>
+            ${tbodyContent}
+          </tbody>
+        </table>
+      `
+      const newChartElement = document.createElement('div');
+      newChartElement.classList.add('mb-10');
+      newChartElement.innerHTML = chartHtml;
+      tags_container.appendChild(newChartElement);
+      generatePolarChart(prefix, group)
+    }
+
+    function getTagName(tag) {
+      const tagName = tag.tagName.split('|')
+      return tagName[1]
+    }
+
+    function getFieldName(tag) {
+      const tagName = tag.tagName.split('|')
+      const tagData = configData[tagName[1]]
+      return tagData?.field_name
+    }
+
+    function getMajorName(tag) {
+      const tagName = tag.tagName.split('|')
+      const tagData = configData[tagName[1]]
+      return tagData?.major_item_name
+    }
+
+    function groupTagsByPrefix(tags) {
+      const grouped = {};
+
+      tags.forEach(tag => {
+        const prefix = tag.tagName.split('|')[0]; // Get the prefix (e.g., 'MA' from 'MA|MA1')
+
+        // If the prefix doesn't exist in the grouped object, create it
+        if (!grouped[prefix]) {
+          grouped[prefix] = [];
+        }
+
+        // Push the current tag to its corresponding group
+        grouped[prefix].push(tag);
+      });
+
+      return grouped;
+    }
+
+    async function getExamData() {
+      try {
+        await fetchJsonData();
+        await getExamReportData();
+      } catch (error) {
+        console.error('Error occurred:', error);
+      }
+    }
+
+    function generatePolarChart(prefix, group) {
+      const categories = group.map(item => getMajorName(item));
+      const totalEarnedScore = group.reduce((sum, item) => sum + item.earnedScore, 0);
+      const totalAverageScore = group.reduce((sum, item) => sum + item.averageScore, 0);
+      const companyAverage = [totalEarnedScore, ...group.map(item => item.earnedScore)];
+      const nationalAverage = [totalAverageScore, ...group.map(item => item.averageScore)];
+      const allCategories = ['合計', ...categories];
+
+      Highcharts.chart(`polarchart-${prefix}`, {
         chart: {
-          type: 'column'
+          polar: true,
+          type: 'line'
         },
         title: {
-          text: ''
+          text: '',
+        },
+        pane: {
+          size: '80%'
         },
         xAxis: {
-          categories: ['空間把握', '判断推理', '資料解釈', '数的推理'],
-          title: {
-            text: null
-          },
-          labels: {
-            useHTML: true, // Allows HTML formatting in labels
-            formatter: function () {
-              // Check the category and apply a specific color
-              let color;
-              if (this.value === '空間把握') color = '#FF19B6';
-              else if (this.value === '判断推理') color = '#FFA13C';
-              else if (this.value === '資料解釈') color = '#009C00';
-              else if (this.value === '数的推理') color = '#3B82F6';
+          categories: allCategories,
+          tickmarkPlacement: 'on',
+          lineWidth: 0
+        },
 
-              // Return the label with inline style
-              return `<span style="color: ${color}; font-weight: normal;">${this.value}</span>`;
-            }
-          }
-        },
         yAxis: {
-          min: 0,
-          max: 120, // Set the y-axis maximum to 100%
-          tickInterval: 20, // Sets interval to display 0, 20, 40, 60, 80, 100
-          title: {
-            text: ''
-          },
-          labels: {
-            enabled: true, // Show values on the left side
-            formatter: function () {
-              // Only display ticks up to 100, hide 120%
-              return this.value === 120 ? null : this.value;
-            }
-          },
-          gridLineWidth: 0,
-          plotLines: [
-            {
-              value: 0,
-              color: 'rgba(224, 224, 224, 1)',
-              width: 1
-            },
-            {
-              value: 20,
-              color: 'rgba(224, 224, 224, 1)',
-              width: 1
-            },
-            {
-              value: 40,
-              color: 'rgba(224, 224, 224, 1)',
-              width: 1
-            },
-            {
-              value: 60,
-              color: 'rgba(224, 224, 224, 1)',
-              width: 1
-            },
-            {
-              value: 80,
-              color: 'rgba(224, 224, 224, 1)',
-              width: 1
-            },
-            {
-              value: 100,
-              color: 'rgba(224, 224, 224, 1)',
-              width: 1
-            }
-          ]
+          gridLineInterpolation: 'polygon',
+          lineWidth: 0,
+          min: 0
         },
+
         tooltip: {
           enabled: false
         },
+
+        legend: {
+          align: 'right',
+          verticalAlign: 'middle',
+          layout: 'vertical'
+        },
+
         series: [{
-          data: [
-            {
-              y: spatialAwarenessPercent,
-              color: '#FF19B6',
-              dataLabels: {
-                color: '#FF19B6',
-                enabled: true,
-                format: spatialAwarenessPercent + '%', // Set label to show 100%
-                style: {
-                  fontSize: '14px',
-                  fontWeight: 'normal',
-                  textOutline: 'none'
-                },
-              }
-            }, // Color for 基礎
-            {
-              y: logicalReasoningPercent,
-              color: '#FFA13C',
-              dataLabels: {
-                color: '#FFA13C',
-                enabled: true,
-                format: logicalReasoningPercent + '%', // Set label to show 100%
-                style: {
-                  fontSize: '14px',
-                  fontWeight: 'normal',
-                  textOutline: 'none'
-                }
-              }
-            },  // Color for 応用
-            {
-              y: dataInterpretationPercent,
-              color: '#009C00',
-              dataLabels: {
-                color: '#009C00',
-                enabled: true,
-                format: dataInterpretationPercent + '%',
-                style: {
-                  fontSize: '14px',
-                  fontWeight: 'normal',
-                  textOutline: 'none'
-                }
-              }
+          name: '全国平均',
+          data: nationalAverage,
+          pointPlacement: 'on',
+          color: '#EE4344'
+        }, {
+          name: '貴社平均',
+          data: companyAverage,
+          pointPlacement: 'on',
+          color: '#3B82F6'
+        }],
+
+        responsive: {
+          rules: [{
+            condition: {
+              maxWidth: 500
             },
-            {
-              y: numericalReasoningPercent,
-              color: '#3B82F6',
-              dataLabels: {
-                color: '#3B82F6',
-                enabled: true,
-                format: numericalReasoningPercent + '%',
-                style: {
-                  fontSize: '14px',
-                  fontWeight: 'normal',
-                  textOutline: 'none'
-                }
+            chartOptions: {
+              title: {
+                x: 0
+              },
+              legend: {
+                align: 'center',
+                verticalAlign: 'bottom',
+                layout: 'horizontal'
+              },
+              pane: {
+                size: '70%'
               }
             }
-          ],
-          showInLegend: false, // Hides the legend
-        }],
-        plotOptions: {
-          column: {
-            colorByPoint: true,
-          }
+          }]
         },
         credits: {
           enabled: false
         }
       });
-
-      const spatialAwarenessLabel = document.getElementById('spatialAwarenessLabel')
-      const spatialAwarenessAlpha = document.getElementById('spatialAwarenessAlpha')
-      const spatialAwarenessLabelMobile = document.getElementById('spatialAwarenessLabelMobile')
-      const spatialAwarenessAlphaMobile = document.getElementById('spatialAwarenessAlphaMobile')
-
-      const logicalReasoningLabel = document.getElementById('logicalReasoningLabel')
-      const logicalReasoningAlpha = document.getElementById('logicalReasoningAlpha')
-      const logicalReasoningLabelMobile = document.getElementById('logicalReasoningLabelMobile')
-      const logicalReasoningAlphaMobile = document.getElementById('logicalReasoningAlphaMobile')
-
-      const dataInterpretationLabel = document.getElementById('dataInterpretationLabel')
-      const dataInterpretationAlpha = document.getElementById('dataInterpretationAlpha')
-      const dataInterpretationLabelMobile = document.getElementById('dataInterpretationLabelMobile')
-      const dataInterpretationAlphaMobile = document.getElementById('dataInterpretationAlphaMobile')
-
-      const numericalReasoningLabel = document.getElementById('numericalReasoningLabel')
-      const numericalReasoningAlpha = document.getElementById('numericalReasoningAlpha')
-      const numericalReasoningLabelMobile = document.getElementById('numericalReasoningLabelMobile')
-      const numericalReasoningAlphaMobile = document.getElementById('numericalReasoningAlphaMobile')
-
-      if (spatialAwarenessPercent == 100) {
-        spatialAwarenessLabel.innerHTML = "図形や物体をさまざまな角度から見たり、回転させたりする問題を完璧に解く事ができました。<br>ロボット教室でただ漫然とロボットをつくるのではなく、頭の中で完成形をイメージしたり、組み立て写真から他のアングルをイメージしたりといった脳内での作業をよく行えているようです。"
-        spatialAwarenessAlpha.textContent = "S"
-        spatialAwarenessLabelMobile.innerHTML = "図形や物体をさまざまな角度から見たり、回転させたりする問題を完璧に解く事ができました。<br>ロボット教室でただ漫然とロボットをつくるのではなく、頭の中で完成形をイメージしたり、組み立て写真から他のアングルをイメージしたりといった脳内での作業をよく行えているようです。"
-        spatialAwarenessAlphaMobile.textContent = "S"
-      } else if (spatialAwarenessPercent >= 50 && spatialAwarenessPercent < 100) {
-        spatialAwarenessLabel.innerHTML = "図形や物体をさまざまな角度から見たり、回転させたりする問題の多くを解く事ができました。<br>この力をさらに伸ばすためにロボット教室でただ漫然とロボットをつくるのではなく、頭の中で完成形をイメージしたり、組み立て写真から他のアングルをイメージしたりといった脳内での作業を行うことが重要です。たとえば「組み立て中に悩んでも、先生に聞く前に一旦もう少し頑張ってみる」といった小さな目標を立ててみるとよいでしょう。"
-        spatialAwarenessAlpha.textContent = "A"
-        spatialAwarenessLabelMobile.innerHTML = "図形や物体をさまざまな角度から見たり、回転させたりする問題の多くを解く事ができました。<br>この力をさらに伸ばすためにロボット教室でただ漫然とロボットをつくるのではなく、頭の中で完成形をイメージしたり、組み立て写真から他のアングルをイメージしたりといった脳内での作業を行うことが重要です。たとえば「組み立て中に悩んでも、先生に聞く前に一旦もう少し頑張ってみる」といった小さな目標を立ててみるとよいでしょう。"
-        spatialAwarenessAlphaMobile.textContent = "A"
-      } else {
-        spatialAwarenessLabel.innerHTML = "図形や物体をさまざまな角度から見たり、回転させたりする問題が、やや苦手なようです。<br>ロボット教室でただ漫然とロボットをつくるのではなく、頭の中で完成形をイメージしたり、組み立て写真から他のアングルをイメージしたりといった脳内での作業を行うことが、この力を伸ばすための近道です。まずは、ロボット組み立てを「いまよりほんの少しだけ手早く、正確に、自力で」やってみる、ということにチャレンジしてみるとよいでしょう。"
-        spatialAwarenessAlpha.textContent = "B"
-        spatialAwarenessLabelMobile.innerHTML = "図形や物体をさまざまな角度から見たり、回転させたりする問題が、やや苦手なようです。<br>ロボット教室でただ漫然とロボットをつくるのではなく、頭の中で完成形をイメージしたり、組み立て写真から他のアングルをイメージしたりといった脳内での作業を行うことが、この力を伸ばすための近道です。まずは、ロボット組み立てを「いまよりほんの少しだけ手早く、正確に、自力で」やってみる、ということにチャレンジしてみるとよいでしょう。"
-        spatialAwarenessAlphaMobile.textContent = "B"
-      }
-
-      if (logicalReasoningPercent == 100) {
-        logicalReasoningLabel.innerHTML = "身の回りの機械を観察してそのしくみの意味を考えたり、ロボットの試作機から改善案を考えたりする問題を完璧に解くことができました。<br>「もの自体は見たことがあるが、そういえばどうしてこんなつくりになっているんだろう」というのは改めて考えると案外難しいものですが、ロボット作りを通じてさまざまな機械のしくみに注目し、その特徴やメリットを考え、言語化する習慣がしっかりついているようです。"
-        logicalReasoningAlpha.textContent = "S"
-        logicalReasoningLabelMobile.innerHTML = "身の回りの機械を観察してそのしくみの意味を考えたり、ロボットの試作機から改善案を考えたりする問題を完璧に解くことができました。<br>「もの自体は見たことがあるが、そういえばどうしてこんなつくりになっているんだろう」というのは改めて考えると案外難しいものですが、ロボット作りを通じてさまざまな機械のしくみに注目し、その特徴やメリットを考え、言語化する習慣がしっかりついているようです。"
-        logicalReasoningAlphaMobile.textContent = "S"
-      } else if (logicalReasoningPercent >= 50 && logicalReasoningPercent < 100) {
-        logicalReasoningLabel.innerHTML = "身の回りの機械を観察してそのしくみの意味を考えたり、ロボットの試作機から改善案を考えたりする問題の多くを解く事ができました。<br>この力は「今何が分かっていて、何が分かっていないのか、何を知りたいと思っているのか」を言語化するのが上達の近道です。「もの自体は見たことがあるが、そういえばどうしてこんなつくりになっているんだろう」というのをお子さまと一緒に考えてみたり、ロボット作りのなかで登場した機構があればその特徴やメリットを授業後にお子さまから教えてもらうなど、「言語化」の機会をたくさん用意してあげられるとよいでしょう。"
-        logicalReasoningAlpha.textContent = "A"
-        logicalReasoningLabelMobile.innerHTML = "身の回りの機械を観察してそのしくみの意味を考えたり、ロボットの試作機から改善案を考えたりする問題の多くを解く事ができました。<br>この力は「今何が分かっていて、何が分かっていないのか、何を知りたいと思っているのか」を言語化するのが上達の近道です。「もの自体は見たことがあるが、そういえばどうしてこんなつくりになっているんだろう」というのをお子さまと一緒に考えてみたり、ロボット作りのなかで登場した機構があればその特徴やメリットを授業後にお子さまから教えてもらうなど、「言語化」の機会をたくさん用意してあげられるとよいでしょう。"
-        logicalReasoningAlphaMobile.textContent = "A"
-      } else {
-        logicalReasoningLabel.innerHTML = "身の回りの機械を観察してそのしくみの意味を考えたり、ロボットの試作機から改善案を考えたりする問題の多くを解く事ができました。 この力は「今何が分かっていて、何が分かっていないのか、何を知りたいと思っているのか」を言語化するのが上達の近道です。「もの自体は見たことがあるが、そういえばどうしてこんなつくりになっているんだろう」というのをお子さまと一緒に考えてみたり、ロボット作りのなかで登場した機構があればその特徴やメリットを授業後にお子さまから教えてもらうなど、「言語化」の機会をたくさん用意してあげられるとよいでしょう。"
-        logicalReasoningAlpha.textContent = "B"
-        logicalReasoningLabelMobile.innerHTML = "身の回りの機械を観察してそのしくみの意味を考えたり、ロボットの試作機から改善案を考えたりする問題の多くを解く事ができました。 この力は「今何が分かっていて、何が分かっていないのか、何を知りたいと思っているのか」を言語化するのが上達の近道です。「もの自体は見たことがあるが、そういえばどうしてこんなつくりになっているんだろう」というのをお子さまと一緒に考えてみたり、ロボット作りのなかで登場した機構があればその特徴やメリットを授業後にお子さまから教えてもらうなど、「言語化」の機会をたくさん用意してあげられるとよいでしょう。"
-        logicalReasoningAlphaMobile.textContent = "B"
-      }
-
-      if (dataInterpretationPercent == 100) {
-        dataInterpretationLabel.innerHTML = "複雑な図面や文章から、必要な情報を完璧に読み解く事ができました。<br>問題文に対して答えを出すのではなく、情報がちりばめられた資料から問題を解くカギを見つけ、問題を解決することができているようです。"
-        dataInterpretationAlpha.textContent = "S"
-        dataInterpretationLabelMobile.innerHTML = "複雑な図面や文章から、必要な情報を完璧に読み解く事ができました。<br>問題文に対して答えを出すのではなく、情報がちりばめられた資料から問題を解くカギを見つけ、問題を解決することができているようです。"
-        dataInterpretationAlphaMobile.textContent = "S"
-      } else if (dataInterpretationPercent >= 50 && dataInterpretationPercent < 100) {
-        dataInterpretationLabel.innerHTML = "複雑な図面や文章から、必要な情報を読み解く事ができました。<br>問題文に対してただ答えを出すのではなく、情報がちりばめられた資料から問題を解くカギを見つけ、問題を解決することを意識すると、より良い結果を得られるでしょう。"
-        dataInterpretationAlpha.textContent = "A"
-        dataInterpretationLabelMobile.innerHTML = "複雑な図面や文章から、必要な情報を読み解く事ができました。<br>問題文に対してただ答えを出すのではなく、情報がちりばめられた資料から問題を解くカギを見つけ、問題を解決することを意識すると、より良い結果を得られるでしょう。"
-        dataInterpretationAlphaMobile.textContent = "A"
-      } else {
-        dataInterpretationLabel.innerHTML = "複雑な図面や文章から読み解くことができなかった情報がいくつかあるようです。<br>資料を読む際には、重要だと感じる単語に印をつけたり、図の中に情報を書き込んだりと、情報を取りこぼさないようにする習慣をつけると良いでしょう。"
-        dataInterpretationAlpha.textContent = "B"
-        dataInterpretationLabelMobile.innerHTML = "複雑な図面や文章から読み解くことができなかった情報がいくつかあるようです。<br>資料を読む際には、重要だと感じる単語に印をつけたり、図の中に情報を書き込んだりと、情報を取りこぼさないようにする習慣をつけると良いでしょう。"
-        dataInterpretationAlphaMobile.textContent = "B"
-      }
-
-      if (numericalReasoningPercent == 100) {
-        numericalReasoningLabel.innerHTML = "ロボットを作る上で必要な数字の処理を完璧に行うことができています。<br>ロボットの性能を計算で求めたり、設計に必要な数値を与えられた情報から計算したりと、数字の意味まで捉えて計算することができているようです。"
-        numericalReasoningAlpha.textContent = "S"
-        numericalReasoningLabelMobile.innerHTML = "ロボットを作る上で必要な数字の処理を完璧に行うことができています。<br>ロボットの性能を計算で求めたり、設計に必要な数値を与えられた情報から計算したりと、数字の意味まで捉えて計算することができているようです。"
-        numericalReasoningAlphaMobile.textContent = "S"
-      } else if (numericalReasoningPercent >= 50 && numericalReasoningPercent < 100) {
-        numericalReasoningLabel.innerHTML = "ロボットを作る上で必要な数字の処理を行うことができています。<br>ロボットの性能を計算で求めたり、設計に必要な数値を与えられた情報から計算したりと、数字の意味まで捉えて計算することを意識すると、より良い結果が得られるでしょう。"
-        numericalReasoningAlpha.textContent = "A"
-        numericalReasoningLabelMobile.innerHTML = "ロボットを作る上で必要な数字の処理を行うことができています。<br>ロボットの性能を計算で求めたり、設計に必要な数値を与えられた情報から計算したりと、数字の意味まで捉えて計算することを意識すると、より良い結果が得られるでしょう。"
-        numericalReasoningAlphaMobile.textContent = "A"
-      } else {
-        numericalReasoningLabel.innerHTML = "ロボットを作る上で必要な数字の処理を完璧に行うことができなかった問題がいくつかあるようです。<br>出てきた数字を使ってただ計算するだけでなく、その数字にどんな意味があるのか、問題を特にはどんな計算が必要かなどを落ち着いて考える習慣をつけると良いでしょう"
-        numericalReasoningAlpha.textContent = "B"
-        numericalReasoningLabelMobile.innerHTML = "ロボットを作る上で必要な数字の処理を完璧に行うことができなかった問題がいくつかあるようです。<br>出てきた数字を使ってただ計算するだけでなく、その数字にどんな意味があるのか、問題を特にはどんな計算が必要かなどを落ち着いて考える習慣をつけると良いでしょう"
-        numericalReasoningAlphaMobile.textContent = "B"
-      }
     }
 
-    getExamReportData()
+    function createScoreRow({
+      label1, label2, bgColor, scores, isBottom, isRoundLeft, isRoundRight, isPercentage = false
+    }) {
+      let label1Cell = ''
+      if (label1.length > 0) {
+        label1Cell = `
+          <td class="px-4 py-2 border ${bgColor} ${isRoundLeft ? 'rounded-bl-lg' : ''} text-[20px] font-semibold text-center text-white ${label1 === '全国平均' ? 'rounded-tl-lg' : ''}"
+            rowspan="2">
+            ${label1}
+          </td>
+        `;
+      } else {
+      }
+
+      const label2Cell = `
+        <td class="px-4 py-2 border border-r-0 ${isBottom ? '' : 'border-b-0'} text-center text-[20px] font-semibold">${label2}</td>
+      `
+
+      const rowScore = `
+        <tr style='${isPercentage ? 'background-color: #F5F5F5' : ''}'>
+          ${label1Cell}
+          ${label2Cell}
+          ${scores.map((score, index) => `<td class="px-4 py-2 border ${index === 0 ? '' : 'border-l-0'} ${index === scores.length - 1 && isRoundRight ? 'rounded-br-lg' : ''} ${isBottom ? '' : 'border-b-0'} text-right text-[20px] font-semibold">${score}</td>`).join('')}
+        </tr>
+      `
+
+      return rowScore
+    }
+
+    getExamData()
 
     Highcharts.chart('position-nationwide-chart', {
       chart: {
@@ -1192,7 +1343,7 @@
         enabled: false
       }
     });
-
+    /*
     Highcharts.chart('electric-polarchart', {
       chart: {
         polar: true,
@@ -1336,7 +1487,7 @@
         enabled: false
       }
     });
-
+    */
     // Init Selectize
     function initializeSelectize() {
       $('#industry1-selectize').selectize({
@@ -1365,64 +1516,6 @@
 
     }
     initializeSelectize()
-
-    const select = document.getElementById("cars");
-    const defaultValue = "any"; // Store the default value
-    let anyOption;
-
-    // Function to add the "any" option back
-    function addAnyOption() {
-      anyOption = select.querySelector('option[value="any"]');
-      if (!anyOption) {
-        // Create the "any" option element dynamically
-        var opt = document.createElement('option');
-        opt.value = "any";
-        opt.innerHTML = "any";
-        opt.selected = true; // Ensure it is selected
-        select.insertBefore(opt, select.firstChild); // Insert at the top of the list
-      }
-    }
-
-    // Ensure the select starts with "any" as the selected option
-    select.value = defaultValue;
-
-    // Remove "any" option initially on focus
-    select.addEventListener("focus", function () {
-      console.log("focus")
-      anyOption = select.querySelector('option[value="any"]'); // Re-fetch the option
-      if (anyOption) {
-        anyOption.remove(); // Remove the "any" option to hide it
-      }
-    });
-
-    let eventGet = ""
-
-    // Handle the case where the user selects the empty option
-    select.addEventListener("change", function () {
-      console.log("change")
-      if (eventGet === "mouseout") {
-        eventGet = "change"
-        return
-      }
-      if (select.value === "") {
-        // If the empty option is selected, restore "any" and set it as the value
-        select.value = defaultValue; // Set value to "any"
-        addAnyOption(); // Add the "any" option back dynamically
-      }
-    });
-
-    select.addEventListener("mouseout", function () {
-      console.log("mouseout")
-      if (eventGet === "change") {
-        eventGet = "mouseout"
-        return
-      }
-      if (!select.value) {
-        addAnyOption(); // Add the "any" option back dynamically
-        select.value = defaultValue; // Set value to "any"
-      }
-    });
-
 
   </script>
 
