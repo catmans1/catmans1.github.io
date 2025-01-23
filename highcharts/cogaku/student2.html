@@ -794,7 +794,7 @@
           const stats = responseJson.stats
           if (metaData.user !== null) {
             const user = metaData.user
-            nickname.textContent = user.nickname || user.username
+            nickname.textContent = user.nickname
             username.textContent = user.username
             document.title = user.username
           }
