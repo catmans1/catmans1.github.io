@@ -340,13 +340,9 @@
       const username = document.getElementById('username')
       const finishDate = document.getElementById('finishDate')
       const lectureTitle = document.getElementById('lectureTitle')
-      const earnedScore = document.getElementById('earnedScore')
-      const totalScore = document.getElementById('totalScore')
-      const passScore = document.getElementById('passScore')
       const passRateAlpha = document.getElementById('passRateAlpha')
       const passRate = document.getElementById('passRate')
-      const passStatus = document.getElementById('passStatus')
-      const authCookie = getCookie('Authorization') || 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyNiIsInNjcCI6InVzZXIiLCJhdWQiOm51bGwsImlhdCI6MTcyOTgyMTYwMSwiZXhwIjoxNzMyNDEzNjAxLCJqdGkiOiJkYTdjNTMzYS1kNTdjLTRmYTQtYmU0OS00MTI4NjcyNWQ2Y2QifQ.bAEDtZr5zsUfhHElC-O0tpzrZSFyWSfYHECdrtIV4Bc';
+      const authCookie = getCookie('Authorization') || 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0Iiwic2NwIjoidXNlciIsImF1ZCI6bnVsbCwiaWF0IjoxNzM1MjcwNjQ3LCJleHAiOjE3Mzc4NjI2NDcsImp0aSI6ImI2NTI5MzUzLTJmMmItNDY1YS1hOTU0LWVhMjYyMThjMjI4MyJ9.qErwguDsuXi02KLd_Smom3VgM5XuhT9vYDMtM4yuSqo';
       try {
         // const response = await fetch(urlApi, {
         //   headers: {
@@ -355,6 +351,7 @@
         //   },
         // })
         // const responseJson = await response.json()
+
         const responseJson = {
           "metaData": {
             "input": {
@@ -1108,25 +1105,28 @@
         xAxis: {
           categories: allCategories,
           tickmarkPlacement: 'on',
-          lineWidth: 0
+          lineWidth: 0,
+          labels: {
+            style: {
+              color: '#000',
+              fontSize: '12px',
+              fontWeight: '400'
+            }
+          }
         },
-
         yAxis: {
           gridLineInterpolation: 'polygon',
           lineWidth: 0,
           min: 0
         },
-
         tooltip: {
           enabled: false
         },
-
         legend: {
           align: 'right',
           verticalAlign: 'middle',
           layout: 'vertical'
         },
-
         series: [{
           name: '全国平均',
           data: nationalAverage,
@@ -1138,7 +1138,6 @@
           pointPlacement: 'on',
           color: '#3B82F6'
         }],
-
         responsive: {
           rules: [{
             condition: {
@@ -1343,152 +1342,7 @@
         enabled: false
       }
     });
-    /*
-    Highcharts.chart('electric-polarchart', {
-      chart: {
-        polar: true,
-        type: 'line'
-      },
-      title: {
-        text: '',
-      },
-      pane: {
-        size: '80%'
-      },
-      xAxis: {
-        categories: [
-          '合計', '電気回路の基礎', '電子回路の基礎', 'インターフェース', '半導体デバイス', 'モータと電力'
-        ],
-        tickmarkPlacement: 'on',
-        lineWidth: 0
-      },
 
-      yAxis: {
-        gridLineInterpolation: 'polygon',
-        lineWidth: 0,
-        min: 0
-      },
-
-      tooltip: {
-        enabled: false
-      },
-
-      legend: {
-        align: 'right',
-        verticalAlign: 'middle',
-        layout: 'vertical'
-      },
-
-      series: [{
-        name: '全国平均',
-        data: [43, 19, 60, 35, 17, 20],
-        pointPlacement: 'on',
-        color: '#EE4344'
-      }, {
-        name: '貴社平均',
-        data: [50, 39, 42, 31, 26, 21],
-        pointPlacement: 'on',
-        color: '#3B82F6'
-      }],
-
-      responsive: {
-        rules: [{
-          condition: {
-            maxWidth: 500
-          },
-          chartOptions: {
-            title: {
-              x: 0
-            },
-            legend: {
-              align: 'center',
-              verticalAlign: 'bottom',
-              layout: 'horizontal'
-            },
-            pane: {
-              size: '70%'
-            }
-          }
-        }]
-      },
-      credits: {
-        enabled: false
-      }
-    });
-
-    Highcharts.chart('mechanical-polarchart', {
-      chart: {
-        polar: true,
-        type: 'line'
-      },
-      title: {
-        text: '',
-      },
-      pane: {
-        size: '80%'
-      },
-      xAxis: {
-        categories: [
-          '合計', '電気回路の基礎', '電子回路の基礎', 'インターフェース', '半導体デバイス', 'モータと電力'
-        ],
-        tickmarkPlacement: 'on',
-        lineWidth: 0
-      },
-
-      yAxis: {
-        gridLineInterpolation: 'polygon',
-        lineWidth: 0,
-        min: 0
-      },
-
-      tooltip: {
-        enabled: false
-      },
-
-      legend: {
-        align: 'right',
-        verticalAlign: 'middle',
-        layout: 'vertical'
-      },
-
-      series: [{
-        name: '全国平均',
-        data: [43, 19, 60, 35, 17, 20],
-        pointPlacement: 'on',
-        color: '#EE4344'
-      }, {
-        name: '貴社平均',
-        data: [50, 39, 42, 31, 26, 21],
-        pointPlacement: 'on',
-        color: '#3B82F6'
-      }],
-
-      responsive: {
-        rules: [{
-          condition: {
-            maxWidth: 500
-          },
-          chartOptions: {
-            title: {
-              x: 0
-            },
-            legend: {
-              align: 'center',
-              verticalAlign: 'bottom',
-              layout: 'horizontal'
-            },
-            pane: {
-              size: '70%'
-            }
-          }
-        }]
-      },
-      credits: {
-        enabled: false
-      }
-    });
-    */
-    // Init Selectize
     function initializeSelectize() {
       $('#industry1-selectize').selectize({
         onChange: function (value) {
@@ -1516,9 +1370,7 @@
 
     }
     initializeSelectize()
-
   </script>
-
 </body>
 
 </html>
