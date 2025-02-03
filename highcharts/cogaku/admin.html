@@ -317,6 +317,10 @@
               "type": "ExamLecture",
               "createdAt": "2025-01-21T20:46:09.000+09:00",
               "updatedAt": "2025-01-22T10:16:02.000+09:00"
+            },
+            "organization": {
+                "id": null,
+                "name": "ShareWis"
             }
           },
           "stats": {
@@ -686,13 +690,14 @@
           }
         }
         */
+
         if (responseJson != null && responseJson.metaData != null && responseJson.stats != null) {
           const metaData = responseJson.metaData
           const stats = responseJson.stats
           if (stats.exam !== null) {
             const exam = stats.exam
             nickname.textContent = exam.numOfParticipants
-            username.textContent = 'Cogaku'
+            username.textContent = metaData?.organization?.name
             document.title = '結果分析シート'
           }
           finishDate.textContent = metaData.exam?.finishDate
