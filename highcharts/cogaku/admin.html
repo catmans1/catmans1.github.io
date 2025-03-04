@@ -322,7 +322,7 @@
                 "id": null,
                 "name": "ShareWis"
             },
-            "exam_event":{
+            "examEvent":{
               "id": 1,
               "title": "exam_event tobe",
               "createdAt": "2025-01-27T11:32:47.000+09:00",
@@ -708,7 +708,7 @@
           finishDate.textContent = metaData.exam?.finishDate
           lectureTitle.textContent = metaData.lecture?.title
           passRate.textContent = `${stats?.exam?.passRate}` + '%程度の理解度です。'
-          examEventTitle.textContent = metaData.exam_event?.title
+          examEventTitle.textContent = metaData.examEvent?.title
 
           const tags = Object.values(stats?.tags);
 
