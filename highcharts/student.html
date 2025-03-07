@@ -357,13 +357,9 @@
         if (responseJson != null && responseJson.exam != null && responseJson.user != null) {
           const exam = responseJson.exam
           const user = responseJson.user
-          if (user.username != null) {
-            username.textContent = user.username + ' さんのスコア表';
-            document.title = user.username + ' さんのスコア表'
-          } else {
-            username.textContent = user.nickname + ' さんのスコア表';
-            document.title = user.nickname + ' さんのスコア表'
-          }
+          const nameTaker = user.nickname || user.username
+          username.textContent = nameTaker + ' さんのスコア表';
+          document.title = nameTaker + ' さんのスコア表'
 
           courseTitle.innerHTML = exam.course.title + '<br>受験日：' + exam.startDate;
           earnedScore.textContent = exam.totalEarnedScore
