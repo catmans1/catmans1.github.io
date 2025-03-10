@@ -58,7 +58,7 @@
   <div class="w-full mx-auto p-6 bg-white">
     <h2 id="username" class="text-2xl font-semibold text-center mb-4 border border-[#BDBDBD] p-2 rounded-lg">
       さんのスコア表</h2>
-    <p id="courseTitle" class="text-right font-normal text-gray-500 mb-8"><br>受験日：</p>
+    <p id="lectureTitle" class="text-right font-normal text-gray-500 mb-8"><br>受験日：</p>
     <p class="text-left text-base font-normal text-gray-500 mb-8 border border-[#BDBDBD] p-2 py-3 rounded-lg">
       このスコア表では、各問題の特性と内容、正誤から、ロボット製作を通じてお子様に身についている力について解説しております。今回の検定と解説からさまざまな気づきや発見を得ていただき、ぜひこれからもロボット製作を通じて、様々なスキル・知識を身につけるきっかけになれば幸いです。
     </p>
@@ -339,7 +339,7 @@
       if (urlApi === null) return
 
       const username = document.getElementById('username')
-      const courseTitle = document.getElementById('courseTitle') // Including start date
+      const lectureTitle = document.getElementById('lectureTitle') // Including start date
       const earnedScore = document.getElementById('earnedScore')
       const totalScore = document.getElementById('totalScore')
       const passScore = document.getElementById('passScore')
@@ -358,10 +358,10 @@
           const exam = responseJson.exam
           const user = responseJson.user
           const nameTaker = user.nickname || user.username
-          username.textContent = nameTaker + ' さんのスコア表';
-          document.title = nameTaker + ' さんのスコア表'
+          username.textContent = nameTaker + 'さんのスコア表';
+          document.title = nameTaker + 'さんのスコア表'
 
-          courseTitle.innerHTML = exam.course.title + '<br>受験日：' + exam.startDate;
+          lectureTitle.innerHTML = exam.lecture?.title + '<br>受験日：' + exam.startDate;
           earnedScore.textContent = exam.totalEarnedScore
           totalScore.textContent = '/ ' + exam.totalScore
           passScore.textContent = '（合格点' + exam.passScore + '点）'
