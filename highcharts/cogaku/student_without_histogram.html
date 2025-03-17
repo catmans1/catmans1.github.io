@@ -980,7 +980,6 @@
         ${header}
       </th>`).join('');
 
-      const scoreOfTags = calculateMaxScoresOfTags(groups)
       const scores = Object.values(calculateMaxScoresOfTags(groups))
       const averageScores = Object.values(calculateAverageScoresOfTags(groups))
       const earnedScores = Object.values(calculateEarnedScoresOfTags(groups))
@@ -1118,7 +1117,7 @@
     function calculateMaxScoresOfTags(data) {
       const totals = {};
       for (const [key, items] of Object.entries(data)) {
-        const sum = items.reduce((sum, item) => sum + item.maxScore, 0);
+        const sum = items.reduce((sum, item) => sum + item.scores?.length, 0);
         totals[key] = parseFloat(sum.toFixed(1))
       }
       return totals;

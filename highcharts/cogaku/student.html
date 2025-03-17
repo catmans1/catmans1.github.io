@@ -1707,7 +1707,7 @@
     function calculateMaxScoresOfTags(data) {
       const totals = {};
       for (const [key, items] of Object.entries(data)) {
-        const sum = items.reduce((sum, item) => sum + item.maxScore, 0);
+        const sum = items.reduce((sum, item) => sum + item.scores?.length, 0);
         totals[key] = parseFloat(sum.toFixed(1))
       }
       return totals;
