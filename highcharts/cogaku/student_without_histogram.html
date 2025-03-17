@@ -792,7 +792,7 @@
           const tags = Object.values(stats?.tags);
 
           const groupedTags = groupTagsByPrefix(tags);
-          createTableOverall(groupedTags)
+          createTableOverall(stats.exam, groupedTags)
           Object.entries(groupedTags).forEach(([prefix, group]) => {
             createRadarChart(prefix, group);
           });
@@ -973,7 +973,7 @@
     }
 
     const table_overall = document.getElementById('table-overall');
-    function createTableOverall(groups) {
+    function createTableOverall(exam, groups) {
       const categories = Object.values(groups).map(item => getFieldName(item[0]))
       const tableHeaders = categories.map((header, index) => `
       <th class="px-4 py-2 border border-l-0 border-b-0 ${index === categories.length - 1 ? 'rounded-tr-lg' : ''} text-center text-[20px] font-semibold">
@@ -988,7 +988,7 @@
       const totalEarnedScore = earnedScores.reduce((sum, score) => sum + score, 0);
       const companyAverage = [totalEarnedScore.toFixed(1), ...earnedScores];
       const nationalAverage = [totalAverageScore.toFixed(1), ...averageScores];
-      const totalScore = scores.reduce((sum, score) => sum + score, 0);
+      const totalScore = exam?.maxScore //scores.reduce((sum, score) => sum + score, 0);
 
       const scoreCells = scores
         .map(
