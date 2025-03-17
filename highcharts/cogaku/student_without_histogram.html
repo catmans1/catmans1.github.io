@@ -856,7 +856,7 @@
       const totalAverageScore = group.reduce((sum, item) => sum + item.averageScore, 0);
       const companyAverage = [totalEarnedScore.toFixed(1), ...group.map(item => item.earnedScore)];
       const nationalAverage = [totalAverageScore.toFixed(1), ...group.map(item => item.averageScore)];
-      const totalMaxScore = group.reduce((sum, item) => sum + (item?.maxScore || 0), 0);
+      const totalMaxScore = group.reduce((sum, item) => sum + (item?.scores?.length || 0), 0);
 
       const tableHeaders = ['合計', ...categories].map((header, index) => `
       <th class="px-4 py-2 border border-b-0 ${index === 0 ? 'rounded-tl-lg' : 'border-l-0'} ${index === categories.length ? 'rounded-tr-lg' : ''} text-center text-[20px] font-semibold">
@@ -868,7 +868,7 @@
         <td class=""></td>
         <td class="px-4 py-2 border border-r-0 border-b-0 bg-[#F5F5F5] text-center text-[20px] font-semibold rounded-tl-lg">満点</td>
         <td class="px-4 py-2 border border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${totalMaxScore}</td>
-        ${Array(categories.length).fill(`<td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${group[0]?.maxScore || 0}</td>`).join('')}
+        ${Array(categories.length).fill(`<td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${group[0]?.scores?.length || 0}</td>`).join('')}
       </tr>`;
 
       const tbodyContent = `
