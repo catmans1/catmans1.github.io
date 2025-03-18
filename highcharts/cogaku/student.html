@@ -1440,9 +1440,12 @@
       const categories = group.map(item => getTagName(item));
       const totalEarnedScore = group.reduce((sum, item) => sum + item.earnedScore, 0);
       const totalAverageScore = group.reduce((sum, item) => sum + item.averageScore, 0);
-      const companyAverage = [totalEarnedScore.toFixed(1), ...group.map(item => item.earnedScore)];
+      const companyAverage = [totalAverageScore.toFixed(1), ...group.map(item => item.averageScore)];
       const nationalAverage = [totalAverageScore.toFixed(1), ...group.map(item => item.averageScore)];
       const totalMaxScore = group.reduce((sum, item) => sum + (item?.scores?.length || 0), 0);
+
+      const userEarndScores = [totalEarnedScore.toFixed(0), ...group.map(item => item.earnedScore)];
+      const totalUserEarndScores = [totalMaxScore, ...group.map(item => item.scores.length)];
 
       const tableHeaders = ['合計', ...categories].map((header, index) => `
       <th class="px-4 py-2 border border-b-0 ${index === 0 ? 'rounded-tl-lg' : 'border-l-0'} ${index === categories.length ? 'rounded-tr-lg' : ''} text-center text-[20px] font-semibold">
@@ -1469,7 +1472,7 @@
         label1: '',
         label2: '正解率',
         bgColor: 'bg-[#EE4344]',
-        scores: nationalAverage.map(score => (score / 60 * 100).toFixed(1)),
+        scores: nationalAverage.map((score, index) => (score / totalUserEarndScores[index] * 100).toFixed(1)),
         isBottom: false,
         isRoundLeft: false,
         isPercentage: true
@@ -1484,7 +1487,7 @@
         label1: '',
         label2: '正解率',
         bgColor: 'bg-[#3B82F6]',
-        scores: companyAverage.map(score => (score / 60 * 100).toFixed(1)),
+        scores: companyAverage.map((score, index) => (score / totalUserEarndScores[index] * 100).toFixed(1)),
         isBottom: false,
         isRoundLeft: false,
         isPercentage: true
@@ -1493,7 +1496,7 @@
         label1: 'ご本人',
         label2: '得点',
         bgColor: 'bg-[#10B981]',
-        scores: companyAverage,
+        scores: userEarndScores,
         isBottom: false,
         isRoundLeft: true,
         isPercentage: false
@@ -1502,7 +1505,7 @@
         label1: '',
         label2: '正解率',
         bgColor: 'bg-[#10B981]',
-        scores: companyAverage.map(score => (score / 60 * 100).toFixed(1)),
+        scores: userEarndScores.map((score, index) => (score / totalUserEarndScores[index] * 100).toFixed(1)),
         isBottom: false,
         isRoundLeft: true,
         isPercentage: true,
@@ -1571,9 +1574,12 @@
       const earnedScores = Object.values(calculateEarnedScoresOfTags(groups))
       const totalAverageScore = averageScores.reduce((sum, score) => sum + score, 0);
       const totalEarnedScore = earnedScores.reduce((sum, score) => sum + score, 0);
-      const companyAverage = [totalEarnedScore.toFixed(1), ...earnedScores];
+      const companyAverage = [totalAverageScore.toFixed(1), ...averageScores];
       const nationalAverage = [totalAverageScore.toFixed(1), ...averageScores];
-      const totalScore = exam?.maxScore //scores.reduce((sum, score) => sum + score, 0);
+
+      const userEarndScores = [totalEarnedScore.toFixed(0), ...earnedScores];
+      const totalScore = exam?.maxScore
+      const totalUserEarndScores = [totalScore, ...scores];
 
       const scoreCells = scores
         .map(
@@ -1616,7 +1622,7 @@
         label1: '',
         label2: '正解率',
         bgColor: 'bg-[#EE4344]',
-        scores: nationalAverage.map(score => (score / 60 * 100).toFixed(1)),
+        scores: nationalAverage.map((score, index) => (score / totalUserEarndScores[index] * 100).toFixed(1)),
         isBottom: false,
         isRoundLeft: false,
         isPercentage: true
@@ -1632,7 +1638,7 @@
         label1: '',
         label2: '正解率',
         bgColor: 'bg-[#3B82F6]',
-        scores: companyAverage.map(score => (score / 60 * 100).toFixed(1)),
+        scores: companyAverage.map((score, index) => (score / totalUserEarndScores[index] * 100).toFixed(1)),
         isBottom: false,
         isRoundLeft: false,
         isPercentage: true
@@ -1641,7 +1647,7 @@
         label1: 'ご本人',
         label2: '得点',
         bgColor: 'bg-[#10B981]',
-        scores: companyAverage,
+        scores: userEarndScores,
         isBottom: false,
         isRoundLeft: true,
         isPercentage: false
@@ -1650,7 +1656,7 @@
         label1: '',
         label2: '正解率',
         bgColor: 'bg-[#10B981]',
-        scores: companyAverage.map(score => (score / 60 * 100).toFixed(1)),
+        scores: userEarndScores.map((score, index) => (score / totalUserEarndScores[index] * 100).toFixed(1)),
         isBottom: false,
         isRoundLeft: true,
         isPercentage: true,
