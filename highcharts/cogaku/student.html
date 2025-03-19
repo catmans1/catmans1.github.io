@@ -75,10 +75,10 @@
         </thead>
         <tbody>
           <tr>
-            <td id="nickname" class="text-[20px] border-r border-t font-medium text-center py-2">
+            <td id="username" class="text-[20px] border-r border-t font-medium text-center py-2">
 
             </td>
-            <td id="username" class="text-[20px] border-r border-t font-medium text-center py-2">
+            <td id="nickname" class="text-[20px] border-r border-t font-medium text-center py-2">
 
             </td>
             <td id="finishDate" class="text-[20px] border-t font-medium text-center py-2">
@@ -100,19 +100,16 @@
             業種1
           </div>
           <select class="w-48" id="industry1-selectize">
-            <option value="">すべて</option>
-            <option value="1">製造</option>
-            <option value="2">労働者派遣</option>
-            <option value="3">機械機器メンテナンス</option>
-            <option value="4">ソフトウェア・システムサービス</option>
-            <option value="5">通信・ネットワーク</option>
+            <option value="1">すべて</option>
+            <option value="2">製造</option>
+            <option value="3">労働者派遣</option>
+            <option value="4">機械機器メンテナンス</option>
+            <option value="5">ソフトウェア・システムサービス</option>
             <option value="6">商社・卸売</option>
             <option value="7">電気・ガス・エネルギー関連</option>
             <option value="8">建設</option>
             <option value="9">学校</option>
-            <option value="10">金融</option>
-            <option value="11">保険</option>
-            <option value="12">その他</option>
+            <option value="10">その他の業種</option>
           </select>
         </div>
         <div class="mr-16">
@@ -120,21 +117,18 @@
             業種2（業種1が「製造の場合」のみ）
           </div>
           <select id="industry2-selectize" class="w-48">
-            <option value="">すべて</option>
-            <option value="1">機械</option>
-            <option value="2">電気・電子機器</option>
-            <option value="3">輸送用機器</option>
-            <option value="4">精密機器</option>
-            <option value="5">情報通信機器</option>
-            <option value="6">化学</option>
-            <option value="7">鉄鋼</option>
-            <option value="8">電子部品・デバイス・電子回路</option>
-            <option value="9">金属製品</option>
-            <option value="10">石油製品・石炭製品</option>
-            <option value="11">プラスチック製品</option>
-            <option value="12">繊維製品</option>
-            <option value="13">食料品</option>
-            <option value="14">その他の製造業</option>
+            <option value="1">すべて</option>
+            <option value="2">機械</option>
+            <option value="3">電気・電子機器</option>
+            <option value="4">輸送用機器</option>
+            <option value="5">精密機器</option>
+            <option value="6">情報通信機器</option>
+            <option value="7">化学</option>
+            <option value="8">鉄鋼</option>
+            <option value="9">電子部品・デバイス・電子回路</option>
+            <option value="10">金属製品</option>
+            <option value="11">食料品</option>
+            <option value="12">その他の製造業</option>
           </select>
         </div>
         <div class="mr-16">
@@ -142,10 +136,12 @@
             利用目的
           </div>
           <select id="purpose-selectize" class="w-48">
-            <option value="">すべて</option>
-            <option value="1">機械</option>
-            <option value="2">電気・電子機器</option>
-            <option value="3">輸送用機器</option>
+            <option value="1">すべて</option>
+            <option value="2">採用試験-新卒入社</option>
+            <option value="3">採用試験-中途入社</option>
+            <option value="4">人材育成-新入社員</option>
+            <option value="5">人材育成-既存社員</option>
+            <option value="6">その他</option>
           </select>
         </div>
         <div class="">
@@ -153,9 +149,9 @@
             試験実施回
           </div>
           <select id="test-selectize" class="w-48">
-            <option value="">すべて</option>
-            <option value="1">1回目</option>
-            <option value="2">2回目</option>
+            <option value="1">すべて</option>
+            <option value="2">1回目</option>
+            <option value="3">2回目</option>
           </select>
         </div>
         <div
@@ -1457,7 +1453,7 @@
         <td class=""></td>
         <td class="px-4 py-2 border border-r-0 border-b-0 bg-[#F5F5F5] text-center text-[20px] font-semibold rounded-tl-lg">満点</td>
         <td class="px-4 py-2 border border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${totalMaxScore}</td>
-        ${Array(categories.length).fill(`<td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${group[0]?.scores?.length || 0}</td>`).join('')}
+        ${group.map(item => `<td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${item.scores?.length || 0}</td>`).join('')}
       </tr>`;
 
       const tbodyContent = `
@@ -1961,12 +1957,10 @@
           const industry2 = $('#industry2-selectize')[0].selectize;
 
           if (value === '1') {
-            // Enable industry2 if "製造" is selected
-            industry2.enable();
-          } else {
-            // Disable and clear industry2 otherwise
             industry2.disable();
-            industry2.clear();
+            industry2.setValue('1');
+          } else {
+            industry2.enable();
           }
         }
       });
