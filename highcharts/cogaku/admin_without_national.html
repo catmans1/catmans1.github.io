@@ -217,6 +217,10 @@
           },
           "stats": {
             "exam": {
+              "maxScore": 100,
+              "passScore": 80,
+              "passRate": 0.85,
+              "failRate": 0.15,
               "numOfParticipants": 5,
               "numOfPassedParticipants": 2,
               "numOfFailedParticipants": 3,
@@ -582,7 +586,6 @@
           }
         }
         */
-
         if (responseJson != null && responseJson.metaData != null && responseJson.stats != null) {
           const metaData = responseJson.metaData
           const stats = responseJson.stats
@@ -599,7 +602,7 @@
           const tags = Object.values(stats?.tags);
 
           const groupedTags = groupTagsByPrefix(tags);
-          createTableOverall(groupedTags)
+          createTableOverall(stats.exam, groupedTags)
           Object.entries(groupedTags).forEach(([prefix, group]) => {
             createRadarChart(prefix, group);
           });
@@ -647,11 +650,11 @@
         .join("");
 
       const categories = group.map(item => getTagName(item));
-      const totalEarnedScore = group.reduce((sum, item) => sum + item.standardDeviation, 0);
       const totalAverageScore = group.reduce((sum, item) => sum + item.averageScore, 0);
-      const companyAverage = [totalEarnedScore.toFixed(1), ...group.map(item => item.standardDeviation)];
-      const nationalAverage = [totalAverageScore.toFixed(1), ...group.map(item => item.averageScore)];
+      const companyAverage = [totalAverageScore.toFixed(1), ...group.map(item => item.averageScore)];
       const totalMaxScore = group.reduce((sum, item) => sum + (item?.maxScore || 0), 0);
+
+      const totalCompanyAverages = [totalMaxScore, ...group.map(item => item.maxScore)];
 
       const tableHeaders = ['合計', ...categories].map((header, index) => `
       <th class="px-4 py-2 border border-b-0 ${index === 0 ? 'rounded-tl-lg' : 'border-l-0'} ${index === categories.length ? 'rounded-tr-lg' : ''} text-center text-[20px] font-semibold">
@@ -663,7 +666,7 @@
         <td class=""></td>
         <td class="px-4 py-2 border border-r-0 border-b-0 bg-[#F5F5F5] text-center text-[20px] font-semibold rounded-tl-lg">満点</td>
         <td class="px-4 py-2 border border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${totalMaxScore}</td>
-        ${Array(categories.length).fill(`<td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${group[0]?.maxScore || 0}</td>`).join('')}
+        ${group.map(item => `<td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${item.maxScore}</td>`).join('')}
       </tr>`;
 
       const tbodyContent = `
@@ -681,7 +684,7 @@
         label1: '',
         label2: '正解率',
         bgColor: 'bg-[#3B82F6]',
-        scores: companyAverage.map(score => (score / 60 * 100).toFixed(1)),
+        scores: companyAverage.map((score, index) => (score / totalCompanyAverages[index] * 100).toFixed(1)),
         isBottom: false,
         isRoundLeft: true,
         isPercentage: true,
@@ -738,22 +741,20 @@
     }
 
     const table_overall = document.getElementById('table-overall');
-    function createTableOverall(groups) {
+    function createTableOverall(exam, groups) {
       const categories = Object.values(groups).map(item => getFieldName(item[0]))
       const tableHeaders = categories.map((header, index) => `
       <th class="px-4 py-2 border border-l-0 border-b-0 ${index === categories.length - 1 ? 'rounded-tr-lg' : ''} text-center text-[20px] font-semibold">
         ${header}
       </th>`).join('');
 
-      const scoreOfTags = calculateMaxScoresOfTags(groups)
       const scores = Object.values(calculateMaxScoresOfTags(groups))
       const averageScores = Object.values(calculateAverageScoresOfTags(groups))
-      const standardDeviations = Object.values(calculateStandardDeviationOfTags(groups))
       const totalAverageScore = averageScores.reduce((sum, score) => sum + score, 0);
-      const totalStandardDeviation = standardDeviations.reduce((sum, score) => sum + score, 0);
-      const companyAverage = [totalStandardDeviation.toFixed(1), ...standardDeviations];
-      const nationalAverage = [totalAverageScore.toFixed(1), ...averageScores];
-      const totalScore = scores.reduce((sum, score) => sum + score, 0);
+      const companyAverage = [totalAverageScore.toFixed(1), ...averageScores];
+
+      const totalScore = exam?.maxScore || 120
+      const totalCompanyAverages = [totalScore, ...scores];
 
       const scoreCells = scores
         .map(
@@ -800,7 +801,7 @@
         label1: '',
         label2: '正解率',
         bgColor: 'bg-[#3B82F6]',
-        scores: companyAverage.map(score => (score / 60 * 100).toFixed(1)),
+        scores: companyAverage.map((score, index) => (score / totalCompanyAverages[index] * 100).toFixed(1)),
         isBottom: false,
         isRoundLeft: true,
         isPercentage: true,
@@ -898,10 +899,8 @@
 
     function generatePolarChart(prefix, group) {
       const categories = group.map(item => getMajorName(item));
-      const totalEarnedScore = group.reduce((sum, item) => sum + item.standardDeviation, 0);
       const totalAverageScore = group.reduce((sum, item) => sum + item.averageScore, 0);
-      const companyAverage = [totalEarnedScore.toFixed(1), ...group.map(item => item.standardDeviation)];
-      const nationalAverage = [totalAverageScore.toFixed(1), ...group.map(item => item.averageScore)];
+      const companyAverage = [totalAverageScore.toFixed(1), ...group.map(item => item.averageScore)];
       const allCategories = ['合計', ...categories];
 
       Highcharts.chart(`polarchart-${prefix}`, {
