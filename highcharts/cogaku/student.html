@@ -99,7 +99,7 @@
           <div class="font-[300] text-[12px] text-[#292929]">
             業種1
           </div>
-          <select class="w-48" id="industry1-selectize">
+          <select class="w-[15rem]" id="industry1-selectize">
             <option value="1">すべて</option>
             <option value="2">製造</option>
             <option value="3">労働者派遣</option>
@@ -116,7 +116,7 @@
           <div class="font-[300] text-[12px] text-[#292929]">
             業種2（業種1が「製造の場合」のみ）
           </div>
-          <select id="industry2-selectize" class="w-48">
+          <select id="industry2-selectize" class="w-[14rem]">
             <option value="1">すべて</option>
             <option value="2">機械</option>
             <option value="3">電気・電子機器</option>
@@ -154,7 +154,7 @@
             <option value="3">2回目</option>
           </select>
         </div>
-        <div
+        <div id="apply-filter-btn"
           class="ml-auto bg-[#00ABC9] rounded-lg text-white text-[16px] font-semibold px-5 py-2 cursor-pointer hover:bg-[#00ABC990]">
           フィルターを適用
         </div>
@@ -217,6 +217,11 @@
 
   <script>
     let configData = {}
+    let filterData = {}
+    let nationalOverallScores = {}
+    let nationalPartScores = {}
+    let statData = {}
+    let groupedTags = {}
     function getCookie(name) {
       const cookies = document.cookie.split(';');
       for (let i = 0; i < cookies.length; i++) {
@@ -266,8 +271,8 @@
 
     // Call api
     async function getExamReportData() {
-      const urlApi = getPathApi()
-      if (urlApi === null) return
+      // const urlApi = getPathApi()
+      // if (urlApi === null) return
 
       const nickname = document.getElementById('nickname')
       const username = document.getElementById('username')
@@ -278,14 +283,14 @@
       const passRate = document.getElementById('passRate')
       const authCookie = getCookie('Authorization') || 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0Iiwic2NwIjoidXNlciIsImF1ZCI6bnVsbCwiaWF0IjoxNzM1MjcwNjQ3LCJleHAiOjE3Mzc4NjI2NDcsImp0aSI6ImI2NTI5MzUzLTJmMmItNDY1YS1hOTU0LWVhMjYyMThjMjI4MyJ9.qErwguDsuXi02KLd_Smom3VgM5XuhT9vYDMtM4yuSqo';
       try {
-        const response = await fetch(urlApi, {
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + authCookie
-          },
-        })
-        const responseJson = await response.json()
-        /*
+        // const response = await fetch(urlApi, {
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //     "Authorization": "Bearer " + authCookie
+        //   },
+        // })
+        // const responseJson = await response.json()
+
         const responseJson = {
           "metaData": {
             "input": {
@@ -1353,7 +1358,7 @@
             }
           }
         }
-        */
+
         if (responseJson != null && responseJson.metaData != null && responseJson.stats != null) {
           const metaData = responseJson.metaData
           const stats = responseJson.stats
@@ -1372,14 +1377,10 @@
           passRate.textContent = `${stats?.exam?.passRate}` + '%程度の理解度です。'
 
           const tags = Object.values(stats?.tags);
-
-          const groupedTags = groupTagsByPrefix(tags);
-          createTableOverall(stats.exam, groupedTags)
-          Object.entries(groupedTags).forEach(([prefix, group]) => {
-            createRadarChart(prefix, group);
-          });
-
-          generateColumnChart(stats)
+          groupedTags = groupTagsByPrefix(tags);
+          statData = stats;
+          displayFilterData()
+          updateAllData()
         }
       } catch (error) {
 
@@ -1398,6 +1399,28 @@
       }
     }
 
+    async function fetchFilterData() {
+      try {
+        const url = 'https://assets.share-wis.com/reports/exams/cogaku/filter.json';
+        const response = await fetch(url)
+        filterData = await response.json()
+      } catch (error) {
+        console.error('Error fetching the filter data:', error);
+      }
+    }
+
+    const tags_container = document.getElementById('tags-container');
+    function updateAllData() {
+      createTableOverall(statData.exam, groupedTags)
+      // Clear the existing content of the table container
+      tags_container.innerHTML = '';
+      Object.entries(groupedTags).forEach(([prefix, group]) => {
+        createRadarChart(prefix, group);
+      });
+
+      generateColumnChart(statData)
+    }
+
     function getGrade(passRate) {
       if (passRate >= 80) {
         return 'A';
@@ -1410,7 +1433,6 @@
       }
     }
 
-    const tags_container = document.getElementById('tags-container');
     function createRadarChart(prefix, group) {
       if (!group || group.length === 0) {
         console.error("Group data is required to create the radar chart.");
@@ -1432,15 +1454,25 @@
       `;
         })
         .join("");
-
       const categories = group.map(item => getTagName(item));
       const totalEarnedScore = group.reduce((sum, item) => sum + item.earnedScore, 0);
-      const totalAverageScore = group.reduce((sum, item) => sum + item.averageScore, 0);
-      const companyAverage = [totalAverageScore.toFixed(1), ...group.map(item => item.averageScore)];
-      const nationalAverage = [totalAverageScore.toFixed(1), ...group.map(item => item.averageScore)];
+      const totalAverageScore = group.reduce((sum, item) => sum + parseFloat(item.averageScore || 0), 0);
+      const companyAverage = [parseFloat(totalAverageScore.toFixed(1) || 0), ...group.map(item => parseFloat(item.averageScore || 0))];
       const totalMaxScore = group.reduce((sum, item) => sum + (item?.scores?.length || 0), 0);
 
-      const userEarndScores = [totalEarnedScore.toFixed(0), ...group.map(item => item.earnedScore)];
+      let nationalGroupScores = []
+      if (!isEmptyObject(nationalPartScores)) {
+        const nationalSectionData = nationalPartScores[prefix];
+        if (!isEmptyObject(nationalSectionData)) {
+          const nationalScores = categories.map(item => parseFloat(nationalSectionData[item] || 0));
+          const totalNationalScore = nationalScores.reduce((sum, score) => sum + parseFloat(score || 0), 0);
+          nationalGroupScores = [parseFloat(totalNationalScore.toFixed(1) || 0), ...nationalScores];
+        }
+      } else {
+        nationalGroupScores = Array(categories.length + 1).fill(0);
+      }
+
+      const userEarndScores = [parseFloat(totalEarnedScore.toFixed(0) || 0), ...group.map(item => parseFloat(item.earnedScore.toFixed(0) || 0))];
       const totalUserEarndScores = [totalMaxScore, ...group.map(item => item.scores.length)];
 
       const tableHeaders = ['合計', ...categories].map((header, index) => `
@@ -1462,13 +1494,13 @@
         label1: '全国平均',
         label2: '得点',
         bgColor: 'bg-[#EE4344]',
-        scores: nationalAverage
+        scores: nationalGroupScores
       })}
         ${createScoreRow({
         label1: '',
         label2: '正解率',
         bgColor: 'bg-[#EE4344]',
-        scores: nationalAverage.map((score, index) => (score / totalUserEarndScores[index] * 100).toFixed(1)),
+        scores: nationalGroupScores.map((score, index) => parseFloat((score / totalUserEarndScores[index] * 100).toFixed(1) || 0)),
         isBottom: false,
         isRoundLeft: false,
         isPercentage: true
@@ -1483,7 +1515,7 @@
         label1: '',
         label2: '正解率',
         bgColor: 'bg-[#3B82F6]',
-        scores: companyAverage.map((score, index) => (score / totalUserEarndScores[index] * 100).toFixed(1)),
+        scores: companyAverage.map((score, index) => parseFloat((score / totalUserEarndScores[index] * 100).toFixed(1) || 0)),
         isBottom: false,
         isRoundLeft: false,
         isPercentage: true
@@ -1501,7 +1533,7 @@
         label1: '',
         label2: '正解率',
         bgColor: 'bg-[#10B981]',
-        scores: userEarndScores.map((score, index) => (score / totalUserEarndScores[index] * 100).toFixed(1)),
+        scores: userEarndScores.map((score, index) => parseFloat((score / totalUserEarndScores[index] * 100).toFixed(1) || 0)),
         isBottom: false,
         isRoundLeft: true,
         isPercentage: true,
@@ -1554,12 +1586,13 @@
       newChartElement.innerHTML = chartHtml;
       tags_container.appendChild(newChartElement);
 
-      generatePolarChart(prefix, group)
+      generatePolarChart(prefix, group, nationalGroupScores)
     }
 
     const table_overall = document.getElementById('table-overall');
     function createTableOverall(exam, groups) {
       const categories = Object.values(groups).map(item => getFieldName(item[0]))
+      const nameTags = Object.keys(groups).map(item => item);
       const tableHeaders = categories.map((header, index) => `
       <th class="px-4 py-2 border border-l-0 border-b-0 ${index === categories.length - 1 ? 'rounded-tr-lg' : ''} text-center text-[20px] font-semibold">
         ${header}
@@ -1568,10 +1601,17 @@
       const scores = Object.values(calculateMaxScoresOfTags(groups))
       const averageScores = Object.values(calculateAverageScoresOfTags(groups))
       const earnedScores = Object.values(calculateEarnedScoresOfTags(groups))
-      const totalAverageScore = averageScores.reduce((sum, score) => sum + score, 0);
-      const totalEarnedScore = earnedScores.reduce((sum, score) => sum + score, 0);
-      const companyAverage = [totalAverageScore.toFixed(1), ...averageScores];
-      const nationalAverage = [totalAverageScore.toFixed(1), ...averageScores];
+      const totalAverageScore = averageScores.reduce((sum, score) => sum + parseFloat(score || 0), 0);
+      const totalEarnedScore = earnedScores.reduce((sum, score) => sum + parseFloat(score || 0), 0);
+      const companyAverage = [parseFloat(totalAverageScore.toFixed(1) || 0), ...averageScores];
+      let overallNationalScores = []
+      if (!isEmptyObject(nationalOverallScores)) {
+        const nationalScores = nameTags.map(item => nationalOverallScores[item])
+        const totalNationalScore = nationalScores.reduce((sum, score) => sum + parseFloat(score || 0), 0);
+        overallNationalScores = [parseFloat(totalNationalScore.toFixed(1) || 0), ...nationalScores];
+      } else {
+        overallNationalScores = Array(categories.length + 1).fill(0);
+      }
 
       const userEarndScores = [totalEarnedScore.toFixed(0), ...earnedScores];
       const totalScore = exam?.maxScore
@@ -1580,7 +1620,7 @@
       const scoreCells = scores
         .map(
           (score) =>
-            `<td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${score}</td>`
+            `<td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${formatValue(score)}</td>`
         )
         .join("");
 
@@ -1590,7 +1630,7 @@
           <td
             class="px-4 py-2 border border-r-0 border-b-0 bg-[#F5F5F5] text-center text-[20px] font-semibold rounded-tl-lg">
             満点</td>
-          <td class="px-4 py-2 border border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${totalScore}</td>
+          <td class="px-4 py-2 border border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${formatValue(totalScore)}</td>
           ${scoreCells}
         </tr>
       `
@@ -1612,13 +1652,13 @@
         label1: '全国平均',
         label2: '得点',
         bgColor: 'bg-[#EE4344]',
-        scores: nationalAverage
+        scores: overallNationalScores
       })}
             ${createScoreRow({
         label1: '',
         label2: '正解率',
         bgColor: 'bg-[#EE4344]',
-        scores: nationalAverage.map((score, index) => (score / totalUserEarndScores[index] * 100).toFixed(1)),
+        scores: overallNationalScores.map((score, index) => parseFloat((score / totalUserEarndScores[index] * 100).toFixed(1) || 0)),
         isBottom: false,
         isRoundLeft: false,
         isPercentage: true
@@ -1634,7 +1674,7 @@
         label1: '',
         label2: '正解率',
         bgColor: 'bg-[#3B82F6]',
-        scores: companyAverage.map((score, index) => (score / totalUserEarndScores[index] * 100).toFixed(1)),
+        scores: companyAverage.map((score, index) => parseFloat((score / totalUserEarndScores[index] * 100).toFixed(1) || 0)),
         isBottom: false,
         isRoundLeft: false,
         isPercentage: true
@@ -1652,7 +1692,7 @@
         label1: '',
         label2: '正解率',
         bgColor: 'bg-[#10B981]',
-        scores: userEarndScores.map((score, index) => (score / totalUserEarndScores[index] * 100).toFixed(1)),
+        scores: userEarndScores.map((score, index) => parseFloat((score / totalUserEarndScores[index] * 100).toFixed(1) || 0)),
         isBottom: false,
         isRoundLeft: true,
         isPercentage: true,
@@ -1662,6 +1702,8 @@
         </table>
       `
 
+      // Clear the existing content of the table container
+      table_overall.innerHTML = '';
       const tableOverallElement = document.createElement('div');
       tableOverallElement.innerHTML = tableOverallHtml;
       table_overall.appendChild(tableOverallElement);
@@ -1706,7 +1748,7 @@
       const totals = {};
       for (const [key, items] of Object.entries(data)) {
         const sum = items.reduce((sum, item) => sum + item.scores?.length, 0);
-        totals[key] = parseFloat(sum.toFixed(1))
+        totals[key] = parseFloat(sum.toFixed(1) || 0)
       }
       return totals;
     };
@@ -1715,7 +1757,7 @@
       const totals = {};
       for (const [key, items] of Object.entries(data)) {
         const sum = items.reduce((sum, item) => sum + item.averageScore, 0);
-        totals[key] = parseFloat(sum.toFixed(1))
+        totals[key] = parseFloat(sum.toFixed(1) || 0)
       }
       return totals;
     };
@@ -1724,7 +1766,7 @@
       const totals = {};
       for (const [key, items] of Object.entries(data)) {
         const sum = items.reduce((sum, item) => sum + item.earnedScore, 0);
-        totals[key] = parseFloat(sum.toFixed(1))
+        totals[key] = parseFloat(sum.toFixed(1) || 0)
       }
       return totals;
     };
@@ -1732,18 +1774,19 @@
     async function getExamData() {
       try {
         await fetchJsonData();
+        await fetchFilterData();
         await getExamReportData();
       } catch (error) {
         console.error('Error occurred:', error);
       }
     }
 
-    function generatePolarChart(prefix, group) {
+    function generatePolarChart(prefix, group, nationalGroupScores) {
       const categories = group.map(item => getMajorName(item));
       const totalEarnedScore = group.reduce((sum, item) => sum + item.earnedScore, 0);
       const totalAverageScore = group.reduce((sum, item) => sum + item.averageScore, 0);
-      const companyAverage = [totalEarnedScore.toFixed(1), ...group.map(item => item.earnedScore)];
-      const nationalAverage = [totalAverageScore.toFixed(1), ...group.map(item => item.averageScore)];
+      const companyAverage = [parseFloat(totalEarnedScore.toFixed(1) || 0), ...group.map(item => parseFloat(item.earnedScore || 0))];
+      const nationalAverage = nationalGroupScores
       const allCategories = ['合計', ...categories];
 
       Highcharts.chart(`polarchart-${prefix}`, {
@@ -1841,7 +1884,7 @@
         <tr style='${isPercentage ? 'background-color: #F5F5F5' : ''}'>
           ${label1Cell}
           ${label2Cell}
-          ${scores.map((score, index) => `<td class="px-4 py-2 border ${index === 0 ? '' : 'border-l-0'} ${index === scores.length - 1 && isRoundRight ? 'rounded-br-lg' : ''} ${isBottom ? '' : 'border-b-0'} text-right text-[20px] font-semibold">${score}</td>`).join('')}
+          ${scores.map((score, index) => `<td class="px-4 py-2 border ${index === 0 ? '' : 'border-l-0'} ${index === scores.length - 1 && isRoundRight ? 'rounded-br-lg' : ''} ${isBottom ? '' : 'border-b-0'} text-right text-[20px] font-semibold">${formatValue(score)}</td>`).join('')}
         </tr>
       `
 
@@ -1959,8 +2002,12 @@
           if (value === '1') {
             industry2.disable();
             industry2.setValue('1');
-          } else {
+          } else if (value === '2') {
             industry2.enable();
+            industry2.setValue('1');
+          } else {
+            industry2.disable();
+            industry2.clear();
           }
         }
       });
@@ -1975,6 +2022,58 @@
       $('#test-selectize').selectize();
 
     }
+
+    function formatValue(value) {
+      return (value === null || value === undefined || value === 0.0 || isNaN(value)) ? "-" : value;
+    }
+
+    function isEmptyObject(obj) {
+      return Object.keys(obj).length === 0;
+    }
+
+    function displayFilterData() {
+      const industry1 = $('#industry1-selectize option:selected').text();
+      const industry2 = $('#industry2-selectize option:selected').text() === "" ? "undefined" : $('#industry2-selectize option:selected').text();
+      const purpose = $('#purpose-selectize option:selected').text();
+      const test = $('#test-selectize option:selected').text();
+
+      const filterResult = filterData[industry1]?.[industry2]?.[purpose]?.[test];
+      if (!isEmptyObject(filterResult)) {
+        for (const [key, value] of Object.entries(filterResult)) {
+          const mainCategoryMatch = key.match(/\[([A-F])\]/);
+          const subCategoryMatch = key.match(/\[([A-F]\d+)\]/);
+          console.log('mainCategoryMatch', mainCategoryMatch)
+          console.log('subCategoryMatch', subCategoryMatch)
+          if (mainCategoryMatch) {
+            const category = mainCategoryMatch[1];
+            if (key.includes(`[${category}]`)) {
+              if (!nationalOverallScores[category]) {
+                nationalOverallScores[category] = 0;
+              }
+              nationalOverallScores[category] = parseFloat(value.toFixed(1) || 0);
+            }
+          }
+          if (subCategoryMatch) {
+            const category = subCategoryMatch[1][0]; // Get the main category letter
+            const subcategory = subCategoryMatch[1];
+            if (!nationalPartScores[category]) {
+              nationalPartScores[category] = {};
+            }
+            nationalPartScores[category][subcategory] = parseFloat(value.toFixed(1) || 0);
+          }
+        }
+      } else {
+        nationalOverallScores = {}
+        nationalPartScores = {}
+      }
+      console.log(nationalOverallScores)
+      console.log(nationalPartScores)
+      updateAllData()
+    }
+
+    $('#apply-filter-btn').on('click', function () {
+      displayFilterData();
+    });
     initializeSelectize()
   </script>
 </body>
