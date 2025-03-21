@@ -1457,7 +1457,7 @@
       const totalEarnedScore = group.reduce((sum, item) => sum + item.earnedScore, 0);
       const totalAverageScore = group.reduce((sum, item) => sum + parseFloat(item.averageScore || 0), 0);
       const companyAverage = [parseFloat(totalAverageScore.toFixed(1) || 0), ...group.map(item => parseFloat(item.averageScore || 0))];
-      const totalMaxScore = group.reduce((sum, item) => sum + (item?.scores?.length || 0), 0);
+      const totalMaxScore = group.reduce((sum, item) => sum + parseFloat(item?.scores?.length || 0), 0);
 
       let nationalGroupScores = []
       if (!isEmptyObject(nationalPartScores)) {
@@ -1484,7 +1484,7 @@
       <tr>
         <td class=""></td>
         <td class="px-4 py-2 border border-r-0 border-b-0 bg-[#F5F5F5] text-center text-[20px] font-semibold rounded-tl-lg">満点</td>
-        <td class="px-4 py-2 border border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${totalMaxScore}</td>
+        <td class="px-4 py-2 border border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${formatValue(totalMaxScore)}</td>
         ${group.map(item => `<td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${item.scores?.length || 0}</td>`).join('')}
       </tr>`;
 
@@ -1785,9 +1785,8 @@
 
     function generatePolarChart(prefix, group, nationalGroupScores) {
       const categories = group.map(item => getMajorName(item));
-      const totalEarnedScore = group.reduce((sum, item) => sum + item.earnedScore, 0);
       const totalAverageScore = group.reduce((sum, item) => sum + item.averageScore, 0);
-      const companyAverage = [parseFloat(totalEarnedScore.toFixed(1) || 0), ...group.map(item => parseFloat(item.earnedScore || 0))];
+      const companyAverage = [parseFloat(totalAverageScore.toFixed(1) || 0), ...group.map(item => parseFloat(item.averageScore || 0))];
       const nationalAverage = nationalGroupScores
       const allCategories = ['合計', ...categories];
 
