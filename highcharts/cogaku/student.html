@@ -1380,7 +1380,6 @@
           groupedTags = groupTagsByPrefix(tags);
           statData = stats;
           displayFilterData()
-          updateAllData()
         }
       } catch (error) {
 
@@ -1610,7 +1609,9 @@
         const nationalScores = nameTags.map(item => nationalOverallScores[item])
         const totalNationalScore = nationalScores.reduce((sum, score) => sum + parseFloat(score || 0), 0);
         overallNationalScores = [parseFloat(totalNationalScore.toFixed(1) || 0), ...nationalScores];
-      } else {
+      }
+
+      if (overallNationalScores.length === 0) {
         overallNationalScores = Array(categories.length + 1).fill(0);
       }
 
