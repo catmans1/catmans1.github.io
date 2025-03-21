@@ -252,8 +252,8 @@
 
     // Call api
     async function getExamReportData() {
-      // const urlApi = getPathApi()
-      // if (urlApi === null) return
+      const urlApi = getPathApi()
+      if (urlApi === null) return
 
       const nickname = document.getElementById('nickname')
       const username = document.getElementById('username')
@@ -262,14 +262,14 @@
       const examEventTitle = document.getElementById('examEventTitle')
       const authCookie = getCookie('Authorization') || 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0Iiwic2NwIjoidXNlciIsImF1ZCI6bnVsbCwiaWF0IjoxNzM1MjcwNjQ3LCJleHAiOjE3Mzc4NjI2NDcsImp0aSI6ImI2NTI5MzUzLTJmMmItNDY1YS1hOTU0LWVhMjYyMThjMjI4MyJ9.qErwguDsuXi02KLd_Smom3VgM5XuhT9vYDMtM4yuSqo';
       try {
-        // const response = await fetch(urlApi, {
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //     "Authorization": "Bearer " + authCookie
-        //   },
-        // })
-        // const responseJson = await response.json()
-
+        const response = await fetch(urlApi, {
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + authCookie
+          },
+        })
+        const responseJson = await response.json()
+        /*
         const responseJson = {
           "metaData": {
             "input": {
@@ -2856,7 +2856,7 @@
             }
           }
         }
-
+        */
         if (responseJson != null && responseJson.metaData != null && responseJson.stats != null) {
           const metaData = responseJson.metaData
           const stats = responseJson.stats
