@@ -1894,7 +1894,7 @@
 
     function generateColumnChart(stats) {
       const exam = stats.exam
-      if (!exam) return
+      if (isEmptyObject(exam)) return
 
       Highcharts.chart('position-company-chart', {
         chart: {
