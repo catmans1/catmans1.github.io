@@ -3075,7 +3075,7 @@
       <th class="px-4 py-2 border border-l-0 border-b-0 ${index === categories.length - 1 ? 'rounded-tr-lg' : ''} text-center text-[20px] font-semibold">
         ${header}
       </th>`).join('');
-      console.log(groups)
+
       const scores = Object.values(calculateMaxScoresOfTags(groups))
       const averageScores = Object.values(calculateAverageScoresOfTags(groups))
       const totalAverageScore = averageScores.reduce((sum, score) => sum + score, 0);
