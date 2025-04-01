@@ -1962,35 +1962,35 @@
     }
 
     const positionCompanyData = (exam) => {
-      const data = Array(10).fill(0);
+      const data = Array(10).fill(0); // 10 bins for (10%, 20%, ..., 100%)
+      const colors = Array(10).fill('#EBEBEB'); // Default gray color
 
-      const colors = Array(10).fill('#EBEBEB');
-      Object.entries(exam.deviationDistribution).forEach(([key, value]) => {
+      const passRateInt = Math.floor(exam.passRate); // Convert passRate to integer
+
+      // Loop through scoreDistribution to map values correctly
+      Object.entries(exam.scoreDistribution).forEach(([key, value]) => {
         const [rangeStart, rangeEnd] = key.split('-').map(Number);
 
-        // Map each deviation range to the corresponding column (10%, 20%, ..., 100%)
-        for (let i = rangeStart; i <= rangeEnd; i++) {
-          const columnIndex = Math.floor(i / 10);
-          if (columnIndex >= 0 && columnIndex < 10) {
-            data[columnIndex] += value;
+        // Adjust column index so 50-59 falls in 50%, not 60%
+        let columnIndex = Math.floor(rangeStart / 10) - 1;
+        if (rangeStart === 0) columnIndex = 0; // Ensure 0-9 maps to 10% column
 
-            if (exam.deviationValue >= rangeStart && exam.deviationValue <= rangeEnd) {
-              colors[columnIndex] = '#10B981';
-            } else {
-              colors[columnIndex] = '#EBEBEB';
-            }
+        if (columnIndex >= 0 && columnIndex < 10) {
+          data[columnIndex] = value; // Store number of users in this range
+
+          // Highlight correct column if passRate falls in this range
+          if (passRateInt >= rangeStart && passRateInt <= rangeEnd) {
+            colors[columnIndex] = '#10B981'; // Highlight matching pass rate
           }
         }
       });
 
-      // Format the data for Highcharts
-      const positionCompanyData = data.map((y, i) => ({
-        x: (i + 1) * 10,
-        y: y,
-        color: colors[i]
+      // Convert to Highcharts format
+      return data.map((y, i) => ({
+        x: (i + 1) * 10, // x-axis starts at 10%
+        y: y, // Number of users
+        color: colors[i] // Apply highlight color if needed
       }));
-
-      return positionCompanyData;
     };
 
     getExamData()
