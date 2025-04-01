@@ -1456,7 +1456,7 @@
       const categories = group.map(item => getTagName(item));
       const totalEarnedScore = group.reduce((sum, item) => sum + item.earnedScore, 0);
       const totalAverageScore = group.reduce((sum, item) => sum + parseFloat(item.averageScore || 0), 0);
-      const companyAverage = [parseFloat(totalAverageScore.toFixed(1) || 0), ...group.map(item => parseFloat(item.averageScore || 0))];
+      const companyAverage = [parseFloat(totalAverageScore.toFixed(1) || 0), ...group.map(item => parseFloat(item.averageScore.toFixed(1) || 0))];
       const totalMaxScore = group.reduce((sum, item) => sum + parseFloat(item?.scores?.length || 0), 0);
 
       let nationalGroupScores = []
