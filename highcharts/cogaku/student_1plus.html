@@ -237,11 +237,22 @@
       const protocol = window.location.protocol
       const hostname = window.location.hostname
       const path = window.location.pathname;
-      const match = path.match(/\/reports\/(\d+)/);
-      const user_exam_id = match ? match[1] : null;
+      let user_exam_id = null;
+
+      let match = path.match(/\/reports\/(\d+)/); // Match /reports/{user_exam_id}
+      if (!match) {
+        match = path.match(/\/exam_results\/(\d+)\/report/); // Match /exam_results/{user_exam_id}/report
+      }
+      if (!match) {
+        match = path.match(/\/users\/\d+\/exam_results\/(\d+)\/report/); // Match /users/{user_id}/exam_results/{user_exam_id}/report
+      }
+
+      if (match) {
+        user_exam_id = match[1];
+      }
 
       if (!user_exam_id) {
-        console.error('Invalid URL format: Unable to extract reportId');
+        console.error('Invalid URL format: Unable to extract user_exam_id');
         return null;
       }
       const urlParams = new URLSearchParams(window.location.search);
