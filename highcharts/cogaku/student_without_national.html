@@ -1362,7 +1362,7 @@
       const totalAverageScore = group.reduce((sum, item) => sum + item.averageScore, 0);
       const companyAverage = [totalAverageScore.toFixed(1), ...group.map(item => item.averageScore.toFixed(1))];
       const totalMaxScore = group.reduce((sum, item) => sum + (item?.scores?.length || 0), 0);
-      const userEarndScores = [totalEarnedScore.toFixed(0), ...group.map(item => item.earnedScore)];
+      const userEarndScores = [parseFloat(totalEarnedScore.toFixed(1) || 0), ...group.map(item => item.earnedScore)];
       const totalUserEarndScores = [totalMaxScore, ...group.map(item => item.scores.length)];
 
       const tableHeaders = ['合計', ...categories].map((header, index) => `
@@ -1374,8 +1374,8 @@
       <tr>
         <td class=""></td>
         <td class="px-4 py-2 border border-r-0 border-b-0 bg-[#F5F5F5] text-center text-[20px] font-semibold rounded-tl-lg">満点</td>
-        <td class="px-4 py-2 border border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${totalMaxScore}</td>
-        ${Array(categories.length).fill(`<td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${group[0]?.scores?.length || 0}</td>`).join('')}
+        <td class="px-4 py-2 border border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${formatValue(totalMaxScore)}</td>
+        ${Array(categories.length).fill(`<td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${formatValue(group[0]?.scores?.length || 0)}</td>`).join('')}
       </tr>`;
 
       const tbodyContent = `
@@ -1461,7 +1461,7 @@
       newChartElement.innerHTML = chartHtml;
       tags_container.appendChild(newChartElement);
 
-      generatePolarChart(prefix, group)
+      generatePolarChart(prefix, group, userEarndScores)
     }
 
     const table_overall = document.getElementById('table-overall');
@@ -1479,14 +1479,14 @@
       const totalEarnedScore = earnedScores.reduce((sum, score) => sum + score, 0);
       const companyAverage = [totalAverageScore.toFixed(1), ...averageScores];
 
-      const userEarndScores = [totalEarnedScore.toFixed(0), ...earnedScores];
+      const userEarndScores = [totalEarnedScore.toFixed(1), ...earnedScores];
       const totalScore = exam?.maxScore
       const totalUserEarndScores = [totalScore, ...scores];
 
       const scoreCells = scores
         .map(
           (score) =>
-            `<td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${score}</td>`
+            `<td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${formatValue(score)}</td>`
         )
         .join("");
 
@@ -1496,7 +1496,7 @@
           <td
             class="px-4 py-2 border border-r-0 border-b-0 bg-[#F5F5F5] text-center text-[20px] font-semibold rounded-tl-lg">
             満点</td>
-          <td class="px-4 py-2 border border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${totalScore}</td>
+          <td class="px-4 py-2 border border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${formatValue(totalScore)}</td>
           ${scoreCells}
         </tr>
       `
@@ -1629,7 +1629,7 @@
       }
     }
 
-    function generatePolarChart(prefix, group) {
+    function generatePolarChart(prefix, group, userEarndScores) {
       const categories = group.map(item => getMajorName(item));
       const totalAverageScore = group.reduce((sum, item) => sum + item.averageScore, 0);
       const companyAverage = [totalAverageScore.toFixed(1), ...group.map(item => item.averageScore)];
@@ -1676,6 +1676,11 @@
           data: companyAverage,
           pointPlacement: 'on',
           color: '#3B82F6'
+        }, {
+          name: 'ご本人',
+          data: userEarndScores,
+          pointPlacement: 'on',
+          color: '#10B981'
         }],
         responsive: {
           rules: [{
@@ -1725,7 +1730,7 @@
         <tr style='${isPercentage ? 'background-color: #F5F5F5' : ''}'>
           ${label1Cell}
           ${label2Cell}
-          ${scores.map((score, index) => `<td class="px-4 py-2 border ${index === 0 ? '' : 'border-l-0'} ${index === scores.length - 1 && isRoundRight ? 'rounded-br-lg' : ''} ${isBottom ? '' : 'border-b-0'} text-right text-[20px] font-semibold">${score}</td>`).join('')}
+          ${scores.map((score, index) => `<td class="px-4 py-2 border ${index === 0 ? '' : 'border-l-0'} ${index === scores.length - 1 && isRoundRight ? 'rounded-br-lg' : ''} ${isBottom ? '' : 'border-b-0'} text-right text-[20px] font-semibold">${formatValue(score)}</td>`).join('')}
         </tr>
       `
 
@@ -1852,6 +1857,10 @@
         color: colors[i] // Apply highlight color if needed
       }));
     };
+
+    function formatValue(value) {
+      return (value === null || value === undefined || value === 0.0 || isNaN(value)) ? "-" : value;
+    }
 
     getExamData()
   </script>

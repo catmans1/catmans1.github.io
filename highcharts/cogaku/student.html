@@ -2384,7 +2384,7 @@
         nationalGroupScores = Array(categories.length + 1).fill(0);
       }
 
-      const userEarndScores = [parseFloat(totalEarnedScore.toFixed(0) || 0), ...group.map(item => parseFloat(item.earnedScore.toFixed(0) || 0))];
+      const userEarndScores = [parseFloat(totalEarnedScore.toFixed(1) || 0), ...group.map(item => parseFloat(item.earnedScore.toFixed(1) || 0))];
       const totalUserEarndScores = [totalMaxScore, ...group.map(item => item.scores.length)];
 
       const tableHeaders = ['合計', ...categories].map((header, index) => `
@@ -2498,7 +2498,7 @@
       newChartElement.innerHTML = chartHtml;
       tags_container.appendChild(newChartElement);
 
-      generatePolarChart(prefix, group, nationalGroupScores)
+      generatePolarChart(prefix, group, nationalGroupScores, userEarndScores)
     }
 
     const table_overall = document.getElementById('table-overall');
@@ -2527,7 +2527,7 @@
         overallNationalScores = Array(categories.length + 1).fill(0);
       }
 
-      const userEarndScores = [totalEarnedScore.toFixed(0), ...earnedScores];
+      const userEarndScores = [totalEarnedScore.toFixed(1), ...earnedScores];
       const totalScore = exam?.maxScore
       const totalUserEarndScores = [totalScore, ...scores];
 
@@ -2695,7 +2695,7 @@
       }
     }
 
-    function generatePolarChart(prefix, group, nationalGroupScores) {
+    function generatePolarChart(prefix, group, nationalGroupScores, userEarndScores) {
       const categories = group.map(item => getMajorName(item));
       const totalAverageScore = group.reduce((sum, item) => sum + item.averageScore, 0);
       const companyAverage = [parseFloat(totalAverageScore.toFixed(1) || 0), ...group.map(item => parseFloat(item.averageScore || 0))];
@@ -2748,6 +2748,11 @@
           data: companyAverage,
           pointPlacement: 'on',
           color: '#3B82F6'
+        }, {
+          name: 'ご本人',
+          data: userEarndScores,
+          pointPlacement: 'on',
+          color: '#10B981'
         }],
         responsive: {
           rules: [{
