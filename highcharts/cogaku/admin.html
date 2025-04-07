@@ -2036,6 +2036,9 @@
         nationalGroupScores = Array(categories.length + 1).fill(0);
       }
 
+      const nationalAverageScorePercent = nationalGroupScores.map((score, index) => parseFloat((score / totalCompanyAverages[index] * 100).toFixed(1) || 0));
+      const companyAverageScorePercent = companyAverage.map((score, index) => parseFloat((score / totalCompanyAverages[index] * 100).toFixed(1) || 0));
+
       const tableHeaders = ['合計', ...categories].map((header, index) => `
       <th class="px-4 py-2 border border-b-0 ${index === 0 ? 'rounded-tl-lg' : 'border-l-0'} ${index === categories.length ? 'rounded-tr-lg' : ''} text-center text-[20px] font-semibold">
         ${header}
@@ -2061,7 +2064,7 @@
         label1: '',
         label2: '正解率',
         bgColor: 'bg-[#EE4344]',
-        scores: nationalGroupScores.map((score, index) => parseFloat((score / totalCompanyAverages[index] * 100).toFixed(1) || 0)),
+        scores: nationalAverageScorePercent,
         isBottom: false,
         isRoundLeft: false,
         isPercentage: true
@@ -2079,7 +2082,7 @@
         label1: '',
         label2: '正解率',
         bgColor: 'bg-[#3B82F6]',
-        scores: companyAverage.map((score, index) => parseFloat((score / totalCompanyAverages[index] * 100).toFixed(1) || 0)),
+        scores: companyAverageScorePercent,
         isBottom: false,
         isRoundLeft: true,
         isPercentage: true,
@@ -2132,7 +2135,7 @@
       newChartElement.innerHTML = chartHtml;
       tags_container.appendChild(newChartElement);
 
-      generatePolarChart(prefix, group, nationalGroupScores)
+      generatePolarChart(prefix, group, nationalAverageScorePercent, companyAverageScorePercent)
     }
 
     const table_overall = document.getElementById('table-overall');
@@ -2318,11 +2321,8 @@
       }
     }
 
-    function generatePolarChart(prefix, group, nationalGroupScores) {
+    function generatePolarChart(prefix, group, nationalAverageScorePercent, companyAverageScorePercent) {
       const categories = group.map(item => getMajorName(item));
-      const totalAverageScore = group.reduce((sum, item) => sum + item.averageScore, 0);
-      const companyAverage = [parseFloat(totalAverageScore.toFixed(1) || 0), ...group.map(item => parseFloat(item.averageScore || 0))];
-      const nationalAverage = nationalGroupScores
       const allCategories = ['合計', ...categories];
 
       Highcharts.chart(`polarchart-${prefix}`, {
@@ -2351,7 +2351,8 @@
         yAxis: {
           gridLineInterpolation: 'polygon',
           lineWidth: 0,
-          min: 0
+          min: 0,
+          tickInterval: 20
         },
         tooltip: {
           enabled: false
@@ -2363,12 +2364,12 @@
         },
         series: [{
           name: '全国平均',
-          data: nationalAverage,
+          data: nationalAverageScorePercent,
           pointPlacement: 'on',
           color: '#EE4344'
         }, {
           name: '貴社平均',
-          data: companyAverage,
+          data: companyAverageScorePercent,
           pointPlacement: 'on',
           color: '#3B82F6'
         }],
