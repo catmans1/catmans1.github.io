@@ -2261,10 +2261,10 @@
       const categories = group.map(item => getTagName(item));
       const totalEarnedScore = group.reduce((sum, item) => sum + item.earnedScore, 0);
       const totalAverageScore = group.reduce((sum, item) => sum + item.averageScore, 0);
-      const companyAverage = [totalAverageScore.toFixed(1), ...group.map(item => item.averageScore.toFixed(1))];
+      const companyAverage = [parseFloat(totalAverageScore.toFixed(1) || 0), ...group.map(item => parseFloat(item.averageScore.toFixed(1) || 0))];
       const totalMaxScore = group.reduce((sum, item) => sum + (item?.scores?.length || 0), 0);
-      const userEarndScores = [parseFloat(totalEarnedScore.toFixed(1) || 0), ...group.map(item => item.earnedScore)];
-      const totalUserEarndScores = [totalMaxScore, ...group.map(item => item.scores.length)];
+      const userEarndScores = [parseFloat(totalEarnedScore.toFixed(1) || 0), ...group.map(item => parseFloat(item.earnedScore || 0))];
+      const totalUserEarndScores = [parseFloat(totalMaxScore.toFixed(1) || 0), ...group.map(item => item.scores.length)];
 
       const companyAverageScorePercent = companyAverage.map((score, index) => parseFloat((score / totalUserEarndScores[index] * 100).toFixed(1) || 0));
       const userAverageScorePercent = userEarndScores.map((score, index) => parseFloat((score / totalUserEarndScores[index] * 100).toFixed(1) || 0));
@@ -2381,9 +2381,9 @@
       const earnedScores = Object.values(calculateEarnedScoresOfTags(groups))
       const totalAverageScore = averageScores.reduce((sum, score) => sum + score, 0);
       const totalEarnedScore = earnedScores.reduce((sum, score) => sum + score, 0);
-      const companyAverage = [totalAverageScore.toFixed(1), ...averageScores];
+      const companyAverage = [parseFloat(totalAverageScore.toFixed(1) || 0), ...averageScores.map(s => parseFloat(s.toFixed(1) || 0))];
 
-      const userEarndScores = [totalEarnedScore.toFixed(1), ...earnedScores];
+      const userEarndScores = [parseFloat(totalEarnedScore.toFixed(1) || 0), ...earnedScores.map(s => parseFloat(s.toFixed(1) || 0))];
       const totalScore = exam?.maxScore
       const totalUserEarndScores = [totalScore, ...scores];
 
@@ -2429,7 +2429,7 @@
         label1: '',
         label2: '正解率',
         bgColor: 'bg-[#3B82F6]',
-        scores: companyAverage.map((score, index) => (score / totalUserEarndScores[index] * 100).toFixed(1)),
+        scores: companyAverage.map((score, index) => parseFloat((score / totalUserEarndScores[index] * 100).toFixed(1) || 0)),
         isBottom: false,
         isRoundLeft: false,
         isPercentage: true
@@ -2447,7 +2447,7 @@
         label1: '',
         label2: '正解率',
         bgColor: 'bg-[#10B981]',
-        scores: userEarndScores.map((score, index) => (score / totalUserEarndScores[index] * 100).toFixed(1)),
+        scores: userEarndScores.map((score, index) => parseFloat((score / totalUserEarndScores[index] * 100).toFixed(1) || 0)),
         isBottom: false,
         isRoundLeft: true,
         isPercentage: true,
@@ -2501,7 +2501,7 @@
       const totals = {};
       for (const [key, items] of Object.entries(data)) {
         const sum = items.reduce((sum, item) => sum + item.scores?.length, 0);
-        totals[key] = parseFloat(sum.toFixed(1))
+        totals[key] = parseFloat(sum || 0)
       }
       return totals;
     };
@@ -2510,7 +2510,7 @@
       const totals = {};
       for (const [key, items] of Object.entries(data)) {
         const sum = items.reduce((sum, item) => sum + item.averageScore, 0);
-        totals[key] = parseFloat(sum.toFixed(1))
+        totals[key] = parseFloat(sum || 0)
       }
       return totals;
     };
@@ -2519,7 +2519,7 @@
       const totals = {};
       for (const [key, items] of Object.entries(data)) {
         const sum = items.reduce((sum, item) => sum + item.earnedScore, 0);
-        totals[key] = parseFloat(sum.toFixed(1))
+        totals[key] = parseFloat(sum || 0)
       }
       return totals;
     };

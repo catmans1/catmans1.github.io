@@ -2153,7 +2153,7 @@
 
       const averageScores = Object.values(calculateAverageScoresOfTags(groups))
       const totalAverageScore = averageScores.reduce((sum, score) => sum + score, 0);
-      const companyAverage = [parseFloat(totalAverageScore.toFixed(1) || 0), ...averageScores];
+      const companyAverage = [parseFloat(totalAverageScore.toFixed(1) || 0), ...averageScores.map(s => parseFloat(s.toFixed(1) || 0))];
 
       const totalScore = exam?.maxScore || 120
       const totalCompanyAverages = [totalScore, ...scores];
@@ -2230,7 +2230,7 @@
         label1: '',
         label2: '正解率',
         bgColor: 'bg-[#3B82F6]',
-        scores: companyAverage.map((score, index) => (score / totalCompanyAverages[index] * 100).toFixed(1)),
+        scores: companyAverage.map((score, index) => parseFloat((score / totalCompanyAverages[index] * 100).toFixed(1) || 0)),
         isBottom: false,
         isRoundLeft: true,
         isPercentage: true,
@@ -2286,7 +2286,7 @@
       const totals = {};
       for (const [key, items] of Object.entries(data)) {
         const sum = items.reduce((sum, item) => sum + item.maxScore, 0);
-        totals[key] = parseFloat(sum.toFixed(1) || 0)
+        totals[key] = parseFloat(sum || 0)
       }
 
       return totals;
@@ -2296,7 +2296,7 @@
       const totals = {};
       for (const [key, items] of Object.entries(data)) {
         const sum = items.reduce((sum, item) => sum + item.averageScore, 0);
-        totals[key] = parseFloat(sum.toFixed(1) || 0)
+        totals[key] = parseFloat(sum || 0)
       }
 
       return totals;
@@ -2306,7 +2306,7 @@
       const totals = {};
       for (const [key, items] of Object.entries(data)) {
         const sum = items.reduce((sum, item) => sum + item.earnedScore, 0);
-        totals[key] = parseFloat(sum.toFixed(1) || 0)
+        totals[key] = parseFloat(sum || 0)
       }
       return totals;
     };

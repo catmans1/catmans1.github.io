@@ -2366,7 +2366,7 @@
         })
         .join("");
       const categories = group.map(item => getTagName(item));
-      const totalEarnedScore = group.reduce((sum, item) => sum + item.earnedScore, 0);
+      const totalEarnedScore = group.reduce((sum, item) => sum + parseFloat(item.earnedScore || 0), 0);
       const totalAverageScore = group.reduce((sum, item) => sum + parseFloat(item.averageScore || 0), 0);
       const companyAverage = [parseFloat(totalAverageScore.toFixed(1) || 0), ...group.map(item => parseFloat(item.averageScore.toFixed(1) || 0))];
       const totalMaxScore = group.reduce((sum, item) => sum + parseFloat(item?.scores?.length || 0), 0);
@@ -2385,7 +2385,7 @@
       }
 
       const userEarndScores = [parseFloat(totalEarnedScore.toFixed(1) || 0), ...group.map(item => parseFloat(item.earnedScore.toFixed(1) || 0))];
-      const totalUserEarndScores = [totalMaxScore, ...group.map(item => item.scores.length)];
+      const totalUserEarndScores = [parseFloat(totalMaxScore.toFixed(1) || 0), ...group.map(item => item.scores.length)];
 
       const nationalAverageScorePercent = nationalGroupScores.map((score, index) => parseFloat((score / totalUserEarndScores[index] * 100).toFixed(1) || 0));
       const companyAverageScorePercent = companyAverage.map((score, index) => parseFloat((score / totalUserEarndScores[index] * 100).toFixed(1) || 0));
@@ -2519,7 +2519,7 @@
       const earnedScores = Object.values(calculateEarnedScoresOfTags(groups))
       const totalAverageScore = averageScores.reduce((sum, score) => sum + parseFloat(score || 0), 0);
       const totalEarnedScore = earnedScores.reduce((sum, score) => sum + parseFloat(score || 0), 0);
-      const companyAverage = [parseFloat(totalAverageScore.toFixed(1) || 0), ...averageScores];
+      const companyAverage = [parseFloat(totalAverageScore.toFixed(1) || 0), ...averageScores.map(s => parseFloat(s.toFixed(1) || 0))];
       let overallNationalScores = []
       if (!isEmptyObject(nationalOverallScores)) {
         const nationalScores = nameTags.map(item => nationalOverallScores[item])
@@ -2531,7 +2531,7 @@
         overallNationalScores = Array(categories.length + 1).fill(0);
       }
 
-      const userEarndScores = [totalEarnedScore.toFixed(1), ...earnedScores];
+      const userEarndScores = [parseFloat(totalEarnedScore.toFixed(1) || 0), ...earnedScores.map(s => parseFloat(s.toFixed(1) || 0))];
       const totalScore = exam?.maxScore
       const totalUserEarndScores = [totalScore, ...scores];
 
@@ -2666,7 +2666,7 @@
       const totals = {};
       for (const [key, items] of Object.entries(data)) {
         const sum = items.reduce((sum, item) => sum + item.scores?.length, 0);
-        totals[key] = parseFloat(sum.toFixed(1) || 0)
+        totals[key] = parseFloat(sum || 0)
       }
       return totals;
     };
@@ -2675,7 +2675,7 @@
       const totals = {};
       for (const [key, items] of Object.entries(data)) {
         const sum = items.reduce((sum, item) => sum + item.averageScore, 0);
-        totals[key] = parseFloat(sum.toFixed(1) || 0)
+        totals[key] = parseFloat(sum || 0)
       }
       return totals;
     };
@@ -2684,7 +2684,7 @@
       const totals = {};
       for (const [key, items] of Object.entries(data)) {
         const sum = items.reduce((sum, item) => sum + item.earnedScore, 0);
-        totals[key] = parseFloat(sum.toFixed(1) || 0)
+        totals[key] = parseFloat(sum || 0)
       }
       return totals;
     };

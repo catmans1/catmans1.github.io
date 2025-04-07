@@ -2018,7 +2018,7 @@
 
       const averageScores = Object.values(calculateAverageScoresOfTags(groups))
       const totalAverageScore = averageScores.reduce((sum, score) => sum + score, 0);
-      const companyAverage = [totalAverageScore.toFixed(1), ...averageScores];
+      const companyAverage = [parseFloat(totalAverageScore.toFixed(1) || 0), ...averageScores.map(s => parseFloat(s.toFixed(1) || 0))];
 
       const totalScore = exam?.maxScore || 120
       const totalCompanyAverages = [totalScore, ...scores];
@@ -2122,7 +2122,7 @@
       const totals = {};
       for (const [key, items] of Object.entries(data)) {
         const sum = items.reduce((sum, item) => sum + item.maxScore, 0);
-        totals[key] = parseFloat(sum.toFixed(1))
+        totals[key] = parseFloat(sum || 0)
       }
       return totals;
     };
@@ -2131,7 +2131,7 @@
       const totals = {};
       for (const [key, items] of Object.entries(data)) {
         const sum = items.reduce((sum, item) => sum + item.averageScore, 0);
-        totals[key] = parseFloat(sum.toFixed(1))
+        totals[key] = parseFloat(sum || 0)
       }
       return totals;
     };
@@ -2140,7 +2140,7 @@
       const totals = {};
       for (const [key, items] of Object.entries(data)) {
         const sum = items.reduce((sum, item) => sum + item.earnedScore, 0);
-        totals[key] = parseFloat(sum.toFixed(1))
+        totals[key] = parseFloat(sum || 0)
       }
       return totals;
     };
