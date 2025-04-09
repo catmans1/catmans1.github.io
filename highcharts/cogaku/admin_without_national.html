@@ -255,16 +255,16 @@
               "variance": 2.3,
               "median": 27.5,
               "scoreDistribution": {
-                "0-9": 0,
-                "10-19": 0,
-                "20-29": 1,
-                "30-39": 1,
-                "40-49": 0,
-                "50-59": 0,
-                "60-69": 0,
-                "70-79": 0,
-                "80-89": 0,
-                "90-99": 0
+                "0-10": 1,
+                "10-20": 1,
+                "20-30": 0,
+                "30-40": 0,
+                "40-50": 0,
+                "50-60": 1,
+                "60-70": 0,
+                "70-80": 0,
+                "80-90": 1,
+                "90-100": 1
               },
               "scoreDistributionByEarnedScore": {
                 "0-9": 0,
@@ -2258,81 +2258,12 @@
     }
 
     function generateColumnChart(stats) {
-      const exam = stats.exam
-      if (!exam) return
-      const possibleYValues = [5, 10, 15, 20, 22];
-      const positionChartData = Object.entries(exam.scoreDistribution).map(([key, value]) => {
-        let color;
-        return {
-          x: parseInt(key),
-          y: possibleYValues[Math.floor(Math.random() * possibleYValues.length)],
-          color: '#EE4344'
-        };
-      });
-      /*
-      Highcharts.chart('position-nationwide-chart', {
-        chart: {
-          type: 'column'
-        },
-        title: {
-          text: ''
-        },
-        xAxis: {
-          min: 10,
-          max: 100,
-          tickInterval: 10,
-          title: {
-            text: '正解率',
-            style: {
-              fontSize: '14px',  // Custom font size
-              fontWeight: '500', // Custom font weight
-              color: '#000000'   // Custom font color (optional)
-            }
-          },
-          labels: {
-            useHTML: true,
-            formatter: function () {
-              return this.value + '%'; // Add percentage sign
-            }
-          },
-          tickWidth: 0
-        },
-        yAxis: {
-          tickInterval: 5, // Set y-axis to have intervals of 5
-          title: {
-            text: '頻度',
-            style: {
-              fontSize: '14px',  // Custom font size
-              fontWeight: '500', // Custom font weight
-              color: '#000000'   // Custom font color (optional)
-            }
-          }
-        },
-        tooltip: {
-          enabled: false
-        },
-        series: [{
-          data: positionChartData,
-          showInLegend: false,
-          pointWidth: 40,
-        }],
-        plotOptions: {
-          column: {
-            pointPadding: 0.2,
-            borderWidth: 0
-          }
-        },
-        plotOptions: {
-          column: {
-            pointPadding: 0.2,
-            borderWidth: 0
-          }
-        },
-        credits: {
-          enabled: false
-        }
-      });
-      */
+      const exam = stats.exam;
+      if (isEmptyObject(exam)) return;
+
+      // Process the score distribution data
+      const processedData = processScoreDistribution(exam.scoreDistribution, exam.passRate);
+
       Highcharts.chart('position-company-chart', {
         chart: {
           type: 'column'
@@ -2341,33 +2272,34 @@
           text: ''
         },
         xAxis: {
-          min: 10,
+          min: 0,
           max: 100,
           tickInterval: 10,
           title: {
             text: '正解率',
             style: {
-              fontSize: '14px',  // Custom font size
-              fontWeight: '500', // Custom font weight
-              color: '#000000'   // Custom font color (optional)
+              fontSize: '14px',
+              fontWeight: '500',
+              color: '#000000'
             }
           },
           labels: {
             useHTML: true,
             formatter: function () {
-              return this.value + '%'; // Add percentage sign
+              if (this.value === 0) return ''
+              return this.value + '%';
             }
           },
           tickWidth: 0
         },
         yAxis: {
-          tickInterval: 5, // Set y-axis to have intervals of 5
+          tickInterval: 5,
           title: {
             text: '頻度',
             style: {
-              fontSize: '14px',  // Custom font size
-              fontWeight: '500', // Custom font weight
-              color: '#000000'   // Custom font color (optional)
+              fontSize: '14px',
+              fontWeight: '500',
+              color: '#000000'
             }
           }
         },
@@ -2375,52 +2307,59 @@
           enabled: false
         },
         series: [{
-          data: positionCompanyData(exam),
+          data: processedData.data,
           showInLegend: false,
-          pointWidth: 40,
+          pointWidth: 78,
+          // pointRange: 10,
+          pointPlacement: 'on',
+          colorByPoint: true,
+          colors: processedData.colors
         }],
         plotOptions: {
           column: {
-            pointPadding: 0.2,
-            borderWidth: 0
-          }
-        },
-        plotOptions: {
-          column: {
-            pointPadding: 0.2,
-            borderWidth: 0
+            pointPadding: 0,
+            borderWidth: 0,
+            groupPadding: 0
           }
         },
         credits: {
           enabled: false
         }
       });
-
     }
 
-    const positionCompanyData = (exam) => {
+    function processScoreDistribution(scoreDistribution, passRate) {
+      // Initialize data for all ranges (0-10, 10-20, ..., 90-100)
       const data = Array(10).fill(0);
+      const colors = Array(10).fill('#3B82F6'); // Default blue color
 
-      // Populate data based on scoreDistribution
-      Object.entries(exam.scoreDistribution).forEach(([key, value]) => {
-        const [rangeStart] = key.split('-').map(Number);
+      // Convert passRate to integer
+      const passRateInt = parseFloat(passRate.toFixed(1) || 0);
 
-        // Adjust column index to match the x-axis percentage (10%, 20%, ..., 100%)
-        let columnIndex = Math.floor(rangeStart / 10) - 1;
-        if (rangeStart === 0) columnIndex = 0; // Ensure 0-9 maps to 10%
-
-        if (columnIndex >= 0 && columnIndex < 10) {
-          data[columnIndex] = value;
-        }
+      // Process each range in the score distribution
+      Object.entries(scoreDistribution).forEach(([range, value]) => {
+        const [start, end] = range.split('-').map(Number);
+        // Determine which bucket this range belongs to (0-10 -> 0, 10-20 -> 1, etc.)
+        const bucketIndex = Math.floor(start / 10);
+        data[bucketIndex] = value;
       });
 
-      // Convert to Highcharts format
-      return data.map((y, i) => ({
-        x: (i + 1) * 10, // X-axis represents 10%, 20%, ..., 100%
-        y: y, // Y-axis represents number of users in this score range
-        color: '#3B82F6' // Default admin-side color
+      // Format data for Highcharts (x values are the middle of each range)
+      const formattedData = data.map((value, index) => ({
+        x: index * 10 + 5, // Center of the range (5, 15, 25,...)
+        y: value,
+        // name: `${index * 10}-${index === 9 ? 100 : index * 10 + 10}%` // Range label (0-10, 10-20,...,90-100)
       }));
-    };
+
+      return {
+        data: formattedData,
+        colors: colors
+      };
+    }
+
+    function isEmptyObject(obj) {
+      return !obj || Object.keys(obj).length === 0;
+    }
 
     function formatValue(value) {
       return (value === null || value === undefined || value === 0.0 || isNaN(value)) ? "-" : value;

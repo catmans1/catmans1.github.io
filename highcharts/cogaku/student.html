@@ -349,7 +349,7 @@
               "earnedScore": 150,
               "passScore": 75,
               "isPassed": true,
-              "passRate": 100.0,
+              "passRate": 100,
               "failRate": 0.0,
               "numOfParticipants": 4,
               "numOfPassedParticipants": 3,
@@ -362,17 +362,16 @@
               "variance": 1084.7,
               "median": 65.0,
               "scoreDistribution": {
-                "0-9": 0,
-                "10-19": 1,
-                "20-29": 0,
-                "30-39": 0,
-                "40-49": 0,
-                "50-59": 1,
-                "60-69": 0,
-                "70-79": 0,
-                "80-89": 1,
-                "90-99": 0,
-                "100-100": 1
+                "0-10": 1,
+                "10-20": 1,
+                "20-30": 0,
+                "30-40": 0,
+                "40-50": 0,
+                "50-60": 1,
+                "60-70": 0,
+                "70-80": 0,
+                "80-90": 1,
+                "90-100": 1
               },
               "deviationDistribution": {
                 "60-69": 1,
@@ -3585,8 +3584,11 @@
     }
 
     function generateColumnChart(stats) {
-      const exam = stats.exam
-      if (isEmptyObject(exam)) return
+      const exam = stats.exam;
+      if (isEmptyObject(exam)) return;
+
+      // Process the score distribution data
+      const processedData = processScoreDistribution(exam.scoreDistribution, exam.passRate);
 
       Highcharts.chart('position-company-chart', {
         chart: {
@@ -3596,33 +3598,34 @@
           text: ''
         },
         xAxis: {
-          min: 10,
+          min: 0,
           max: 100,
           tickInterval: 10,
           title: {
             text: '正解率',
             style: {
-              fontSize: '14px',  // Custom font size
-              fontWeight: '500', // Custom font weight
-              color: '#000000'   // Custom font color (optional)
+              fontSize: '14px',
+              fontWeight: '500',
+              color: '#000000'
             }
           },
           labels: {
             useHTML: true,
             formatter: function () {
-              return this.value + '%'; // Add percentage sign
+              if (this.value === 0) return ''
+              return this.value + '%';
             }
           },
           tickWidth: 0
         },
         yAxis: {
-          tickInterval: 5, // Set y-axis to have intervals of 5
+          tickInterval: 5,
           title: {
             text: '頻度',
             style: {
-              fontSize: '14px',  // Custom font size
-              fontWeight: '500', // Custom font weight
-              color: '#000000'   // Custom font color (optional)
+              fontSize: '14px',
+              fontWeight: '500',
+              color: '#000000'
             }
           }
         },
@@ -3630,60 +3633,70 @@
           enabled: false
         },
         series: [{
-          data: positionCompanyData(exam),
+          data: processedData.data,
           showInLegend: false,
-          pointWidth: 40,
+          pointWidth: 78,
+          // pointRange: 10,
+          pointPlacement: 'on',
+          colorByPoint: true,
+          colors: processedData.colors
         }],
         plotOptions: {
           column: {
-            pointPadding: 0.2,
-            borderWidth: 0
-          }
-        },
-        plotOptions: {
-          column: {
-            pointPadding: 0.2,
-            borderWidth: 0
+            pointPadding: 0,
+            borderWidth: 0,
+            groupPadding: 0
           }
         },
         credits: {
           enabled: false
         }
       });
-
     }
 
-    const positionCompanyData = (exam) => {
-      const data = Array(10).fill(0); // 10 bins for (10%, 20%, ..., 100%)
+    function processScoreDistribution(scoreDistribution, passRate) {
+      // Initialize data for all ranges (0-10, 10-20, ..., 90-100)
+      const data = Array(10).fill(0);
       const colors = Array(10).fill('#EBEBEB'); // Default gray color
 
-      const passRateInt = Math.floor(exam.passRate); // Convert passRate to integer
+      // Convert passRate to integer
+      const passRateInt = parseFloat(passRate.toFixed(1) || 0);
 
-      // Loop through scoreDistribution to map values correctly
-      Object.entries(exam.scoreDistribution).forEach(([key, value]) => {
-        const [rangeStart, rangeEnd] = key.split('-').map(Number);
+      // Process each range in the score distribution
+      Object.entries(scoreDistribution).forEach(([range, value]) => {
+        const [start, end] = range.split('-').map(Number);
 
-        // Adjust column index so 50-59 falls in 50%, not 60%
-        let columnIndex = Math.floor(rangeStart / 10) - 1;
-        if (rangeStart === 0) columnIndex = 0; // Ensure 0-9 maps to 10% column
+        // Determine which bucket this range belongs to (0-10 -> 0, 10-20 -> 1, etc.)
+        const bucketIndex = Math.floor(start / 10);
 
-        if (columnIndex >= 0 && columnIndex < 10) {
-          data[columnIndex] = value; // Store number of users in this range
+        // Special case for 100 (put it in the last bucket)
+        if (start === 90 && end === 100) {
+          data[9] = value;
+          if (passRateInt === 100) colors[9] = '#10B981';
+        }
+        // Normal case for other ranges
+        else if (bucketIndex >= 0 && bucketIndex < 10) {
+          data[bucketIndex] = value;
 
-          // Highlight correct column if passRate falls in this range
-          if (passRateInt >= rangeStart && passRateInt <= rangeEnd) {
-            colors[columnIndex] = '#10B981'; // Highlight matching pass rate
+          // Highlight if pass rate falls in this bucket
+          if (passRateInt >= start && passRateInt < end) {  // Note: < instead of <= for right-exclusive
+            colors[bucketIndex] = '#10B981';
           }
         }
       });
 
-      // Convert to Highcharts format
-      return data.map((y, i) => ({
-        x: (i + 1) * 10, // x-axis starts at 10%
-        y: y, // Number of users
-        color: colors[i] // Apply highlight color if needed
+      // Format data for Highcharts (x values are the middle of each range)
+      const formattedData = data.map((value, index) => ({
+        x: index * 10 + 5, // Center of the range (5, 15, 25,...)
+        y: value,
+        // name: `${index * 10}-${index === 9 ? 100 : index * 10 + 10}%` // Range label (0-10, 10-20,...,90-100)
       }));
-    };
+
+      return {
+        data: formattedData,
+        colors: colors
+      };
+    }
 
     getExamData()
 
