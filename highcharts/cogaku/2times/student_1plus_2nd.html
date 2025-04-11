@@ -1,0 +1,3016 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta content="noindex, nofollow" name="robots">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>個人成績表</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:,">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+    rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <script defer src="https://assets.share-wis.com/libs/font-awesome/6.6.0/solid.min.js"></script>
+  <script defer src="https://assets.share-wis.com/libs/font-awesome/6.6.0/fontawesome.min.js"></script>
+
+  <!-- Highcharts -->
+  <script src="https://assets.share-wis.com/libs/highcharts@12/highcharts.js"></script>
+  <script src="https://assets.share-wis.com/libs/highcharts@12/highcharts-more.js"></script>
+  <script src="https://assets.share-wis.com/libs/highcharts@12/accessibility.js"></script>
+
+  <!-- Tailwind CSS -->
+  <script src="https://assets.share-wis.com/libs/tailwindcss@3/tailwindcss.js"></script>
+
+  <!-- selectize -->
+  <!-- <script src="https://assets.share-wis.com/libs/selectize@0.15.2/selectize.min.js"></script> -->
+  <!-- <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.default.min.css"> -->
+  <script src="https://assets.share-wis.com/libs/jquery-3.6.0.min.js"></script> <!-- jQuery (required for Selectize) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js"></script>
+  <link href="https://assets.share-wis.com/libs/selectize@0.15.2/selectize.default.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Noto Sans', sans-serif;
+      color: #212121;
+    }
+
+    .loading-container {
+      visibility: visible;
+    }
+
+    .selectize-dropdown-content .selected {
+      background-color: #00ABC9;
+      color: #fff
+    }
+  </style>
+</head>
+
+<body class="bg-white">
+  <div class="w-full mx-auto p-6 bg-white">
+    <h2 class="text-[40px] font-semibold text-center">
+      個人成績表
+    </h2>
+    <h3 id="lectureTitle" class="text-[24px] font-semibold text-center"></h3>
+    <div id="examEventTitle" class="text-[24px] text-[#666666] font-semibold text-center mb-6"></div>
+    <div class="overflow-hidden rounded-lg border">
+      <table class="table-auto w-full border-collapse">
+        <thead>
+          <tr>
+            <th class="text-[20px] border-r font-semibold py-2">
+              アカウント名
+            </th>
+            <th class="text-[20px] border-r font-semibold py-2 py-2">
+              氏名
+            </th>
+            <th class="text-[20px] font-semibold py-2">
+              受験完了日
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td id="username" class="text-[20px] border-r border-t font-medium text-center py-2">
+
+            </td>
+            <td id="nickname" class="text-[20px] border-r border-t font-medium text-center py-2">
+
+            </td>
+            <td id="finishDate" class="text-[20px] border-t font-medium text-center py-2">
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 全国平均表示フィルター -->
+    <div class="border-solid border mt-10 p-8 rounded-lg">
+      <span class="text-[24px] font-semibold">
+        全国平均表示フィルター
+      </span>
+      <div class="flex justify-start items-end mt-4">
+        <div class="mr-16">
+          <div class="font-[300] text-[12px] text-[#292929]">
+            業種1
+          </div>
+          <select class="w-[15rem]" id="industry1-selectize">
+            <option value="1">すべて</option>
+            <option value="2">製造</option>
+            <option value="3">労働者派遣</option>
+            <option value="4">機械機器メンテナンス</option>
+            <option value="5">ソフトウェア・システムサービス</option>
+            <option value="6">商社・卸売</option>
+            <option value="7">電気・ガス・エネルギー関連</option>
+            <option value="8">建設</option>
+            <option value="9">学校</option>
+            <option value="10">その他の業種</option>
+          </select>
+        </div>
+        <div class="mr-16">
+          <div class="font-[300] text-[12px] text-[#292929]">
+            業種2（業種1が「製造の場合」のみ）
+          </div>
+          <select id="industry2-selectize" class="w-[14rem]">
+            <option value="1">すべて</option>
+            <option value="2">機械</option>
+            <option value="3">電気・電子機器</option>
+            <option value="4">輸送用機器</option>
+            <option value="5">精密機器</option>
+            <option value="6">情報通信機器</option>
+            <option value="7">化学</option>
+            <option value="8">鉄鋼</option>
+            <option value="9">電子部品・デバイス・電子回路</option>
+            <option value="10">金属製品</option>
+            <option value="11">食料品</option>
+            <option value="12">その他の製造業</option>
+          </select>
+        </div>
+        <div class="mr-16">
+          <div class="font-[300] text-[12px] text-[#292929]">
+            利用目的
+          </div>
+          <select id="purpose-selectize" class="w-48">
+            <option value="1">すべて</option>
+            <option value="2">採用試験-新卒入社</option>
+            <option value="3">採用試験-中途入社</option>
+            <option value="4">人材育成-新入社員</option>
+            <option value="5">人材育成-既存社員</option>
+            <option value="6">その他</option>
+          </select>
+        </div>
+        <div class="">
+          <div class="font-[300] text-[12px] text-[#292929]">
+            試験実施回
+          </div>
+          <select id="test-selectize" class="w-48">
+            <option value="1">すべて</option>
+            <option value="2">1回目</option>
+            <option value="3">2回目</option>
+          </select>
+        </div>
+        <div id="apply-filter-btn"
+          class="ml-auto bg-[#00ABC9] rounded-lg text-white text-[16px] font-semibold px-5 py-2 cursor-pointer hover:bg-[#00ABC990]">
+          フィルターを適用
+        </div>
+      </div>
+    </div>
+
+    <!-- 総合成績 -->
+    <div class="flex items-center space-x-2 my-10">
+      <i class="fas fa-play-circle"></i>
+      <h3 class="text-[24px] font-semibold">総合成績</h3>
+    </div>
+    <!-- Table Overall -->
+    <div id="table-overall"></div>
+
+    <!-- 正解率分布表でのあなたの位置 -->
+    <div class="flex items-center space-x-2 mt-10">
+      <i class="fas fa-play-circle"></i>
+      <h3 class="text-[24px] font-semibold">正解率分布表でのあなたの位置</h3>
+    </div>
+    <div class="mt-4">
+      <!-- 貴社でのあなたの位置 -->
+      <h3 class="text-[24px] font-semibold">貴社でのあなたの位置</h3>
+      <div class="flex my-8">
+        <div id="position-company-chart" class="w-2/3 h-[300px] mt-5"></div>
+        <div class="flex w-1/3 pl-14">
+          <div class="flex h-[150px] border overflow-hidden rounded-lg place-content-center">
+            <div class="w-52 border-r text-center">
+              <div class="border-b text-center py-2 text-[20px] font-semibold">
+                理解度
+              </div>
+              <div id="passRateAlpha" class="py-4 text-[40px] font-medium">
+
+              </div>
+            </div>
+            <div id="passRate"
+              class="flex text-center p-3 items-center justify-center text-center text-[20px] font-medium">
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 分野別 -->
+    <div class="flex items-center space-x-2 mt-10">
+      <i class="fas fa-play-circle"></i>
+      <h3 class="text-[24px] font-semibold">分野別</h3>
+    </div>
+
+    <div id="tags-container"></div>
+
+  </div>
+
+  <div class="loading-container fixed inset-0 flex items-center justify-center bg-gray-100 bg-opacity-50 z-50"
+    id="loadingSpinner">
+    <div class="text-4xl text-[#00abc9]">
+      <i class="fa fa-spinner fa-spin"></i>
+    </div>
+  </div>
+
+  <script>
+    let configData = {}
+    let filterData = {}
+    let nationalOverallScores = {}
+    let nationalPartScores = {}
+    let statData = {}
+    let groupedTags = {}
+    function getCookie(name) {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith(`${name}=`)) {
+          return cookie.substring(name.length + 1);
+        }
+      }
+      return null;
+    }
+
+    function getPathApi() {
+      const protocol = window.location.protocol
+      const hostname = window.location.hostname
+      const path = window.location.pathname;
+      let user_exam_id = null;
+
+      let match = path.match(/\/reports\/(\d+)/); // Match /reports/{user_exam_id}
+      if (!match) {
+        match = path.match(/\/exam_results\/(\d+)\/report/); // Match /exam_results/{user_exam_id}/report
+      }
+      if (!match) {
+        match = path.match(/\/users\/\d+\/exam_results\/(\d+)\/report/); // Match /users/{user_id}/exam_results/{user_exam_id}/report
+      }
+
+      if (match) {
+        user_exam_id = match[1];
+      }
+
+      if (!user_exam_id) {
+        console.error('Invalid URL format: Unable to extract user_exam_id');
+        return null;
+      }
+      const urlParams = new URLSearchParams(window.location.search);
+
+      const startDateInput = urlParams.get('start_date') || null; // Default to null if not present
+      const endDateInput = urlParams.get('end_date') || null;
+
+      const currentDate = new Date();
+      const executionDate = currentDate.toISOString().split('T')[0];  // Get the current date in YYYY-MM-DD format
+
+      const startDate = startDateInput || new Date(currentDate.setFullYear(currentDate.getFullYear() - 1)).toISOString().split('T')[0];
+      const endDate = endDateInput || executionDate;
+
+      return `${protocol}//${hostname}/api/v3/reports/individual/user_exams/${user_exam_id}?start_date=${startDate}&end_date=${endDate}`
+    }
+
+
+    // Show the loading spinner
+    function showLoadingSpinner() {
+      document.getElementById('loadingSpinner').style.visibility = 'visible';
+    }
+
+    // Hide the loading spinner
+    function hideLoadingSpinner() {
+      document.getElementById('loadingSpinner').style.visibility = 'hidden';
+    }
+
+    // Call api
+    async function getExamReportData() {
+      const urlApi = getPathApi()
+      if (urlApi === null) return
+
+      const nickname = document.getElementById('nickname')
+      const username = document.getElementById('username')
+      const finishDate = document.getElementById('finishDate')
+      const lectureTitle = document.getElementById('lectureTitle')
+      const examEventTitle = document.getElementById('examEventTitle')
+      const passRateAlpha = document.getElementById('passRateAlpha')
+      const passRate = document.getElementById('passRate')
+      const authCookie = getCookie('Authorization') || 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0Iiwic2NwIjoidXNlciIsImF1ZCI6bnVsbCwiaWF0IjoxNzM1MjcwNjQ3LCJleHAiOjE3Mzc4NjI2NDcsImp0aSI6ImI2NTI5MzUzLTJmMmItNDY1YS1hOTU0LWVhMjYyMThjMjI4MyJ9.qErwguDsuXi02KLd_Smom3VgM5XuhT9vYDMtM4yuSqo';
+      try {
+        const response = await fetch(urlApi, {
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + authCookie
+          },
+        })
+        const responseJson = await response.json()
+        /*
+        const responseJson = {
+          "metaData": {
+            "input": {
+              "path": {
+                "user_exam_id": 1145630
+              },
+              "queryParameters": {
+                "organizationID": null,
+                "courseID": null,
+                "startDate": "2024-04-01",
+                "endDate": "2025-04-01",
+                "group_internal_values": ""
+              }
+            },
+            "exam": {
+              "id": 30789,
+              "startDate": "2025年03月23日",
+              "finishDate": "2025年03月23日",
+              "createdAt": "2025年03月17日",
+              "updatedAt": "2025年03月23日"
+            },
+            "course": null,
+            "lecture": {
+              "id": 364281,
+              "title": "スタンダード【BA】機・電・情・品（120問）",
+              "type": "ExamLecture",
+              "createdAt": "2025年03月17日",
+              "updatedAt": "2025年03月23日"
+            },
+            "user": {
+              "username": "ikuseisetdemo8",
+              "nickname": "浦崎育成セット"
+            },
+            "userExam": {
+              "id": 1145630,
+              "createdAt": "2025-03-23T16:23:53.000+09:00",
+              "updatedAt": "2025-03-23T16:28:12.000+09:00"
+            },
+            "examEvent": null,
+            "examEventCourse": null
+          },
+          "stats": {
+            "exam": {
+              "maxScore": 120,
+              "earnedScore": 23,
+              "passScore": 60,
+              "isPassed": false,
+              "passRate": 19.2,
+              "failRate": 80.8,
+              "numOfParticipants": 3,
+              "numOfPassedParticipants": 0,
+              "numOfFailedParticipants": 3,
+              "numOfQuizzes": 120,
+              "numOfSections": 96,
+              "averageScore": 29.4,
+              "standardDeviation": 11.7,
+              "deviationValue": 44.5,
+              "variance": 137.2,
+              "median": 23.3,
+              "scoreDistribution": {
+                "0-10": 1,
+                "10-20": 1,
+                "20-30": 0,
+                "30-40": 0,
+                "40-50": 0,
+                "50-60": 1,
+                "60-70": 0,
+                "70-80": 0,
+                "80-90": 1,
+                "90-100": 1
+              },
+              "deviationDistribution": {
+                "40-49": 2,
+                "60-69": 1
+              },
+              "modeScore": 19.166666666666668,
+              "modeDeviation": 41.2,
+              "scoreDistributionByEarnedScore": {
+                "0-9": 0,
+                "10-19": 0,
+                "20-29": 2,
+                "30-39": 0,
+                "40-49": 0,
+                "50-59": 1,
+                "60-69": 0,
+                "70-79": 0,
+                "80-89": 0,
+                "90-99": 0
+              }
+            },
+            "tags": {
+              "A|A1": {
+                "tagName": "A|A1",
+                "numOfQuizzes": 5,
+                "maxScore": 5,
+                "earnedScore": 1,
+                "scores": [
+                  0,
+                  0,
+                  1,
+                  0,
+                  0
+                ],
+                "groupAverageScore": 8.666666666666666,
+                "standardDeviation": 0.3,
+                "variance": 0.12,
+                "median": 0,
+                "averageScore": 1.3333333333333333,
+                "groupEarnedScores": [
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  1,
+                  1,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "groupEarnedScore": 4,
+                "groupMaxScores": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "numUserInGroup": 3
+              },
+              "A|A2": {
+                "tagName": "A|A2",
+                "numOfQuizzes": 5,
+                "maxScore": 5,
+                "earnedScore": 2,
+                "scores": [
+                  0,
+                  1,
+                  0,
+                  0,
+                  1
+                ],
+                "groupAverageScore": 8.666666666666666,
+                "standardDeviation": 0.5,
+                "variance": 0.28,
+                "median": 0,
+                "averageScore": 1.6666666666666667,
+                "groupEarnedScores": [
+                  0,
+                  1,
+                  0,
+                  0,
+                  1,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  1,
+                  0
+                ],
+                "groupEarnedScore": 5,
+                "groupMaxScores": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "numUserInGroup": 3
+              },
+              "A|A3": {
+                "tagName": "A|A3",
+                "numOfQuizzes": 5,
+                "maxScore": 5,
+                "earnedScore": 0,
+                "scores": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "groupAverageScore": 8.666666666666666,
+                "standardDeviation": 0.0,
+                "variance": 0.0,
+                "median": 0,
+                "averageScore": 1.0,
+                "groupEarnedScores": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  1,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "groupEarnedScore": 3,
+                "groupMaxScores": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "numUserInGroup": 3
+              },
+              "A|A4": {
+                "tagName": "A|A4",
+                "numOfQuizzes": 5,
+                "maxScore": 5,
+                "earnedScore": 2,
+                "scores": [
+                  1,
+                  1,
+                  0,
+                  0,
+                  0
+                ],
+                "groupAverageScore": 8.666666666666666,
+                "standardDeviation": 0.5,
+                "variance": 0.28,
+                "median": 0,
+                "averageScore": 1.6666666666666667,
+                "groupEarnedScores": [
+                  1,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "groupEarnedScore": 5,
+                "groupMaxScores": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "numUserInGroup": 3
+              },
+              "A|A5": {
+                "tagName": "A|A5",
+                "numOfQuizzes": 5,
+                "maxScore": 5,
+                "earnedScore": 2,
+                "scores": [
+                  0,
+                  1,
+                  0,
+                  1,
+                  0
+                ],
+                "groupAverageScore": 8.666666666666666,
+                "standardDeviation": 0.5,
+                "variance": 0.28,
+                "median": 0,
+                "averageScore": 2.0,
+                "groupEarnedScores": [
+                  0,
+                  1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  1,
+                  1,
+                  0,
+                  1,
+                  0,
+                  0
+                ],
+                "groupEarnedScore": 6,
+                "groupMaxScores": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "numUserInGroup": 3
+              },
+              "A|A6": {
+                "tagName": "A|A6",
+                "numOfQuizzes": 5,
+                "maxScore": 5,
+                "earnedScore": 1,
+                "scores": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "groupAverageScore": 8.666666666666666,
+                "standardDeviation": 0.3,
+                "variance": 0.12,
+                "median": 0,
+                "averageScore": 1.0,
+                "groupEarnedScores": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0
+                ],
+                "groupEarnedScore": 3,
+                "groupMaxScores": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "numUserInGroup": 3
+              },
+              "B|B1": {
+                "tagName": "B|B1",
+                "numOfQuizzes": 5,
+                "maxScore": 5,
+                "earnedScore": 1,
+                "scores": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "groupAverageScore": 9.666666666666666,
+                "standardDeviation": 0.3,
+                "variance": 0.12,
+                "median": 0,
+                "averageScore": 1.0,
+                "groupEarnedScores": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "groupEarnedScore": 3,
+                "groupMaxScores": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "numUserInGroup": 3
+              },
+              "B|B2": {
+                "tagName": "B|B2",
+                "numOfQuizzes": 5,
+                "maxScore": 5,
+                "earnedScore": 2,
+                "scores": [
+                  0,
+                  0,
+                  1,
+                  0,
+                  1
+                ],
+                "groupAverageScore": 9.666666666666666,
+                "standardDeviation": 0.5,
+                "variance": 0.28,
+                "median": 0,
+                "averageScore": 2.6666666666666665,
+                "groupEarnedScores": [
+                  0,
+                  0,
+                  1,
+                  0,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  1
+                ],
+                "groupEarnedScore": 8,
+                "groupMaxScores": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "numUserInGroup": 3
+              },
+              "B|B3": {
+                "tagName": "B|B3",
+                "numOfQuizzes": 5,
+                "maxScore": 5,
+                "earnedScore": 2,
+                "scores": [
+                  1,
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "groupAverageScore": 9.666666666666666,
+                "standardDeviation": 0.5,
+                "variance": 0.28,
+                "median": 0,
+                "averageScore": 1.3333333333333333,
+                "groupEarnedScores": [
+                  1,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  1,
+                  0,
+                  0,
+                  0
+                ],
+                "groupEarnedScore": 4,
+                "groupMaxScores": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "numUserInGroup": 3
+              },
+              "B|B4": {
+                "tagName": "B|B4",
+                "numOfQuizzes": 5,
+                "maxScore": 5,
+                "earnedScore": 2,
+                "scores": [
+                  0,
+                  0,
+                  1,
+                  1,
+                  0
+                ],
+                "groupAverageScore": 9.666666666666666,
+                "standardDeviation": 0.5,
+                "variance": 0.28,
+                "median": 0,
+                "averageScore": 2.6666666666666665,
+                "groupEarnedScores": [
+                  0,
+                  0,
+                  1,
+                  1,
+                  0,
+                  1,
+                  1,
+                  0,
+                  0,
+                  0,
+                  1,
+                  1,
+                  1,
+                  0,
+                  1
+                ],
+                "groupEarnedScore": 8,
+                "groupMaxScores": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "numUserInGroup": 3
+              },
+              "B|B5": {
+                "tagName": "B|B5",
+                "numOfQuizzes": 5,
+                "maxScore": 5,
+                "earnedScore": 0,
+                "scores": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "groupAverageScore": 9.666666666666666,
+                "standardDeviation": 0.0,
+                "variance": 0.0,
+                "median": 0,
+                "averageScore": 0.3333333333333333,
+                "groupEarnedScores": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "groupEarnedScore": 1,
+                "groupMaxScores": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "numUserInGroup": 3
+              },
+              "B|B6": {
+                "tagName": "B|B6",
+                "numOfQuizzes": 5,
+                "maxScore": 5,
+                "earnedScore": 0,
+                "scores": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "groupAverageScore": 9.666666666666666,
+                "standardDeviation": 0.0,
+                "variance": 0.0,
+                "median": 0,
+                "averageScore": 1.6666666666666667,
+                "groupEarnedScores": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "groupEarnedScore": 5,
+                "groupMaxScores": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "numUserInGroup": 3
+              },
+              "C|C1": {
+                "tagName": "C|C1",
+                "numOfQuizzes": 5,
+                "maxScore": 5,
+                "earnedScore": 1,
+                "scores": [
+                  0,
+                  1,
+                  0,
+                  0,
+                  0
+                ],
+                "groupAverageScore": 9.666666666666666,
+                "standardDeviation": 0.3,
+                "variance": 0.12,
+                "median": 0,
+                "averageScore": 1.3333333333333333,
+                "groupEarnedScores": [
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0
+                ],
+                "groupEarnedScore": 4,
+                "groupMaxScores": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "numUserInGroup": 3
+              },
+              "C|C2": {
+                "tagName": "C|C2",
+                "numOfQuizzes": 5,
+                "maxScore": 5,
+                "earnedScore": 0,
+                "scores": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "groupAverageScore": 9.666666666666666,
+                "standardDeviation": 0.0,
+                "variance": 0.0,
+                "median": 0,
+                "averageScore": 2.0,
+                "groupEarnedScores": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  1,
+                  1,
+                  1,
+                  1,
+                  0,
+                  1,
+                  0
+                ],
+                "groupEarnedScore": 6,
+                "groupMaxScores": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "numUserInGroup": 3
+              },
+              "C|C3": {
+                "tagName": "C|C3",
+                "numOfQuizzes": 5,
+                "maxScore": 5,
+                "earnedScore": 1,
+                "scores": [
+                  0,
+                  1,
+                  0,
+                  0,
+                  0
+                ],
+                "groupAverageScore": 9.666666666666666,
+                "standardDeviation": 0.3,
+                "variance": 0.12,
+                "median": 0,
+                "averageScore": 1.0,
+                "groupEarnedScores": [
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "groupEarnedScore": 3,
+                "groupMaxScores": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "numUserInGroup": 3
+              },
+              "C|C4": {
+                "tagName": "C|C4",
+                "numOfQuizzes": 5,
+                "maxScore": 5,
+                "earnedScore": 1,
+                "scores": [
+                  0,
+                  1,
+                  0,
+                  0,
+                  0
+                ],
+                "groupAverageScore": 9.666666666666666,
+                "standardDeviation": 0.3,
+                "variance": 0.12,
+                "median": 0,
+                "averageScore": 1.6666666666666667,
+                "groupEarnedScores": [
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "groupEarnedScore": 5,
+                "groupMaxScores": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "numUserInGroup": 3
+              },
+              "C|C5": {
+                "tagName": "C|C5",
+                "numOfQuizzes": 5,
+                "maxScore": 5,
+                "earnedScore": 1,
+                "scores": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "groupAverageScore": 9.666666666666666,
+                "standardDeviation": 0.3,
+                "variance": 0.12,
+                "median": 0,
+                "averageScore": 2.0,
+                "groupEarnedScores": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  1,
+                  1,
+                  0,
+                  0,
+                  1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  1
+                ],
+                "groupEarnedScore": 6,
+                "groupMaxScores": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "numUserInGroup": 3
+              },
+              "C|C6": {
+                "tagName": "C|C6",
+                "numOfQuizzes": 5,
+                "maxScore": 5,
+                "earnedScore": 0,
+                "scores": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "groupAverageScore": 9.666666666666666,
+                "standardDeviation": 0.0,
+                "variance": 0.0,
+                "median": 0,
+                "averageScore": 1.6666666666666667,
+                "groupEarnedScores": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  1,
+                  1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0
+                ],
+                "groupEarnedScore": 5,
+                "groupMaxScores": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "numUserInGroup": 3
+              },
+              "D|D1": {
+                "tagName": "D|D1",
+                "numOfQuizzes": 5,
+                "maxScore": 5,
+                "earnedScore": 0,
+                "scores": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "groupAverageScore": 7.333333333333333,
+                "standardDeviation": 0.0,
+                "variance": 0.0,
+                "median": 0,
+                "averageScore": 0.0,
+                "groupEarnedScores": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "groupEarnedScore": 0,
+                "groupMaxScores": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "numUserInGroup": 3
+              },
+              "D|D2": {
+                "tagName": "D|D2",
+                "numOfQuizzes": 5,
+                "maxScore": 5,
+                "earnedScore": 1,
+                "scores": [
+                  0,
+                  0,
+                  1,
+                  0,
+                  0
+                ],
+                "groupAverageScore": 7.333333333333333,
+                "standardDeviation": 0.3,
+                "variance": 0.12,
+                "median": 0,
+                "averageScore": 1.3333333333333333,
+                "groupEarnedScores": [
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1
+                ],
+                "groupEarnedScore": 4,
+                "groupMaxScores": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "numUserInGroup": 3
+              },
+              "D|D3": {
+                "tagName": "D|D3",
+                "numOfQuizzes": 5,
+                "maxScore": 5,
+                "earnedScore": 0,
+                "scores": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "groupAverageScore": 7.333333333333333,
+                "standardDeviation": 0.0,
+                "variance": 0.0,
+                "median": 0,
+                "averageScore": 1.6666666666666667,
+                "groupEarnedScores": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  1,
+                  1,
+                  0,
+                  0,
+                  1,
+                  1,
+                  0,
+                  0
+                ],
+                "groupEarnedScore": 5,
+                "groupMaxScores": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "numUserInGroup": 3
+              },
+              "D|D4": {
+                "tagName": "D|D4",
+                "numOfQuizzes": 5,
+                "maxScore": 5,
+                "earnedScore": 1,
+                "scores": [
+                  1,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "groupAverageScore": 7.333333333333333,
+                "standardDeviation": 0.3,
+                "variance": 0.12,
+                "median": 0,
+                "averageScore": 2.3333333333333335,
+                "groupEarnedScores": [
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  1,
+                  0,
+                  1,
+                  1,
+                  0,
+                  1,
+                  0,
+                  0,
+                  1
+                ],
+                "groupEarnedScore": 7,
+                "groupMaxScores": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "numUserInGroup": 3
+              },
+              "D|D5": {
+                "tagName": "D|D5",
+                "numOfQuizzes": 5,
+                "maxScore": 5,
+                "earnedScore": 1,
+                "scores": [
+                  1,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "groupAverageScore": 7.333333333333333,
+                "standardDeviation": 0.3,
+                "variance": 0.12,
+                "median": 0,
+                "averageScore": 1.6666666666666667,
+                "groupEarnedScores": [
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  1,
+                  1,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "groupEarnedScore": 5,
+                "groupMaxScores": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "numUserInGroup": 3
+              },
+              "D|D6": {
+                "tagName": "D|D6",
+                "numOfQuizzes": 5,
+                "maxScore": 5,
+                "earnedScore": 1,
+                "scores": [
+                  0,
+                  0,
+                  0,
+                  1,
+                  0
+                ],
+                "groupAverageScore": 7.333333333333333,
+                "standardDeviation": 0.3,
+                "variance": 0.12,
+                "median": 0,
+                "averageScore": 0.3333333333333333,
+                "groupEarnedScores": [
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "groupEarnedScore": 1,
+                "groupMaxScores": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ],
+                "numUserInGroup": 3
+              }
+            },
+            "sections": {
+              "4359384": {
+                "sectionID": 4359384,
+                "sectionName": "機械_機械工学基礎（4力）1",
+                "numOfQuizzes": 2,
+                "maxScore": 2
+              },
+              "4359385": {
+                "sectionID": 4359385,
+                "sectionName": "機械_機械工学基礎（4力）2",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359386": {
+                "sectionID": 4359386,
+                "sectionName": "機械_機械工学基礎（4力）3",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359387": {
+                "sectionID": 4359387,
+                "sectionName": "機械_機械工学基礎（4力）4",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359388": {
+                "sectionID": 4359388,
+                "sectionName": "機械_材料1",
+                "numOfQuizzes": 2,
+                "maxScore": 2
+              },
+              "4359389": {
+                "sectionID": 4359389,
+                "sectionName": "機械_材料2",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359390": {
+                "sectionID": 4359390,
+                "sectionName": "機械_材料3",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359391": {
+                "sectionID": 4359391,
+                "sectionName": "機械_材料4",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359392": {
+                "sectionID": 4359392,
+                "sectionName": "機械_設計・製図1",
+                "numOfQuizzes": 2,
+                "maxScore": 2
+              },
+              "4359393": {
+                "sectionID": 4359393,
+                "sectionName": "機械_設計・製図2",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359394": {
+                "sectionID": 4359394,
+                "sectionName": "機械_設計・製図3",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359395": {
+                "sectionID": 4359395,
+                "sectionName": "機械_設計・製図4",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359396": {
+                "sectionID": 4359396,
+                "sectionName": "機械_加工1",
+                "numOfQuizzes": 2,
+                "maxScore": 2
+              },
+              "4359397": {
+                "sectionID": 4359397,
+                "sectionName": "機械_加工2",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359398": {
+                "sectionID": 4359398,
+                "sectionName": "機械_加工3",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359399": {
+                "sectionID": 4359399,
+                "sectionName": "機械_加工4",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359400": {
+                "sectionID": 4359400,
+                "sectionName": "機械_機械要素1",
+                "numOfQuizzes": 2,
+                "maxScore": 2
+              },
+              "4359401": {
+                "sectionID": 4359401,
+                "sectionName": "機械_機械要素2",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359402": {
+                "sectionID": 4359402,
+                "sectionName": "機械_機械要素3",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359403": {
+                "sectionID": 4359403,
+                "sectionName": "機械_機械要素4",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359404": {
+                "sectionID": 4359404,
+                "sectionName": "機械_計測制御1",
+                "numOfQuizzes": 2,
+                "maxScore": 2
+              },
+              "4359405": {
+                "sectionID": 4359405,
+                "sectionName": "機械_計測制御2",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359406": {
+                "sectionID": 4359406,
+                "sectionName": "機械_計測制御3",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359407": {
+                "sectionID": 4359407,
+                "sectionName": "機械_計測制御4",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359408": {
+                "sectionID": 4359408,
+                "sectionName": "電気電子_電気回路の基礎1",
+                "numOfQuizzes": 2,
+                "maxScore": 2
+              },
+              "4359409": {
+                "sectionID": 4359409,
+                "sectionName": "電気電子_電気回路の基礎2",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359410": {
+                "sectionID": 4359410,
+                "sectionName": "電気電子_電気回路の基礎3",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359411": {
+                "sectionID": 4359411,
+                "sectionName": "電気電子_電気回路の基礎4",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359412": {
+                "sectionID": 4359412,
+                "sectionName": "電気電子_電子回路の基礎1",
+                "numOfQuizzes": 2,
+                "maxScore": 2
+              },
+              "4359413": {
+                "sectionID": 4359413,
+                "sectionName": "電気電子_電子回路の基礎2",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359414": {
+                "sectionID": 4359414,
+                "sectionName": "電気電子_電子回路の基礎3",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359415": {
+                "sectionID": 4359415,
+                "sectionName": "電気電子_電子回路の基礎4",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359416": {
+                "sectionID": 4359416,
+                "sectionName": "電気電子_半導体デバイス1",
+                "numOfQuizzes": 2,
+                "maxScore": 2
+              },
+              "4359417": {
+                "sectionID": 4359417,
+                "sectionName": "電気電子_半導体デバイス2",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359418": {
+                "sectionID": 4359418,
+                "sectionName": "電気電子_半導体デバイス3",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359419": {
+                "sectionID": 4359419,
+                "sectionName": "電気電子_半導体デバイス4",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359420": {
+                "sectionID": 4359420,
+                "sectionName": "電気電子_インターフェース1",
+                "numOfQuizzes": 2,
+                "maxScore": 2
+              },
+              "4359421": {
+                "sectionID": 4359421,
+                "sectionName": "電気電子_インターフェース2",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359422": {
+                "sectionID": 4359422,
+                "sectionName": "電気電子_インターフェース3",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359423": {
+                "sectionID": 4359423,
+                "sectionName": "電気電子_インターフェース4",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359424": {
+                "sectionID": 4359424,
+                "sectionName": "電気電子_モータと電力1",
+                "numOfQuizzes": 2,
+                "maxScore": 2
+              },
+              "4359425": {
+                "sectionID": 4359425,
+                "sectionName": "電気電子_モータと電力2",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359426": {
+                "sectionID": 4359426,
+                "sectionName": "電気電子_モータと電力3",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359427": {
+                "sectionID": 4359427,
+                "sectionName": "電気電子_モータと電力4",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359428": {
+                "sectionID": 4359428,
+                "sectionName": "電気電子_センサ技術1",
+                "numOfQuizzes": 2,
+                "maxScore": 2
+              },
+              "4359429": {
+                "sectionID": 4359429,
+                "sectionName": "電気電子_センサ技術2",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359430": {
+                "sectionID": 4359430,
+                "sectionName": "電気電子_センサ技術3",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359431": {
+                "sectionID": 4359431,
+                "sectionName": "電気電子_センサ技術4",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359432": {
+                "sectionID": 4359432,
+                "sectionName": "情報_情報の基礎1",
+                "numOfQuizzes": 2,
+                "maxScore": 2
+              },
+              "4359433": {
+                "sectionID": 4359433,
+                "sectionName": "情報_情報の基礎2",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359434": {
+                "sectionID": 4359434,
+                "sectionName": "情報_情報の基礎3",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359435": {
+                "sectionID": 4359435,
+                "sectionName": "情報_情報の基礎4",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359436": {
+                "sectionID": 4359436,
+                "sectionName": "情報_プロセッサ1",
+                "numOfQuizzes": 2,
+                "maxScore": 2
+              },
+              "4359437": {
+                "sectionID": 4359437,
+                "sectionName": "情報_プロセッサ2",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359438": {
+                "sectionID": 4359438,
+                "sectionName": "情報_プロセッサ3",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359439": {
+                "sectionID": 4359439,
+                "sectionName": "情報_プロセッサ4",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359440": {
+                "sectionID": 4359440,
+                "sectionName": "情報_プログラミング1",
+                "numOfQuizzes": 2,
+                "maxScore": 2
+              },
+              "4359441": {
+                "sectionID": 4359441,
+                "sectionName": "情報_プログラミング2",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359442": {
+                "sectionID": 4359442,
+                "sectionName": "情報_プログラミング3",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359443": {
+                "sectionID": 4359443,
+                "sectionName": "情報_プログラミング4",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359444": {
+                "sectionID": 4359444,
+                "sectionName": "情報_システム構成1",
+                "numOfQuizzes": 2,
+                "maxScore": 2
+              },
+              "4359445": {
+                "sectionID": 4359445,
+                "sectionName": "情報_システム構成2",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359446": {
+                "sectionID": 4359446,
+                "sectionName": "情報_システム構成3",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359447": {
+                "sectionID": 4359447,
+                "sectionName": "情報_システム構成4",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359448": {
+                "sectionID": 4359448,
+                "sectionName": "情報_システム開発1",
+                "numOfQuizzes": 2,
+                "maxScore": 2
+              },
+              "4359449": {
+                "sectionID": 4359449,
+                "sectionName": "情報_システム開発2",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359450": {
+                "sectionID": 4359450,
+                "sectionName": "情報_システム開発3",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359451": {
+                "sectionID": 4359451,
+                "sectionName": "情報_システム開発4",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359452": {
+                "sectionID": 4359452,
+                "sectionName": "情報_ネットワークとマルチメディア1",
+                "numOfQuizzes": 2,
+                "maxScore": 2
+              },
+              "4359453": {
+                "sectionID": 4359453,
+                "sectionName": "情報_ネットワークとマルチメディア2",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359454": {
+                "sectionID": 4359454,
+                "sectionName": "情報_ネットワークとマルチメディア3",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359455": {
+                "sectionID": 4359455,
+                "sectionName": "情報_ネットワークとマルチメディア4",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359456": {
+                "sectionID": 4359456,
+                "sectionName": "品質管理基礎_品質1",
+                "numOfQuizzes": 2,
+                "maxScore": 2
+              },
+              "4359457": {
+                "sectionID": 4359457,
+                "sectionName": "品質管理基礎_品質2",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359458": {
+                "sectionID": 4359458,
+                "sectionName": "品質管理基礎_品質3",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359459": {
+                "sectionID": 4359459,
+                "sectionName": "品質管理基礎_品質4",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359460": {
+                "sectionID": 4359460,
+                "sectionName": "品質管理基礎_管理1",
+                "numOfQuizzes": 2,
+                "maxScore": 2
+              },
+              "4359461": {
+                "sectionID": 4359461,
+                "sectionName": "品質管理基礎_管理2",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359462": {
+                "sectionID": 4359462,
+                "sectionName": "品質管理基礎_管理3",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359463": {
+                "sectionID": 4359463,
+                "sectionName": "品質管理基礎_管理4",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359464": {
+                "sectionID": 4359464,
+                "sectionName": "品質管理基礎_QC的考え方1",
+                "numOfQuizzes": 2,
+                "maxScore": 2
+              },
+              "4359465": {
+                "sectionID": 4359465,
+                "sectionName": "品質管理基礎_QC的考え方2",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359466": {
+                "sectionID": 4359466,
+                "sectionName": "品質管理基礎_QC的考え方3",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359467": {
+                "sectionID": 4359467,
+                "sectionName": "品質管理基礎_QC的考え方4",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359468": {
+                "sectionID": 4359468,
+                "sectionName": "品質管理基礎_改善と問題解決1",
+                "numOfQuizzes": 2,
+                "maxScore": 2
+              },
+              "4359469": {
+                "sectionID": 4359469,
+                "sectionName": "品質管理基礎_改善と問題解決2",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359470": {
+                "sectionID": 4359470,
+                "sectionName": "品質管理基礎_改善と問題解決3",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359471": {
+                "sectionID": 4359471,
+                "sectionName": "品質管理基礎_改善と問題解決4",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359472": {
+                "sectionID": 4359472,
+                "sectionName": "品質管理基礎_統計的考え方1",
+                "numOfQuizzes": 2,
+                "maxScore": 2
+              },
+              "4359473": {
+                "sectionID": 4359473,
+                "sectionName": "品質管理基礎_統計的考え方2",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359474": {
+                "sectionID": 4359474,
+                "sectionName": "品質管理基礎_統計的考え方3",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359475": {
+                "sectionID": 4359475,
+                "sectionName": "品質管理基礎_統計的考え方4",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359476": {
+                "sectionID": 4359476,
+                "sectionName": "品質管理基礎_QC七つ道具1",
+                "numOfQuizzes": 2,
+                "maxScore": 2
+              },
+              "4359477": {
+                "sectionID": 4359477,
+                "sectionName": "品質管理基礎_QC七つ道具2",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359478": {
+                "sectionID": 4359478,
+                "sectionName": "品質管理基礎_QC七つ道具3",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              },
+              "4359479": {
+                "sectionID": 4359479,
+                "sectionName": "品質管理基礎_QC七つ道具4",
+                "numOfQuizzes": 1,
+                "maxScore": 1
+              }
+            }
+          }
+        }
+        */
+        if (responseJson != null && responseJson.metaData != null && responseJson.stats != null) {
+          const metaData = responseJson.metaData
+          const stats = responseJson.stats
+          if (metaData.user !== null) {
+            const user = metaData.user
+            nickname.textContent = user.nickname || user.username
+            username.textContent = user.username
+            if (user.username) {
+              document.title = '個人成績表:' + user.username
+            }
+          }
+          finishDate.textContent = metaData.exam?.finishDate
+          lectureTitle.textContent = metaData.lecture?.title
+          examEventTitle.textContent = metaData.examEvent?.title
+          passRateAlpha.textContent = getGrade(stats?.exam?.passRate);
+          passRate.textContent = `${stats?.exam?.passRate}` + '%程度の理解度です。'
+
+          const tags = Object.values(stats?.tags);
+          groupedTags = groupTagsByPrefix(tags);
+          statData = stats;
+          displayFilterData()
+        }
+      } catch (error) {
+
+      } finally {
+        hideLoadingSpinner()
+      }
+    }
+
+    async function fetchJsonData() {
+      try {
+        const url = 'https://assets.share-wis.com/reports/exams/cogaku/config.json';
+        const response = await fetch(url)
+        configData = await response.json()
+      } catch (error) {
+        console.error('Error fetching the JSON file:', error);
+      }
+    }
+
+    async function fetchFilterData() {
+      try {
+        const url = 'https://assets.share-wis.com/reports/exams/cogaku/filter1.json';
+        const response = await fetch(url)
+        filterData = await response.json()
+      } catch (error) {
+        console.error('Error fetching the filter data:', error);
+      }
+    }
+
+    const tags_container = document.getElementById('tags-container');
+    function updateAllData() {
+      createTableOverall(statData.exam, groupedTags)
+      // Clear the existing content of the table container
+      tags_container.innerHTML = '';
+      Object.entries(groupedTags).forEach(([prefix, group]) => {
+        createRadarChart(prefix, group);
+      });
+
+      generateColumnChart(statData)
+    }
+
+    function getGrade(passRate) {
+      if (passRate >= 80) {
+        return 'A';
+      } else if (passRate >= 60) {
+        return 'B';
+      } else if (passRate >= 50) {
+        return 'C';
+      } else {
+        return 'D';
+      }
+    }
+
+    function createRadarChart(prefix, group) {
+      if (!group || group.length === 0) {
+        console.error("Group data is required to create the radar chart.");
+        return;
+      }
+      const fileName = getFieldName(group[0])
+      const tbodyRows = group
+        .map((item, index) => {
+          const rowClass = index % 2 === 0 ? "bg-[#b9b9b933]" : ""; // Alternating row styles
+          return `
+        <tr class="h-14 text-[20px] font-[300] text-[#212121] ${rowClass}">
+          <td class="w-14 text-center border-r border-b">
+            ${prefix}${index + 1}
+          </td>
+          <td class="px-3 text-left border-b">
+            ${getMajorName(item)}
+          </td>
+        </tr>
+      `;
+        })
+        .join("");
+      const categories = group.map(item => getTagName(item));
+      const totalEarnedScore = group.reduce((sum, item) => sum + item.earnedScore, 0);
+      const totalAverageScore = group.reduce((sum, item) => sum + parseFloat(item.averageScore || 0), 0);
+      const companyAverage = [parseFloat(totalAverageScore.toFixed(1) || 0), ...group.map(item => parseFloat(item.averageScore.toFixed(1) || 0))];
+      const totalMaxScore = group.reduce((sum, item) => sum + parseFloat(item?.scores?.length || 0), 0);
+
+      let nationalGroupScores = []
+      if (!isEmptyObject(nationalPartScores)) {
+        const nationalSectionData = nationalPartScores[prefix];
+        if (!isEmptyObject(nationalSectionData)) {
+          const nationalScores = categories.map(item => parseFloat(nationalSectionData[item] || 0));
+          const totalNationalScore = nationalScores.reduce((sum, score) => sum + parseFloat(score || 0), 0);
+          nationalGroupScores = [parseFloat(totalNationalScore.toFixed(1) || 0), ...nationalScores];
+        }
+      }
+      if (nationalGroupScores.length === 0) {
+        nationalGroupScores = Array(categories.length + 1).fill(0);
+      }
+
+      const userEarndScores = [parseFloat(totalEarnedScore.toFixed(1) || 0), ...group.map(item => parseFloat(item.earnedScore.toFixed(1) || 0))];
+      const totalUserEarndScores = [totalMaxScore, ...group.map(item => item.scores.length)];
+
+      const nationalAverageScorePercent = nationalGroupScores.map((score, index) => parseFloat((score / totalUserEarndScores[index] * 100).toFixed(1) || 0));
+      const companyAverageScorePercent = companyAverage.map((score, index) => parseFloat((score / totalUserEarndScores[index] * 100).toFixed(1) || 0));
+      const userAverageScorePercent = userEarndScores.map((score, index) => parseFloat((score / totalUserEarndScores[index] * 100).toFixed(1) || 0));
+
+      const tableHeaders = ['合計', ...categories].map((header, index) => `
+      <th class="px-4 py-2 border border-b-0 ${index === 0 ? 'rounded-tl-lg' : 'border-l-0'} ${index === categories.length ? 'rounded-tr-lg' : ''} text-center text-[20px] font-semibold">
+        ${header}
+      </th>`).join('');
+
+      const fullScoreRow = `
+      <tr>
+        <td class=""></td>
+        <td class="px-4 py-2 border border-r-0 border-b-0 bg-[#F5F5F5] text-center text-[20px] font-semibold rounded-tl-lg">満点</td>
+        <td class="px-4 py-2 border border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${formatValue(totalMaxScore)}</td>
+        ${group.map(item => `<td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${formatValue(item.scores?.length || 0)}</td>`).join('')}
+      </tr>`;
+
+      const tbodyContent = `
+        ${fullScoreRow}
+        ${createScoreRow({
+        label1: '全国平均',
+        label2: '得点',
+        bgColor: 'bg-[#EE4344]',
+        scores: nationalGroupScores
+      })}
+        ${createScoreRow({
+        label1: '',
+        label2: '正解率',
+        bgColor: 'bg-[#EE4344]',
+        scores: nationalAverageScorePercent,
+        isBottom: false,
+        isRoundLeft: false,
+        isPercentage: true
+      })}
+        ${createScoreRow({
+        label1: '貴社平均',
+        label2: '得点',
+        bgColor: 'bg-[#3B82F6]',
+        scores: companyAverage
+      })}
+        ${createScoreRow({
+        label1: '',
+        label2: '正解率',
+        bgColor: 'bg-[#3B82F6]',
+        scores: companyAverageScorePercent,
+        isBottom: false,
+        isRoundLeft: false,
+        isPercentage: true
+      })}
+        ${createScoreRow({
+        label1: 'ご本人',
+        label2: '得点',
+        bgColor: 'bg-[#10B981]',
+        scores: userEarndScores,
+        isBottom: false,
+        isRoundLeft: true,
+        isPercentage: false
+      })}
+        ${createScoreRow({
+        label1: '',
+        label2: '正解率',
+        bgColor: 'bg-[#10B981]',
+        scores: userAverageScorePercent,
+        isBottom: false,
+        isRoundLeft: true,
+        isPercentage: true,
+        isRoundRight: true
+      })}
+      `;
+
+      const chartHtml = `
+        <h3 class="text-[24px] font-semibold mt-4">${fileName}</h3>
+        <div class="flex mt-5">
+          <div class="w-2/3 p-5 overflow-hidden h-[400px] rounded-lg border">
+            <div id="polarchart-${prefix}"></div>
+          </div>
+          <div class="flex-box w-1/3 pl-14">
+            <div class="overflow-hidden rounded-lg border">
+              <table class="table-auto w-full">
+                <thead>
+                  <tr class="h-14 text-[20px] font-[600] text-[#212121]">
+                    <th class="w-14 text-center border-r border-b">
+                      ${prefix}
+                    </th>
+                    <th class="w-60 px-3 text-left border-b">
+                      ${fileName}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${tbodyRows}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <table class="mt-6 w-4/5 table-auto border-separate border-spacing-0 overflow-hidden">
+          <thead>
+            <tr>
+              <th class="px-4 py-2 text-center"></th>
+              <th class="px-4 py-2 text-center"></th>
+              ${tableHeaders}
+            </tr>
+          </thead>
+          <tbody>
+            ${tbodyContent}
+          </tbody>
+        </table>
+      `
+
+      const newChartElement = document.createElement('div');
+      newChartElement.classList.add('mb-10');
+      newChartElement.innerHTML = chartHtml;
+      tags_container.appendChild(newChartElement);
+
+      generatePolarChart(prefix, group, nationalAverageScorePercent, companyAverageScorePercent, userAverageScorePercent)
+    }
+
+    const table_overall = document.getElementById('table-overall');
+    function createTableOverall(exam, groups) {
+      const categories = Object.values(groups).map(item => getFieldName(item[0]))
+      const nameTags = Object.keys(groups).map(item => item);
+      const tableHeaders = categories.map((header, index) => `
+      <th class="px-4 py-2 border border-l-0 border-b-0 ${index === categories.length - 1 ? 'rounded-tr-lg' : ''} text-center text-[20px] font-semibold">
+        ${header}
+      </th>`).join('');
+
+      const scores = Object.values(calculateMaxScoresOfTags(groups))
+      const averageScores = Object.values(calculateAverageScoresOfTags(groups))
+      const earnedScores = Object.values(calculateEarnedScoresOfTags(groups))
+      const totalAverageScore = averageScores.reduce((sum, score) => sum + parseFloat(score || 0), 0);
+      const totalEarnedScore = earnedScores.reduce((sum, score) => sum + parseFloat(score || 0), 0);
+      const companyAverage = [parseFloat(totalAverageScore.toFixed(1) || 0), ...averageScores.map(s => parseFloat(s.toFixed(1) || 0))];
+      let overallNationalScores = []
+      if (!isEmptyObject(nationalOverallScores)) {
+        const nationalScores = nameTags.map(item => nationalOverallScores[item])
+        const totalNationalScore = nationalScores.reduce((sum, score) => sum + parseFloat(score || 0), 0);
+        overallNationalScores = [parseFloat(totalNationalScore.toFixed(1) || 0), ...nationalScores];
+      }
+
+      if (overallNationalScores.length === 0) {
+        overallNationalScores = Array(categories.length + 1).fill(0);
+      }
+
+      const userEarndScores = [parseFloat(totalEarnedScore.toFixed(1) || 0), ...earnedScores.map(s => parseFloat(s.toFixed(1) || 0))];
+      const totalScore = exam?.maxScore
+      const totalUserEarndScores = [totalScore, ...scores];
+
+      const scoreCells = scores
+        .map(
+          (score) =>
+            `<td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${formatValue(score)}</td>`
+        )
+        .join("");
+
+      const fullScoreRow = `
+        <tr>
+          <td class=""></td>
+          <td
+            class="px-4 py-2 border border-r-0 border-b-0 bg-[#F5F5F5] text-center text-[20px] font-semibold rounded-tl-lg">
+            満点</td>
+          <td class="px-4 py-2 border border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${formatValue(totalScore)}</td>
+          ${scoreCells}
+        </tr>
+      `
+
+      const tableOverallHtml = `
+        <table class="w-full table-auto border-separate border-spacing-0 overflow-hidden">
+          <thead>
+            <tr>
+              <th class="px-4 py-2 text-center"></th>
+              <th class="px-4 py-2 text-center"></th>
+              <th class="px-4 py-2 border border-b-0 text-center text-[20px] font-semibold rounded-tl-lg">総合</th>
+              ${tableHeaders}
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Full Score Row -->
+            ${fullScoreRow}
+            ${createScoreRow({
+        label1: '全国平均',
+        label2: '得点',
+        bgColor: 'bg-[#EE4344]',
+        scores: overallNationalScores
+      })}
+            ${createScoreRow({
+        label1: '',
+        label2: '正解率',
+        bgColor: 'bg-[#EE4344]',
+        scores: overallNationalScores.map((score, index) => parseFloat((score / totalUserEarndScores[index] * 100).toFixed(1) || 0)),
+        isBottom: false,
+        isRoundLeft: false,
+        isPercentage: true
+      })}
+            ${createScoreRow({
+        label1: '貴社平均',
+        label2: '得点',
+        bgColor: 'bg-[#3B82F6]',
+        scores: companyAverage
+      })}
+
+            ${createScoreRow({
+        label1: '',
+        label2: '正解率',
+        bgColor: 'bg-[#3B82F6]',
+        scores: companyAverage.map((score, index) => parseFloat((score / totalUserEarndScores[index] * 100).toFixed(1) || 0)),
+        isBottom: false,
+        isRoundLeft: false,
+        isPercentage: true
+      })}
+            ${createScoreRow({
+        label1: 'ご本人',
+        label2: '得点',
+        bgColor: 'bg-[#10B981]',
+        scores: userEarndScores,
+        isBottom: false,
+        isRoundLeft: true,
+        isPercentage: false
+      })}
+            ${createScoreRow({
+        label1: '',
+        label2: '正解率',
+        bgColor: 'bg-[#10B981]',
+        scores: userEarndScores.map((score, index) => parseFloat((score / totalUserEarndScores[index] * 100).toFixed(1) || 0)),
+        isBottom: false,
+        isRoundLeft: true,
+        isPercentage: true,
+        isRoundRight: true
+      })}
+          </tbody>
+        </table>
+      `
+
+      // Clear the existing content of the table container
+      table_overall.innerHTML = '';
+      const tableOverallElement = document.createElement('div');
+      tableOverallElement.innerHTML = tableOverallHtml;
+      table_overall.appendChild(tableOverallElement);
+    }
+
+    function getTagName(tag) {
+      const tagName = tag.tagName.split('|')
+      return tagName[1]
+    }
+
+    function getFieldName(tag) {
+      const tagName = tag.tagName.split('|')
+      const tagData = configData[tagName[1]]
+      return tagData?.field_name
+    }
+
+    function getMajorName(tag) {
+      const tagName = tag.tagName.split('|')
+      const tagData = configData[tagName[1]]
+      return tagData?.major_item_name
+    }
+
+    function groupTagsByPrefix(tags) {
+      const grouped = {};
+
+      tags.forEach(tag => {
+        const prefix = tag.tagName.split('|')[0]; // Get the prefix (e.g., 'MA' from 'MA|MA1')
+
+        // If the prefix doesn't exist in the grouped object, create it
+        if (!grouped[prefix]) {
+          grouped[prefix] = [];
+        }
+
+        // Push the current tag to its corresponding group
+        grouped[prefix].push(tag);
+      });
+
+      return grouped;
+    }
+
+    function calculateMaxScoresOfTags(data) {
+      const totals = {};
+      for (const [key, items] of Object.entries(data)) {
+        const sum = items.reduce((sum, item) => sum + item.scores?.length, 0);
+        totals[key] = parseFloat(sum || 0)
+      }
+      return totals;
+    };
+
+    function calculateAverageScoresOfTags(data) {
+      const totals = {};
+      for (const [key, items] of Object.entries(data)) {
+        const sum = items.reduce((sum, item) => sum + item.averageScore, 0);
+        totals[key] = parseFloat(sum || 0)
+      }
+      return totals;
+    };
+
+    function calculateEarnedScoresOfTags(data) {
+      const totals = {};
+      for (const [key, items] of Object.entries(data)) {
+        const sum = items.reduce((sum, item) => sum + item.earnedScore, 0);
+        totals[key] = parseFloat(sum || 0)
+      }
+      return totals;
+    };
+
+    async function getExamData() {
+      try {
+        await fetchJsonData();
+        await fetchFilterData();
+        await getExamReportData();
+      } catch (error) {
+        console.error('Error occurred:', error);
+      }
+    }
+
+    function generatePolarChart(prefix, group, nationalAverageScorePercent, companyAverageScorePercent, userAverageScorePercent) {
+      const categories = group.map(item => getMajorName(item));
+      const allCategories = ['合計', ...categories];
+
+      Highcharts.chart(`polarchart-${prefix}`, {
+        chart: {
+          polar: true,
+          type: 'line'
+        },
+        title: {
+          text: '',
+        },
+        pane: {
+          size: '80%'
+        },
+        xAxis: {
+          categories: allCategories,
+          tickmarkPlacement: 'on',
+          lineWidth: 0,
+          labels: {
+            style: {
+              color: '#000',
+              fontSize: '12px',
+              fontWeight: '400'
+            }
+          }
+        },
+        yAxis: {
+          gridLineInterpolation: 'polygon',
+          lineWidth: 0,
+          min: 0,
+          max: 100,
+          tickInterval: 20
+        },
+        tooltip: {
+          enabled: false
+        },
+        legend: {
+          align: 'right',
+          verticalAlign: 'middle',
+          layout: 'vertical'
+        },
+        series: [{
+          name: '全国平均',
+          data: nationalAverageScorePercent,
+          pointPlacement: 'on',
+          color: '#EE4344'
+        }, {
+          name: '貴社平均',
+          data: companyAverageScorePercent,
+          pointPlacement: 'on',
+          color: '#3B82F6'
+        }, {
+          name: 'ご本人',
+          data: userAverageScorePercent,
+          pointPlacement: 'on',
+          color: '#10B981'
+        }],
+        responsive: {
+          rules: [{
+            condition: {
+              maxWidth: 500
+            },
+            chartOptions: {
+              title: {
+                x: 0
+              },
+              legend: {
+                align: 'center',
+                verticalAlign: 'bottom',
+                layout: 'horizontal'
+              },
+              pane: {
+                size: '70%'
+              }
+            }
+          }]
+        },
+        credits: {
+          enabled: false
+        }
+      });
+    }
+
+    function createScoreRow({
+      label1, label2, bgColor, scores, isBottom, isRoundLeft, isRoundRight, isPercentage = false
+    }) {
+      let label1Cell = ''
+      if (label1.length > 0) {
+        label1Cell = `
+          <td class="px-4 py-2 border ${bgColor} ${isRoundLeft ? 'rounded-bl-lg' : ''} text-[20px] font-semibold text-center text-white ${label1 === '全国平均' ? 'rounded-tl-lg' : ''}"
+            rowspan="2">
+            ${label1}
+          </td>
+        `;
+      } else {
+      }
+
+      const label2Cell = `
+        <td class="px-4 py-2 border border-r-0 ${isBottom ? '' : 'border-b-0'} text-center text-[20px] font-semibold">${label2}</td>
+      `
+
+      const rowScore = `
+        <tr style='${isPercentage ? 'background-color: #F5F5F5' : ''}'>
+          ${label1Cell}
+          ${label2Cell}
+          ${scores.map((score, index) => `<td class="px-4 py-2 border ${index === 0 ? '' : 'border-l-0'} ${index === scores.length - 1 && isRoundRight ? 'rounded-br-lg' : ''} ${isBottom ? '' : 'border-b-0'} text-right text-[20px] font-semibold">${formatValue(score)}</td>`).join('')}
+        </tr>
+      `
+
+      return rowScore
+    }
+
+    function generateColumnChart(stats) {
+      const exam = stats.exam;
+      if (isEmptyObject(exam)) return;
+
+      // Process the score distribution data
+      const processedData = processScoreDistribution(exam.scoreDistribution, exam.passRate);
+
+      Highcharts.chart('position-company-chart', {
+        chart: {
+          type: 'column'
+        },
+        title: {
+          text: ''
+        },
+        xAxis: {
+          min: 0,
+          max: 100,
+          tickInterval: 10,
+          title: {
+            text: '正解率',
+            style: {
+              fontSize: '14px',
+              fontWeight: '500',
+              color: '#000000'
+            }
+          },
+          labels: {
+            useHTML: true,
+            formatter: function () {
+              if (this.value === 0) return ''
+              return this.value + '%';
+            }
+          },
+          tickWidth: 0
+        },
+        yAxis: {
+          tickInterval: 5,
+          title: {
+            text: '頻度',
+            style: {
+              fontSize: '14px',
+              fontWeight: '500',
+              color: '#000000'
+            }
+          }
+        },
+        tooltip: {
+          enabled: false
+        },
+        series: [{
+          data: processedData.data,
+          showInLegend: false,
+          pointWidth: 78,
+          // pointRange: 10,
+          pointPlacement: 'on',
+          colorByPoint: true,
+          colors: processedData.colors
+        }],
+        plotOptions: {
+          column: {
+            pointPadding: 0,
+            borderWidth: 0,
+            groupPadding: 0
+          }
+        },
+        credits: {
+          enabled: false
+        }
+      });
+    }
+
+    function processScoreDistribution(scoreDistribution, passRate) {
+      // Initialize data for all ranges (0-10, 10-20, ..., 90-100)
+      const data = Array(10).fill(0);
+      const colors = Array(10).fill('#EBEBEB'); // Default gray color
+
+      // Convert passRate to integer
+      const passRateInt = parseFloat(passRate.toFixed(1) || 0);
+
+      // Process each range in the score distribution
+      Object.entries(scoreDistribution).forEach(([range, value]) => {
+        const [start, end] = range.split('-').map(Number);
+
+        // Determine which bucket this range belongs to (0-10 -> 0, 10-20 -> 1, etc.)
+        const bucketIndex = Math.floor(start / 10);
+
+        // Special case for 100 (put it in the last bucket)
+        if (start === 90 && end === 100) {
+          data[9] = value;
+          if (passRateInt === 100) colors[9] = '#10B981';
+        }
+        // Normal case for other ranges
+        else if (bucketIndex >= 0 && bucketIndex < 10) {
+          data[bucketIndex] = value;
+
+          // Highlight if pass rate falls in this bucket
+          if (passRateInt >= start && passRateInt < end) {  // Note: < instead of <= for right-exclusive
+            colors[bucketIndex] = '#10B981';
+          }
+        }
+      });
+
+      // Format data for Highcharts (x values are the middle of each range)
+      const formattedData = data.map((value, index) => ({
+        x: index * 10 + 5, // Center of the range (5, 15, 25,...)
+        y: value,
+        // name: `${index * 10}-${index === 9 ? 100 : index * 10 + 10}%` // Range label (0-10, 10-20,...,90-100)
+      }));
+
+      return {
+        data: formattedData,
+        colors: colors
+      };
+    }
+
+    getExamData()
+
+    function initializeSelectize() {
+      $('#industry1-selectize').selectize({
+        onChange: function (value) {
+          const industry2 = $('#industry2-selectize')[0].selectize;
+
+          if (value === '1') {
+            industry2.disable();
+            industry2.setValue('1');
+          } else if (value === '2') {
+            industry2.enable();
+            industry2.setValue('1');
+          } else {
+            industry2.disable();
+            industry2.clear();
+          }
+        }
+      });
+      $('#industry2-selectize').selectize({
+        // Disable industry2 by default
+        onInitialize: function () {
+          this.disable();
+        },
+      });
+
+      $('#purpose-selectize').selectize();
+      $('#test-selectize').selectize();
+
+    }
+
+    function formatValue(value) {
+      return (value === null || value === undefined || value === 0.0 || isNaN(value)) ? "-" : value;
+    }
+
+    function isEmptyObject(obj) {
+      return !obj || Object.keys(obj).length === 0;
+    }
+
+    function displayFilterData() {
+      const industry1 = $('#industry1-selectize option:selected').text();
+      const industry2 = $('#industry2-selectize option:selected').text() === "" ? "undefined" : $('#industry2-selectize option:selected').text();
+      const purpose = $('#purpose-selectize option:selected').text();
+      const test = $('#test-selectize option:selected').text();
+
+      // Reset scores
+      nationalOverallScores = {};
+      nationalPartScores = {};
+
+      const filterResult = filterData[industry1]?.[industry2]?.[purpose]?.[test];
+      if (!isEmptyObject(filterResult)) {
+        for (const [key, value] of Object.entries(filterResult)) {
+          const mainCategoryMatch = key.match(/\[([A-F])\]/);
+          const subCategoryMatch = key.match(/\[([A-F]\d+)\]/);
+          if (mainCategoryMatch) {
+            const category = mainCategoryMatch[1];
+            if (key.includes(`[${category}]`)) {
+              if (!nationalOverallScores[category]) {
+                nationalOverallScores[category] = 0;
+              }
+              nationalOverallScores[category] = parseFloat(value.toFixed(1) || 0);
+            }
+          }
+          if (subCategoryMatch) {
+            const category = subCategoryMatch[1][0]; // Get the main category letter
+            const subcategory = subCategoryMatch[1];
+            if (!nationalPartScores[category]) {
+              nationalPartScores[category] = {};
+            }
+            nationalPartScores[category][subcategory] = parseFloat(value.toFixed(1) || 0);
+          }
+        }
+      } else {
+        nationalOverallScores = {}
+        nationalPartScores = {}
+      }
+      updateAllData()
+    }
+
+    $('#apply-filter-btn').on('click', function () {
+      displayFilterData();
+    });
+    initializeSelectize()
+  </script>
+</body>
+
+</html>

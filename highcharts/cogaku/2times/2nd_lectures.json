@@ -1,0 +1,102 @@
+{
+  "365701": {
+    "first_lecture_id": "365700",
+    "second_lecture_title": "スタンダード【KL】機・電・化（90問）2回目",
+    "first_lecture_title": "スタンダード【KL】機・電・化（90問）1回目"
+  },
+  "364285": {
+    "first_lecture_id": "364283",
+    "second_lecture_title": "スタンダード【BA】機・電・情・品（120問）2回目",
+    "first_lecture_title": "スタンダード【BA】機・電・情・品（120問）1回目"
+  },
+  "366818": {
+    "first_lecture_id": "366817",
+    "second_lecture_title": "スタンダード【KE】機・電・品・化（120問）2回目",
+    "first_lecture_title": "スタンダード【KE】機・電・品・化（120問）1回目"
+  },
+  "365791": {
+    "first_lecture_id": "365790",
+    "second_lecture_title": "スタンダード【KA】機・電・情・品・化（150問）2回目",
+    "first_lecture_title": "スタンダード【KA】機・電・情・品・化（150問）1回目"
+  },
+  "366020": {
+    "first_lecture_id": "366019",
+    "second_lecture_title": "スタンダード【AP】機械（96問）2回目",
+    "first_lecture_title": "スタンダード【AP】機械（96問）1回目"
+  },
+  "366022": {
+    "first_lecture_id": "366021",
+    "second_lecture_title": "スタンダード【AQ】電気電子（96問）2回目",
+    "first_lecture_title": "スタンダード【AQ】電気電子（96問）1回目"
+  },
+  "366025": {
+    "first_lecture_id": "366024",
+    "second_lecture_title": "スタンダード【AR】情報（96問）2回目",
+    "first_lecture_title": "スタンダード【AR】情報（96問）1回目"
+  },
+  "366030": {
+    "first_lecture_id": "366026",
+    "second_lecture_title": "スタンダード【MA】電気電子96問（電気回路・電子回路・半導体）2回目",
+    "first_lecture_title": "スタンダード【MA】電気電子96問（電気回路・電子回路・半導体）1回目"
+  },
+  "366039": {
+    "first_lecture_id": "366035",
+    "second_lecture_title": "To-Beメンテナンス技術試験【EA】5分野100問 2回目",
+    "first_lecture_title": "To-Beメンテナンス技術試験【EA】5分野100問 1回目"
+  },
+  "364777": {
+    "first_lecture_id": "364776",
+    "second_lecture_title": "スタンダード【AL（OP）】機械（30問）2回目",
+    "first_lecture_title": "スタンダード【AL（OP）】機械（30問）1回目"
+  },
+  "364779": {
+    "first_lecture_id": "364778",
+    "second_lecture_title": "スタンダード【AM（OP）】電気電子（30問）2回目",
+    "first_lecture_title": "スタンダード【AM（OP）】電気電子（30問）1回目"
+  },
+  "365302": {
+    "first_lecture_id": "365300",
+    "second_lecture_title": "スタンダード【AF（OP）】機械・電気電子（60問）2回目",
+    "first_lecture_title": "スタンダード【AF（OP）】機械・電気電子（60問）1回目"
+  },
+  "365298": {
+    "first_lecture_id": "365297",
+    "second_lecture_title": "スタンダード【AB（OP）】機械・電気電子・情報（90問）2回目",
+    "first_lecture_title": "スタンダード【AB（OP）】機械・電気電子・情報（90問）1回目"
+  },
+  "366815": {
+    "first_lecture_id": "366814",
+    "second_lecture_title": "スタンダード【BC（OP）】機・電・品（90問）2回目",
+    "first_lecture_title": "スタンダード【BC（OP）】機・電・品（90問）1回目"
+  },
+  "365713": {
+    "first_lecture_id": "365711",
+    "second_lecture_title": "スタンダード【BE（OP）】電・情・品（90問）2回目",
+    "first_lecture_title": "スタンダード【BE（OP）】電・情・品（90問）1回目"
+  },
+  "364771": {
+    "first_lecture_id": "364770",
+    "second_lecture_title": "スタンダード【BA（OP）】機・電・情・品（120問）2回目",
+    "first_lecture_title": "スタンダード【BA（OP）】機・電・情・品（120問）1回目"
+  },
+  "367882": {
+    "first_lecture_id": "367880",
+    "second_lecture_title": "スタンダード【K1】化学（30問）2回目",
+    "first_lecture_title": "スタンダード【K1】化学（30問）1回目"
+  },
+  "369740": {
+    "first_lecture_id": "369739",
+    "second_lecture_title": "アドバンスト【WA】機械（128問）2回目",
+    "first_lecture_title": "アドバンスト【WA】機械（128問）1回目"
+  },
+  "369742": {
+    "first_lecture_id": "369741",
+    "second_lecture_title": "アドバンスト【WB】電気電子（128問）2回目",
+    "first_lecture_title": "アドバンスト【WB】電気電子（128問）1回目"
+  },
+  "369744": {
+    "first_lecture_id": "369743",
+    "second_lecture_title": "アドバンスト【WC】情報（128問）2回目",
+    "first_lecture_title": "アドバンスト【WC】情報（128問）1回目"
+  }
+}
