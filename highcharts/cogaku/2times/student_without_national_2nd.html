@@ -2670,7 +2670,6 @@
           labels: {
             useHTML: true,
             formatter: function () {
-              if (this.value === 0) return ''
               return this.value + '%';
             }
           },
@@ -2757,7 +2756,7 @@
     }
 
     function formatValue(value) {
-      return (value === null || value === undefined || value === 0.0 || isNaN(value)) ? "-" : value;
+      return (value === null || value === undefined || isNaN(value)) ? "-" : value;
     }
 
     function isEmptyObject(obj) {

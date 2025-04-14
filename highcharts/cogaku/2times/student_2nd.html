@@ -3200,7 +3200,8 @@
         label1: '全国平均',
         label2: '得点',
         bgColor: 'bg-[#EE4344]',
-        scores: nationalGroupScores
+        scores: nationalGroupScores,
+        isShowZero: false
       })}
         ${createScoreRow({
         label1: '',
@@ -3209,7 +3210,8 @@
         scores: nationalAverageScorePercent,
         isBottom: false,
         isRoundLeft: false,
-        isPercentage: true
+        isPercentage: true,
+        isShowZero: false
       })}
         ${createScoreRow({
         label1: '貴社平均',
@@ -3360,7 +3362,8 @@
         label1: '全国平均',
         label2: '得点',
         bgColor: 'bg-[#EE4344]',
-        scores: overallNationalScores
+        scores: overallNationalScores,
+        isShowZero: false
       })}
             ${createScoreRow({
         label1: '',
@@ -3369,7 +3372,8 @@
         scores: overallNationalScores.map((score, index) => parseFloat((score / totalUserEarndScores[index] * 100).toFixed(1) || 0)),
         isBottom: false,
         isRoundLeft: false,
-        isPercentage: true
+        isPercentage: true,
+        isShowZero: false
       })}
             ${createScoreRow({
         label1: '貴社平均',
@@ -3575,7 +3579,7 @@
     }
 
     function createScoreRow({
-      label1, label2, bgColor, scores, isBottom, isRoundLeft, isRoundRight, isPercentage = false
+      label1, label2, bgColor, scores, isBottom, isRoundLeft, isRoundRight, isPercentage = false, isShowZero = true
     }) {
       let label1Cell = ''
       if (label1.length > 0) {
@@ -3596,7 +3600,7 @@
         <tr style='${isPercentage ? 'background-color: #F5F5F5' : ''}'>
           ${label1Cell}
           ${label2Cell}
-          ${scores.map((score, index) => `<td class="px-4 py-2 border ${index === 0 ? '' : 'border-l-0'} ${index === scores.length - 1 && isRoundRight ? 'rounded-br-lg' : ''} ${isBottom ? '' : 'border-b-0'} text-right text-[20px] font-semibold">${formatValue(score)}</td>`).join('')}
+          ${scores.map((score, index) => `<td class="px-4 py-2 border ${index === 0 ? '' : 'border-l-0'} ${index === scores.length - 1 && isRoundRight ? 'rounded-br-lg' : ''} ${isBottom ? '' : 'border-b-0'} text-right text-[20px] font-semibold">${formatValue(score, isShowZero)}</td>`).join('')}
         </tr>
       `
 
@@ -3632,7 +3636,6 @@
           labels: {
             useHTML: true,
             formatter: function () {
-              if (this.value === 0) return ''
               return this.value + '%';
             }
           },
@@ -3749,7 +3752,11 @@
 
     }
 
-    function formatValue(value) {
+    function formatValue(value, isShowZero = true) {
+      if (isShowZero) {
+        return (value === null || value === undefined || isNaN(value)) ? "-" : value;
+      }
+
       return (value === null || value === undefined || value === 0.0 || isNaN(value)) ? "-" : value;
     }
 
@@ -3770,31 +3777,35 @@
       const filterResult = filterData[industry1]?.[industry2]?.[purpose]?.[test];
       if (!isEmptyObject(filterResult)) {
         for (const [key, value] of Object.entries(filterResult)) {
-          const mainCategoryMatch = key.match(/\[([A-F])\]/);
-          const subCategoryMatch = key.match(/\[([A-F]\d+)\]/);
-          if (mainCategoryMatch) {
-            const category = mainCategoryMatch[1];
-            if (key.includes(`[${category}]`)) {
-              if (!nationalOverallScores[category]) {
-                nationalOverallScores[category] = 0;
+          const categoryCodeMatch = key.match(/\[([^\]]+)\]/); // Match text inside []
+
+          if (categoryCodeMatch) {
+            const code = categoryCodeMatch[1]; // e.g., AA4, B1, AC3, A
+
+            // Determine if it's a main or sub category
+            const isSubcategory = /\d/.test(code);
+            const mainCategory = isSubcategory ? code.match(/^[A-Z]+/)[0] : code;
+
+            // Overall score (main category)
+            if (!isSubcategory) {
+              nationalOverallScores[mainCategory] = parseFloat(value.toFixed(1) || 0);
+            }
+
+            // Part score (subcategory)
+            if (isSubcategory) {
+              if (!nationalPartScores[mainCategory]) {
+                nationalPartScores[mainCategory] = {};
               }
-              nationalOverallScores[category] = parseFloat(value.toFixed(1) || 0);
+              nationalPartScores[mainCategory][code] = parseFloat(value.toFixed(1) || 0);
             }
-          }
-          if (subCategoryMatch) {
-            const category = subCategoryMatch[1][0]; // Get the main category letter
-            const subcategory = subCategoryMatch[1];
-            if (!nationalPartScores[category]) {
-              nationalPartScores[category] = {};
-            }
-            nationalPartScores[category][subcategory] = parseFloat(value.toFixed(1) || 0);
           }
         }
       } else {
-        nationalOverallScores = {}
-        nationalPartScores = {}
+        nationalOverallScores = {};
+        nationalPartScores = {};
       }
-      updateAllData()
+
+      updateAllData();
     }
 
     $('#apply-filter-btn').on('click', function () {
