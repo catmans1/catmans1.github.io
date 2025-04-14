@@ -2577,32 +2577,37 @@
       const filterResult = filterData[industry1]?.[industry2]?.[purpose]?.[test];
       if (!isEmptyObject(filterResult)) {
         for (const [key, value] of Object.entries(filterResult)) {
-          const mainCategoryMatch = key.match(/\[([A-F])\]/);
-          const subCategoryMatch = key.match(/\[([A-F]\d+)\]/);
-          if (mainCategoryMatch) {
-            const category = mainCategoryMatch[1];
-            if (key.includes(`[${category}]`)) {
-              if (!nationalOverallScores[category]) {
-                nationalOverallScores[category] = 0;
+          const categoryCodeMatch = key.match(/\(([^)]+)\)/); // Match text inside ()
+
+          if (categoryCodeMatch) {
+            const code = categoryCodeMatch[1]; // e.g., AA4, B1, AC3, A
+
+            // Determine if it's a main or sub category
+            const isSubcategory = /\d/.test(code);
+            const mainCategory = isSubcategory ? code.match(/^[A-Z]+/)[0] : code;
+
+            // Overall score (main category)
+            if (!isSubcategory) {
+              nationalOverallScores[mainCategory] = parseFloat(value.toFixed(1) || 0);
+            }
+
+            // Part score (subcategory)
+            if (isSubcategory) {
+              if (!nationalPartScores[mainCategory]) {
+                nationalPartScores[mainCategory] = {};
               }
-              nationalOverallScores[category] = parseFloat(value.toFixed(1) || 0);
+              nationalPartScores[mainCategory][code] = parseFloat(value.toFixed(1) || 0);
             }
-          }
-          if (subCategoryMatch) {
-            const category = subCategoryMatch[1][0]; // Get the main category letter
-            const subcategory = subCategoryMatch[1];
-            if (!nationalPartScores[category]) {
-              nationalPartScores[category] = {};
-            }
-            nationalPartScores[category][subcategory] = parseFloat(value.toFixed(1) || 0);
           }
         }
       } else {
-        nationalOverallScores = {}
-        nationalPartScores = {}
+        nationalOverallScores = {};
+        nationalPartScores = {};
       }
-      updateAllData()
+
+      updateAllData();
     }
+
     $('#apply-filter-btn').on('click', function () {
       displayFilterData();
     });
