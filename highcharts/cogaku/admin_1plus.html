@@ -2577,7 +2577,7 @@
       const filterResult = filterData[industry1]?.[industry2]?.[purpose]?.[test];
       if (!isEmptyObject(filterResult)) {
         for (const [key, value] of Object.entries(filterResult)) {
-          const categoryCodeMatch = key.match(/\(([^)]+)\)/); // Match text inside ()
+          const categoryCodeMatch = key.match(/\[([^\]]+)\]/); // Match text inside ()
 
           if (categoryCodeMatch) {
             const code = categoryCodeMatch[1]; // e.g., AA4, B1, AC3, A
