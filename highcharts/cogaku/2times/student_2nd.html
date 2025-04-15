@@ -275,7 +275,7 @@
 
       let apiUrl = `${protocol}//${hostname}/api/v3/reports/individual/user_exams/${user_exam_id}?start_date=${startDate}&end_date=${endDate}`
       if (!isEmptyObject(lectureObject)) {
-        return apiUrl + `&firstLectureId=${lectureObject.first_lecture_id}`
+        return apiUrl + `&first_lecture_id=${lectureObject.first_lecture_id}`
       }
 
       return apiUrl
@@ -770,6 +770,14 @@
         const url = 'https://assets.share-wis.com/reports/exams/cogaku/2nd_lectures.json';
         const response = await fetch(url)
         lectures2nd = await response.json()
+        const newLecture = {
+          "311929": {
+            "first_lecture_id": "311928",
+            "second_lecture_title": "second exam",
+            "first_lecture_title": "first exam"
+          }
+        }
+        lectures2nd = { ...lectures2nd, ...newLecture }
       } catch (error) {
         console.error('Error fetching the filter data:', error);
       }

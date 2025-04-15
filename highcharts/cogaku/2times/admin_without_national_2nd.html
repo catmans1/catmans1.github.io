@@ -158,7 +158,7 @@
 
       let apiUrl = `${protocol}//${hostname}/api/v3/reports/organization/exam_lectures/${exam_lecture_id}?start_date=${startDate}&end_date=${endDate}`
       if (!isEmptyObject(lectureObject)) {
-        return apiUrl + `&firstLectureId=${lectureObject.first_lecture_id}`
+        return apiUrl + `&first_lecture_id=${lectureObject.first_lecture_id}`
       }
 
       return apiUrl
