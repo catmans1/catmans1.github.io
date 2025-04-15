@@ -766,6 +766,16 @@
       }
     }
 
+    async function fetchLectureId2nd() {
+      try {
+        const url = 'https://assets.share-wis.com/reports/exams/cogaku/2nd_lectures.json';
+        const response = await fetch(url)
+        lectures2nd = await response.json()
+      } catch (error) {
+        console.error('Error fetching the filter data:', error);
+      }
+    }
+
     const tags_container = document.getElementById('tags-container');
     function updateAllData() {
       createTableOverall(statData, groupedTags)
@@ -1176,6 +1186,7 @@
       try {
         await fetchJsonData();
         await fetchFilterData();
+        await fetchLectureId2nd();
         await getExamReportData();
       } catch (error) {
         console.error('Error occurred:', error);

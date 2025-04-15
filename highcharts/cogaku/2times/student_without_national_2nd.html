@@ -669,6 +669,16 @@
       }
     }
 
+    async function fetchLectureId2nd() {
+      try {
+        const url = 'https://assets.share-wis.com/reports/exams/cogaku/2nd_lectures.json';
+        const response = await fetch(url)
+        lectures2nd = await response.json()
+      } catch (error) {
+        console.error('Error fetching the filter data:', error);
+      }
+    }
+
     function getGrade(passRate) {
       if (passRate >= 80) {
         return 'A';
@@ -1008,6 +1018,7 @@
     async function getExamData() {
       try {
         await fetchJsonData();
+        await fetchLectureId2nd();
         await getExamReportData();
       } catch (error) {
         console.error('Error occurred:', error);
