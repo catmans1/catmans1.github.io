@@ -222,6 +222,7 @@
           },
         })
         const responseJson = await response.json()
+
         /*
         const responseJson = {
           "metaData": {
@@ -643,14 +644,16 @@
 
           const tags = Object.values(stats?.tags);
           const groupedTags = groupTagsByPrefix(tags);
-          const firstTags = Object.values(stats?.firstExamLecture?.tags);
-          firstGroupTags = groupTagsByPrefix(firstTags);
+          if (!isEmptyObject(stats?.firstExamLecture?.tags)) {
+            const firstTags = Object.values(stats?.firstExamLecture?.tags);
+            firstGroupTags = groupTagsByPrefix(firstTags);
+          }
           createTableOverall(stats, groupedTags)
+          generateColumnChart(stats)
+
           Object.entries(groupedTags).forEach(([prefix, group]) => {
             createRadarChart(prefix, group);
           });
-
-          generateColumnChart(stats)
         }
       } catch (error) {
 
@@ -723,12 +726,17 @@
       const userEarndScores = [parseFloat(totalEarnedScore.toFixed(1) || 0), ...group.map(item => parseFloat(item.earnedScore.toFixed(1) || 0))];
       const totalUserEarndScores = [parseFloat(totalMaxScore.toFixed(1) || 0), ...group.map(item => item.scores.length)];
 
-      const firstTotalEarnedScore = firstGroup.reduce((sum, item) => sum + parseFloat(item.earnedScore || 0), 0);
-      const firstUserEarndScores = [parseFloat(firstTotalEarnedScore.toFixed(1) || 0), ...firstGroup.map(item => parseFloat(item.earnedScore.toFixed(1) || 0))];
+      let firstTotalEarnedScore = null
+      let firstUserEarndScores = Array(categories.length + 1).fill(null)
+      let firstUserAverageScorePercent = Array(categories.length + 1).fill(null)
+      if (!isEmptyObject(firstGroup)) {
+        firstTotalEarnedScore = firstGroup.reduce((sum, item) => sum + parseFloat(item.earnedScore || 0), 0);
+        firstUserEarndScores = [parseFloat(firstTotalEarnedScore.toFixed(1) || 0), ...firstGroup.map(item => parseFloat(item.earnedScore.toFixed(1) || 0))];
+        firstUserAverageScorePercent = firstUserEarndScores.map((score, index) => parseFloat((score / totalUserEarndScores[index] * 100).toFixed(1) || 0));
+      }
 
       const companyAverageScorePercent = companyAverage.map((score, index) => parseFloat((score / totalUserEarndScores[index] * 100).toFixed(1) || 0));
       const userAverageScorePercent = userEarndScores.map((score, index) => parseFloat((score / totalUserEarndScores[index] * 100).toFixed(1) || 0));
-      const firstUserAverageScorePercent = firstUserEarndScores.map((score, index) => parseFloat((score / totalUserEarndScores[index] * 100).toFixed(1) || 0));
 
       const tableHeaders = ['合計', ...categories].map((header, index) => `
       <th class="px-4 py-2 border border-b-0 ${index === 0 ? 'rounded-tl-lg' : 'border-l-0'} ${index === categories.length ? 'rounded-tr-lg' : ''} text-center text-[20px] font-semibold">
@@ -861,7 +869,12 @@
       const totalScore = exam?.maxScore
       const totalUserEarndScores = [totalScore];
 
-      const firstUserEarndScores = [parseFloat(firstExam?.earnedScore.toFixed(1) || 0)];
+      let firstUserEarndScores = [null]
+      let firstUserEarndScoresPercent = [null]
+      if (!isEmptyObject(firstExam)) {
+        firstUserEarndScores = [parseFloat(firstExam?.earnedScore.toFixed(1) || 0)];
+        firstUserEarndScoresPercent = firstUserEarndScores.map((score, index) => parseFloat((score / totalUserEarndScores[index] * 100).toFixed(1) || 0))
+      }
 
       const scoreCells = scores
         .map(
@@ -918,7 +931,7 @@
         label1: '',
         label2: '正解率',
         bgColor: 'bg-[#2DD92D]',
-        scores: firstUserEarndScores.map((score, index) => parseFloat((score / totalUserEarndScores[index] * 100).toFixed(1) || 0)),
+        scores: firstUserEarndScoresPercent,
         isBottom: false,
         isRoundLeft: false,
         isPercentage: true

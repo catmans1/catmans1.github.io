@@ -687,12 +687,14 @@
           finishDate.textContent = metaData.exam?.finishDate
           lectureTitle.textContent = metaData.lecture?.title
           examEventTitle.textContent = metaData.examEvent?.title
-
+          statData = stats;
           const tags = Object.values(stats?.tags);
           groupedTags = groupTagsByPrefix(tags);
-          const firstTags = Object.values(stats?.firstExamLecture?.tags);
-          firstGroupTags = groupTagsByPrefix(firstTags);
-          statData = stats;
+          if (!isEmptyObject(stats?.firstExamLecture?.tags)) {
+            const firstTags = Object.values(stats?.firstExamLecture?.tags);
+            firstGroupTags = groupTagsByPrefix(firstTags);
+          }
+
           displayFilterData()
         }
       } catch (error) {
@@ -735,14 +737,14 @@
     const tags_container = document.getElementById('tags-container');
     function updateAllData() {
       createTableOverall(statData, groupedTags)
+      generateColumnChart(statData)
+      generateColumnChartFirst(statData)
+
       // Clear the existing content of the table container
       tags_container.innerHTML = '';
       Object.entries(groupedTags).forEach(([prefix, group]) => {
         createRadarChart(statData.exam, prefix, group);
       });
-
-      generateColumnChart(statData)
-      generateColumnChartFirst(statData)
     }
 
     function createRadarChart(exam, prefix, group) {
@@ -775,8 +777,13 @@
       const totalMaxScore = group.reduce((sum, item) => sum + parseFloat(item?.maxScore || 0), 0) / numOfParticipants;
       const totalCompanyAverages = [totalMaxScore, ...group.map(item => parseFloat(item.maxScore || 0) / numOfParticipants)];
 
-      const firstTotalAverageScore = firstGroup.reduce((sum, item) => sum + item.averageScore, 0);
-      const firstCompanyAverage = [parseFloat(firstTotalAverageScore.toFixed(1) || 0), ...firstGroup.map(item => parseFloat(item.averageScore.toFixed(1) || 0))];
+      let firstCompanyAverage = Array(categories.length + 1).fill(null);
+      let firstCompanyAverageScorePercent = firstCompanyAverage
+      if (!isEmptyObject(firstGroup)) {
+        const firstTotalAverageScore = firstGroup.reduce((sum, item) => sum + item.averageScore, 0);
+        firstCompanyAverage = [parseFloat(firstTotalAverageScore.toFixed(1) || 0), ...firstGroup.map(item => parseFloat(item.averageScore.toFixed(1) || 0))];
+        firstCompanyAverageScorePercent = firstCompanyAverage.map((score, index) => parseFloat((score / totalCompanyAverages[index] * 100).toFixed(1) || 0));
+      }
 
       let nationalGroupScores = []
       if (!isEmptyObject(nationalPartScores)) {
@@ -793,7 +800,6 @@
 
       const nationalAverageScorePercent = nationalGroupScores.map((score, index) => parseFloat((score / totalCompanyAverages[index] * 100).toFixed(1) || 0));
       const companyAverageScorePercent = companyAverage.map((score, index) => parseFloat((score / totalCompanyAverages[index] * 100).toFixed(1) || 0));
-      const firstCompanyAverageScorePercent = firstCompanyAverage.map((score, index) => parseFloat((score / totalCompanyAverages[index] * 100).toFixed(1) || 0));
 
       const tableHeaders = ['合計', ...categories].map((header, index) => `
       <th class="px-4 py-2 border border-b-0 ${index === 0 ? 'rounded-tl-lg' : 'border-l-0'} ${index === categories.length ? 'rounded-tr-lg' : ''} text-center text-[20px] font-semibold">
@@ -932,9 +938,14 @@
       const companyAverage = [parseFloat(totalAverageScore.toFixed(1) || 0), ...averageScores.map(s => parseFloat(s.toFixed(1) || 0))];
       const totalCompanyAverages = [totalScore, ...scores];
 
-      const firstAverageScores = Object.values(calculateAverageScoresOfTags(firstGroupTags))
-      const firstTotalAverageScore = firstAverageScores.reduce((sum, score) => sum + score, 0);
-      const firstCompanyAverage = [parseFloat(firstTotalAverageScore.toFixed(1) || 0), ...firstAverageScores.map(s => parseFloat(s.toFixed(1) || 0))];
+      let firstCompanyAverage = Array(categories.length + 1).fill(null);
+      let firstCompanyAveragePercent = firstCompanyAverage
+      if (!isEmptyObject(firstGroupTags)) {
+        const firstAverageScores = Object.values(calculateAverageScoresOfTags(firstGroupTags))
+        const firstTotalAverageScore = firstAverageScores.reduce((sum, score) => sum + score, 0);
+        firstCompanyAverage = [parseFloat(firstTotalAverageScore.toFixed(1) || 0), ...firstAverageScores.map(s => parseFloat(s.toFixed(1) || 0))];
+        firstCompanyAveragePercent = firstCompanyAverage.map((score, index) => parseFloat((score / totalCompanyAverages[index] * 100).toFixed(1) || 0))
+      }
 
       let overallNationalScores = []
 
@@ -1006,7 +1017,7 @@
         label1: '',
         label2: '正解率',
         bgColor: 'bg-[#3BC7F6]',
-        scores: firstCompanyAverage.map((score, index) => parseFloat((score / totalCompanyAverages[index] * 100).toFixed(1) || 0)),
+        scores: firstCompanyAveragePercent,
         isBottom: false,
         isRoundLeft: false,
         isPercentage: true
