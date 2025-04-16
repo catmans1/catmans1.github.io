@@ -1127,6 +1127,7 @@
       try {
         await fetchJsonData();
         await fetchFilterData();
+        await fetchLectureId2nd();
         await getExamReportData();
       } catch (error) {
         console.error('Error occurred:', error);
