@@ -2400,8 +2400,8 @@
       <tr>
         <td class=""></td>
         <td class="px-4 py-2 border border-r-0 border-b-0 bg-[#F5F5F5] text-center text-[20px] font-semibold rounded-tl-lg">満点</td>
-        <td class="px-4 py-2 border border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${formatValue(totalMaxScore.toFixed(1))}</td>
-        ${group.map(item => `<td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${item.scores?.length.toFixed(1) || 0}</td>`).join('')}
+        <td class="px-4 py-2 border border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${formatValue(totalMaxScore)}</td>
+        ${group.map(item => `<td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${item.scores?.length || 0}</td>`).join('')}
       </tr>`;
 
       const tbodyContent = `
@@ -2534,7 +2534,7 @@
       }
 
       const userEarndScores = [parseFloat(totalEarnedScore.toFixed(1) || 0), ...earnedScores.map(s => parseFloat(s.toFixed(1) || 0))];
-      const totalScore = exam?.maxScore.toFixed(1)
+      const totalScore = exam?.maxScore
       const totalUserEarndScores = [totalScore, ...scores];
 
       const overallNationalScoresPercent = overallNationalScores.map((score, index) => parseFloat((score / totalUserEarndScores[index] * 100).toFixed(1) || 0))
@@ -2544,7 +2544,7 @@
       const scoreCells = scores
         .map(
           (score) =>
-            `<td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${formatValue(score.toFixed(1))}</td>`
+            `<td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${formatValue(score)}</td>`
         )
         .join("");
 
@@ -2813,7 +2813,7 @@
         <tr style='${isPercentage ? 'background-color: #F5F5F5' : ''}'>
           ${label1Cell}
           ${label2Cell}
-          ${scores.map((score, index) => `<td class="px-4 py-2 border ${index === 0 ? '' : 'border-l-0'} ${index === scores.length - 1 && isRoundRight ? 'rounded-br-lg' : ''} ${isBottom ? '' : 'border-b-0'} text-right text-[20px] font-semibold">${formatValue(label1 === 'ご本人' ? score.toFixed(1) : score, isShowZero)}${label2 === '正解率' ? '%' :''}</td>`).join('')}
+          ${scores.map((score, index) => `<td class="px-4 py-2 border ${index === 0 ? '' : 'border-l-0'} ${index === scores.length - 1 && isRoundRight ? 'rounded-br-lg' : ''} ${isBottom ? '' : 'border-b-0'} text-right text-[20px] font-semibold">${formatValue(label1 === 'ご本人' ? score : score.toFixed(1), isShowZero)}${label2 === '正解率' ? '%' :''}</td>`).join('')}
         </tr>
       `
 
