@@ -1890,7 +1890,7 @@
     const tags_container = document.getElementById('tags-container');
     function createRadarChart(exam, prefix, group) {
       if (!group || group.length === 0) {
-        console.error("Group data is required to create the radar chart.");
+        console.log("Group data is required to create the radar chart.");
         return;
       }
       const fileName = getFieldName(group[0])
@@ -1929,8 +1929,8 @@
       <tr>
         <td class=""></td>
         <td class="px-4 py-2 border border-r-0 border-b-0 bg-[#F5F5F5] text-center text-[20px] font-semibold rounded-tl-lg">満点</td>
-        <td class="px-4 py-2 border border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${formatValue(totalMaxScore)}</td>
-        ${group.map(item => `<td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${formatValue(parseFloat(item.maxScore || 0) / numOfParticipants)}</td>`).join('')}
+        <td class="px-4 py-2 border border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${formatValue(totalMaxScore.toFixed(1))}</td>
+        ${group.map(item => `<td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${formatValue((parseFloat(item.maxScore || 0) / numOfParticipants).toFixed(1))}</td>`).join('')}
       </tr>`;
 
       const tbodyContent = `
@@ -2020,13 +2020,13 @@
       const totalAverageScore = averageScores.reduce((sum, score) => sum + score, 0);
       const companyAverage = [parseFloat(totalAverageScore.toFixed(1) || 0), ...averageScores.map(s => parseFloat(s.toFixed(1) || 0))];
 
-      const totalScore = exam?.maxScore || 120
+      const totalScore = exam?.maxScore
       const totalCompanyAverages = [totalScore, ...scores];
 
       const scoreCells = scores
         .map(
           (score) =>
-            `<td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${formatValue(score)}</td>`
+            `<td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${formatValue(score.toFixed(1))}</td>`
         )
         .join("");
 
@@ -2036,7 +2036,7 @@
           <td
             class="px-4 py-2 border border-r-0 border-b-0 bg-[#F5F5F5] text-center text-[20px] font-semibold rounded-tl-lg">
             満点</td>
-          <td class="px-4 py-2 border border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${formatValue(totalScore)}</td>
+          <td class="px-4 py-2 border border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${formatValue(totalScore.toFixed(1))}</td>
           ${scoreCells}
         </tr>
       `
@@ -2250,7 +2250,7 @@
         <tr style='${isPercentage ? 'background-color: #F5F5F5' : ''}'>
           ${label1Cell}
           ${label2Cell}
-          ${scores.map((score, index) => `<td class="px-4 py-2 border ${index === 0 ? '' : 'border-l-0'} ${index === scores.length - 1 && isRoundRight ? 'rounded-br-lg' : ''} ${isBottom ? '' : 'border-b-0'} text-right text-[20px] font-semibold">${formatValue(score)}</td>`).join('')}
+          ${scores.map((score, index) => `<td class="px-4 py-2 border ${index === 0 ? '' : 'border-l-0'} ${index === scores.length - 1 && isRoundRight ? 'rounded-br-lg' : ''} ${isBottom ? '' : 'border-b-0'} text-right text-[20px] font-semibold">${formatValue(score.toFixed(1))}${label2 === '正解率' ? '%' :''}</td>`).join('')}
         </tr>
       `
 

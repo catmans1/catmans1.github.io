@@ -808,7 +808,7 @@
 
     function createRadarChart(prefix, group) {
       if (!group || group.length === 0) {
-        console.error("Group data is required to create the radar chart.");
+        console.log("Group data is required to create the radar chart.");
         return;
       }
       const firstGroup = firstGroupTags[prefix]
@@ -1029,10 +1029,14 @@
         firstUserEarnScoresPercent = firstUserEarndScores.map((score, index) => parseFloat((score / totalUserEarndScores[index] * 100).toFixed(1) || 0))
       }
 
+      const overallNationalScoresPercent = overallNationalScores.map((score, index) => parseFloat((score / totalUserEarndScores[index] * 100).toFixed(1) || 0))
+      const companyAveragePercent = companyAverage.map((score, index) => parseFloat((score / totalUserEarndScores[index] * 100).toFixed(1) || 0))
+      const userEarndScoresPercent = userEarndScores.map((score, index) => parseFloat((score / totalUserEarndScores[index] * 100).toFixed(1) || 0))
+
       const scoreCells = scores
         .map(
           (score) =>
-            `<td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${formatValue(score)}</td>`
+            `<td class="px-4 py-2 border border-l-0 border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold">${formatValue(score.toFixed(1))}</td>`
         )
         .join("");
 
@@ -1042,7 +1046,7 @@
           <td
             class="px-4 py-2 border border-r-0 border-b-0 bg-[#F5F5F5] text-center text-[20px] font-semibold rounded-tl-lg">
             満点</td>
-          <td class="px-4 py-2 border border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold rounded-tr-lg">${formatValue(totalScore)}</td>
+          <td class="px-4 py-2 border border-b-0 bg-[#F5F5F5] text-right text-[20px] font-semibold rounded-tr-lg">${formatValue(totalScore.toFixed(1))}</td>
         </tr>
       `
 
@@ -1069,7 +1073,7 @@
         label1: '',
         label2: '正解率',
         bgColor: 'bg-[#EE4344]',
-        scores: overallNationalScores.map((score, index) => parseFloat((score / totalUserEarndScores[index] * 100).toFixed(1) || 0)),
+        scores: overallNationalScoresPercent,
         isBottom: false,
         isRoundLeft: false,
         isPercentage: true,
@@ -1086,7 +1090,7 @@
         label1: '',
         label2: '正解率',
         bgColor: 'bg-[#3B82F6]',
-        scores: companyAverage.map((score, index) => parseFloat((score / totalUserEarndScores[index] * 100).toFixed(1) || 0)),
+        scores: companyAveragePercent,
         isBottom: false,
         isRoundLeft: false,
         isPercentage: true
@@ -1119,7 +1123,7 @@
         label1: '',
         label2: '正解率',
         bgColor: 'bg-[#10B981]',
-        scores: userEarndScores.map((score, index) => parseFloat((score / totalUserEarndScores[index] * 100).toFixed(1) || 0)),
+        scores: userEarndScoresPercent,
         isBottom: false,
         isRoundLeft: true,
         isPercentage: true,
@@ -1320,7 +1324,7 @@
         <tr style='${isPercentage ? 'background-color: #F5F5F5' : ''}'>
           ${label1Cell}
           ${label2Cell}
-          ${scores.map((score, index) => `<td class="px-4 py-2 border ${index === 0 ? '' : 'border-l-0'} ${index === scores.length - 1 && isRoundRight ? 'rounded-br-lg' : ''} ${isBottom ? '' : 'border-b-0'} text-right text-[20px] font-semibold">${formatValue(score, isShowZero)}</td>`).join('')}
+          ${scores.map((score, index) => `<td class="px-4 py-2 border ${index === 0 ? '' : 'border-l-0'} ${index === scores.length - 1 && isRoundRight ? 'rounded-br-lg' : ''} ${isBottom ? '' : 'border-b-0'} text-right text-[20px] font-semibold">${formatValue(score.toFixed(1), isShowZero)}${label2 === '正解率' ? '%' :''}</td>`).join('')}
         </tr>
       `
 
