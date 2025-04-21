@@ -2250,7 +2250,7 @@
         <tr style='${isPercentage ? 'background-color: #F5F5F5' : ''}'>
           ${label1Cell}
           ${label2Cell}
-          ${scores.map((score, index) => `<td class="px-4 py-2 border ${index === 0 ? '' : 'border-l-0'} ${index === scores.length - 1 && isRoundRight ? 'rounded-br-lg' : ''} ${isBottom ? '' : 'border-b-0'} text-right text-[20px] font-semibold">${formatValue(score.toFixed(1))}${label2 === '正解率' ? '%' :''}</td>`).join('')}
+          ${scores.map((score, index) => `<td class="px-4 py-2 border ${index === 0 ? '' : 'border-l-0'} ${index === scores.length - 1 && isRoundRight ? 'rounded-br-lg' : ''} ${isBottom ? '' : 'border-b-0'} text-right text-[20px] font-semibold">${formatValue(score.toFixed(1), true, label2 === '正解率')}</td>`).join('')}
         </tr>
       `
 
@@ -2360,8 +2360,12 @@
       return !obj || Object.keys(obj).length === 0;
     }
 
-    function formatValue(value) {
-      return (value === null || value === undefined || isNaN(value)) ? "-" : value;
+    function formatValue(value, isShowZero = true, showPercent = false) {
+      if (isShowZero) {
+        return (value === null || value === undefined || isNaN(value)) ? "-" : `${value}${showPercent ? '%' :''}`;
+      }
+
+      return (value === null || value === undefined || value === 0.0 || value === '0.0' || isNaN(value)) ? "-" : `${value}${showPercent ? '%' :''}`;
     }
 
     getExamData()
