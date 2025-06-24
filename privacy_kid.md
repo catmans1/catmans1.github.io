@@ -1,4 +1,3 @@
-
 **Effective Date**: December 2024
 
 ## Introduction
@@ -33,13 +32,29 @@ All game progress, settings, and preferences are stored locally on your device u
 
 ## Third-Party Services
 
-### Google Mobile Ads
-Some of our apps include Google Mobile Ads for displaying advertisements. However:
+### Google Mobile Ads (AdMob)
+Some of our apps include Google Mobile Ads (AdMob) for displaying advertisements. We follow [Google AdMob policies](https://support.google.com/admob/answer/6128543?hl=en) and have configured our implementation for Kids Category compliance:
+
+**AdMob Configuration:**
 - We have configured ads to be non-personalized only
 - No personal information is collected for advertising purposes
-- No tracking permissions are requested
-- All ads are appropriate for children
-- No behavioral targeting is used
+- No tracking permissions are requested from users
+- All ads are appropriate for children and comply with Google's Families Policy
+- We use `tagForChildDirectedTreatment: true` and `tagForUnderAgeOfConsent: true`
+- No behavioral targeting or user profiling is used
+- Ad requests are configured to prevent personalized advertising
+
+**AdMob Data Handling:**
+- Google AdMob may collect standard advertising data (device type, app version, etc.)
+- This data is used by Google for ad delivery and analytics
+- We do not have access to or control over this data
+- Google's privacy policy applies to AdMob data collection: [Google Privacy Policy](https://policies.google.com/privacy)
+
+**Kids Category Compliance:**
+- Our AdMob implementation complies with Google Play's Families Policy
+- We follow AdMob's child-directed treatment guidelines
+- No personal information is shared with AdMob
+- All ad content is filtered for child-appropriate content
 
 ### In-App Purchases
 In-app purchases are processed through Apple's App Store or Google Play Store:
@@ -78,15 +93,30 @@ We are committed to protecting children's privacy across all our apps:
 
 ## App-Specific Information
 
-### Brainy Pals (Memory Game)
-- Educational memory matching game
-- Multiple themes (animals, flowers, fruits, etc.)
-- Progressive difficulty levels
-- No data collection or tracking
+All our Kids Category apps follow the same privacy principles and data handling practices:
 
-### [Other App Names]
-- [Brief description of each app]
-- All follow the same no-data-collection policy
+### Common Features Across All Apps
+- **Educational Focus**: All apps are designed for learning and skill development
+- **No Data Collection**: None of our apps collect, store, or share personal information
+- **Local Storage**: All game progress and settings are stored locally on your device
+- **Parental Controls**: All apps include parental gates for external content access
+- **Non-Personalized Ads**: Any ads are configured for non-personalized delivery only
+- **Child-Appropriate Content**: All content is designed and filtered for children
+
+### App Categories
+Our apps include various educational categories such as:
+- Memory and cognitive training games
+- Educational puzzles and activities
+- Learning games for different age groups
+- Skill-building applications
+
+### Consistent Privacy Practices
+Regardless of the specific app, all our applications:
+- Follow the same no-data-collection policy
+- Use identical privacy protection measures
+- Implement the same parental control features
+- Comply with all Kids Category requirements
+- Maintain the same level of child safety and privacy protection
 
 ## Changes to This Privacy Policy
 
@@ -106,6 +136,7 @@ If you have any questions about this Privacy Policy or our privacy practices, pl
 - **Non-Personalized Ads**: All advertisements are non-personalized and child-appropriate
 - **No Third-Party Data Sharing**: We do not share any data with third parties
 - **Local Storage Only**: All app data remains on your device
+- **AdMob Compliant**: Our AdMob implementation follows [Google AdMob policies](https://support.google.com/admob/answer/6128543?hl=en) and Google Play's Families Policy
 
 ## App Store Privacy Labels
 
