@@ -1,9 +1,9 @@
 # Privacy Policy
 
-**App Name:** Animal Matching Game  
+**App Name:** Animal Puzzles & Pairs  
 **Developer:** Hung Le (Rocky)
 
-Rocky built the *Animal Matching Game* app as a free game. This SERVICE is provided by **Hung Le (Rocky)** at no cost and is intended for use as is.
+Rocky built the *Animal Puzzles & Pairs* app as a free game. This SERVICE is provided by **Hung Le (Rocky)** at no cost and is intended for use as is.
 
 This page is used to inform visitors regarding our policies with the collection, use, and disclosure of Personal Information if anyone decides to use our Service.
 
