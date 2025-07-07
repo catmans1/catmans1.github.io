@@ -6,7 +6,7 @@
 
 This privacy policy applies to all mobile applications and games developed and published by **Hung Le (Rocky)**, including but not limited to:
 
-- Animal Matching Game  
+- Animal Puzzles & Pairs  
 - Car Matching Game
 - Brainy Pals
 
