@@ -9,6 +9,8 @@ This privacy policy applies to all mobile applications and games developed and p
 - Animal Puzzles & Pairs  
 - Car Matching Game
 - Brainy Pals
+- SoroBattle
+- My Card - Wallet
 
 
 By using any of our apps or games, you agree to the collection and use of information in accordance with this policy.
