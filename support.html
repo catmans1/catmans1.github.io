@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Support - Catmans1 Apps & Games</title>
+	<link rel="icon" href="favicon.ico" type="image/png" />
+	<link href="https://fonts.googleapis.com/css?family=Reem+Kufi|Roboto:300" rel="stylesheet">
+	<link href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="css/styles.css">
+	<link rel="stylesheet" href="css/themes/indigo-white.css">
+	<style>
+		.support-container {
+			max-width: 800px;
+			margin: 0 auto;
+			padding: 40px 20px;
+		}
+		.support-section {
+			margin-bottom: 40px;
+		}
+		.support-section h2 {
+			font-family: 'Reem Kufi', sans-serif;
+			font-size: 2.5em;
+			margin-bottom: 20px;
+			color: #4f46e5;
+		}
+		.support-section h3 {
+			font-family: 'Reem Kufi', sans-serif;
+			font-size: 1.8em;
+			margin-top: 30px;
+			margin-bottom: 15px;
+		}
+		.support-section p {
+			font-size: 1.1em;
+			line-height: 1.6;
+			margin-bottom: 15px;
+		}
+		.contact-info {
+			background: rgba(79, 70, 229, 0.1);
+			padding: 20px;
+			border-radius: 8px;
+			margin: 20px 0;
+		}
+		.contact-info a {
+			color: #4f46e5;
+			text-decoration: none;
+			font-weight: bold;
+		}
+		.contact-info a:hover {
+			text-decoration: underline;
+		}
+		.support-form {
+			background: #f9fafb;
+			padding: 30px;
+			border-radius: 8px;
+			margin-top: 20px;
+		}
+		.form-group {
+			margin-bottom: 20px;
+		}
+		.form-group label {
+			display: block;
+			margin-bottom: 8px;
+			font-weight: bold;
+		}
+		.form-group input,
+		.form-group textarea,
+		.form-group select {
+			width: 100%;
+			padding: 12px;
+			border: 1px solid #ddd;
+			border-radius: 4px;
+			font-family: 'Roboto', sans-serif;
+			font-size: 1em;
+			box-sizing: border-box;
+		}
+		.form-group textarea {
+			min-height: 120px;
+			resize: vertical;
+		}
+		.submit-btn {
+			background: #4f46e5;
+			color: white;
+			padding: 12px 30px;
+			border: none;
+			border-radius: 4px;
+			font-size: 1.1em;
+			cursor: pointer;
+			font-weight: bold;
+		}
+		.submit-btn:hover {
+			background: #4338ca;
+		}
+		.back-link {
+			display: inline-block;
+			margin-bottom: 20px;
+			color: #4f46e5;
+			text-decoration: none;
+		}
+		.back-link:hover {
+			text-decoration: underline;
+		}
+		.faq-item {
+			margin-bottom: 20px;
+			padding: 15px;
+			background: #f9fafb;
+			border-radius: 4px;
+		}
+		.faq-item strong {
+			color: #4f46e5;
+		}
+		.contact-info ul {
+			list-style-type: disc;
+			padding-left: 20px;
+			margin: 10px 0;
+		}
+		.contact-info li {
+			margin-bottom: 5px;
+		}
+		.support-section a {
+			color: #4f46e5;
+			text-decoration: none;
+		}
+		.support-section a:hover {
+			text-decoration: underline;
+		}
+	</style>
+</head>
+<body>
+	<div class="support-container">
+		<a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+
+		<div class="support-section">
+			<h2>Support & Contact</h2>
+			<p>Welcome to the support page for Catmans1 Apps & Games. We're here to help you with any questions, issues, or feedback about our apps and games.</p>
+		</div>
+
+		<div class="support-section">
+			<h3>Our Apps & Games</h3>
+			<p>We develop and publish multiple apps and games. This unified support page serves all of them. Please select the specific app or game you need help with when contacting us.</p>
+			<div class="contact-info" style="margin-top: 20px;">
+				<p><strong>Our Current Apps & Games:</strong></p>
+				<ul style="list-style-type: disc; padding-left: 20px;">
+					<li>Animal Puzzles & Pairs</li>
+					<li>Car Matching Game</li>
+					<li>Brainy Pals</li>
+					<li>SoroBattle</li>
+					<li>My Card - Wallet</li>
+					<li>Kids Category Educational Games</li>
+				</ul>
+				<p style="margin-top: 15px; font-style: italic;">Note: If you don't see your app listed, please select "Other" in the form below and specify the app name.</p>
+			</div>
+		</div>
+
+		<div class="support-section">
+			<h3>Contact Us</h3>
+			<div class="contact-info">
+				<p><strong>Email:</strong> <a href="mailto:codeforlifes@gmail.com">codeforlifes@gmail.com</a></p>
+				<p>For the fastest response, please include the following information in your email:</p>
+				<ul style="list-style-type: disc; padding-left: 20px;">
+					<li>App or game name</li>
+					<li>Device model and OS version</li>
+					<li>Description of the issue or question</li>
+					<li>Screenshots (if applicable)</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="support-section">
+			<h3>Send Us a Message</h3>
+			<div class="support-form">
+				<form id="supportForm" onsubmit="handleSubmit(event)">
+					<div class="form-group">
+						<label for="name">Your Name *</label>
+						<input type="text" id="name" name="name" required>
+					</div>
+					<div class="form-group">
+						<label for="email">Your Email *</label>
+						<input type="email" id="email" name="email" required>
+					</div>
+					<div class="form-group">
+						<label for="app">Select App/Game *</label>
+						<select id="app" name="app" required>
+							<option value="">-- Please select an app or game --</option>
+							<option value="Animal Puzzles & Pairs">Animal Puzzles & Pairs</option>
+							<option value="Car Matching Game">Car Matching Game</option>
+							<option value="Brainy Pals">Brainy Pals</option>
+							<option value="SoroBattle">SoroBattle</option>
+							<option value="My Card - Wallet">My Card - Wallet</option>
+							<option value="Kids Category Educational Games">Kids Category Educational Games</option>
+							<option value="Other">Other (please specify in message)</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="subject">Subject *</label>
+						<select id="subject" name="subject" required>
+							<option value="">Select a topic...</option>
+							<option value="Bug Report">Bug Report</option>
+							<option value="Feature Request">Feature Request</option>
+							<option value="Question">General Question</option>
+							<option value="Technical Support">Technical Support</option>
+							<option value="Feedback">Feedback</option>
+							<option value="Refund Request">Refund Request</option>
+							<option value="Other">Other</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="message">Message *</label>
+						<textarea id="message" name="message" placeholder="Please describe your issue, question, or feedback in detail. Include device model, OS version, and steps to reproduce if reporting a bug..." required></textarea>
+					</div>
+					<button type="submit" class="submit-btn">Send Message</button>
+				</form>
+			</div>
+		</div>
+
+		<div class="support-section">
+			<h3>Frequently Asked Questions</h3>
+			<div class="faq-item">
+				<strong>Q: How do I report a bug?</strong>
+				<p>A: Please use the contact form above or email us directly. Include as much detail as possible about the issue, including when it occurs and steps to reproduce it.</p>
+			</div>
+			<div class="faq-item">
+				<strong>Q: How long does it take to get a response?</strong>
+				<p>A: We typically respond within 24-48 hours during business days. For urgent issues, please mark your email as urgent.</p>
+			</div>
+			<div class="faq-item">
+				<strong>Q: Can I request a new feature?</strong>
+				<p>A: Absolutely! We love hearing from our users. Please use the contact form and select "Feature Request" as the subject.</p>
+			</div>
+			<div class="faq-item">
+				<strong>Q: Do you provide refunds?</strong>
+				<p>A: Refund requests should be made through the App Store or Google Play Store according to their respective refund policies.</p>
+			</div>
+		</div>
+
+		<div class="support-section">
+			<h3>Additional Resources</h3>
+			<p>For privacy-related questions, please visit our privacy policy pages:</p>
+			<ul style="list-style-type: disc; padding-left: 20px; margin-bottom: 15px;">
+				<li><a href="privacy_all.md" style="color: #4f46e5; text-decoration: none;">General Privacy Policy</a> (for all apps)</li>
+				<li><a href="privacy_animal.md" style="color: #4f46e5; text-decoration: none;">Animal Puzzles & Pairs Privacy Policy</a></li>
+				<li><a href="privacy-car.md" style="color: #4f46e5; text-decoration: none;">Car Matching Game Privacy Policy</a></li>
+				<li><a href="privacy_kid.md" style="color: #4f46e5; text-decoration: none;">Kids Category Apps Privacy Policy</a></li>
+			</ul>
+			<p>For terms of service, please visit our <a href="term.md" style="color: #4f46e5; text-decoration: none;">Terms of Service</a> page.</p>
+		</div>
+	</div>
+
+	<script>
+		function handleSubmit(event) {
+			event.preventDefault();
+
+			const form = event.target;
+			const name = document.getElementById('name').value;
+			const email = document.getElementById('email').value;
+			const app = document.getElementById('app').value;
+			const subject = document.getElementById('subject').value;
+			const message = document.getElementById('message').value;
+
+			// Create email subject
+			const emailSubject = encodeURIComponent(`[${app}] ${subject}`);
+
+			// Create email body
+			const emailBody = encodeURIComponent(
+				`Support Request\n\n` +
+				`Name: ${name}\n` +
+				`Email: ${email}\n` +
+				`App/Game: ${app}\n` +
+				`Subject: ${subject}\n\n` +
+				`Message:\n${message}\n\n` +
+				`---\n` +
+				`This message was sent from the support form at https://catmans1.github.io/support.html`
+			);
+
+			// Open email client
+			window.location.href = `mailto:codeforlifes@gmail.com?subject=${emailSubject}&body=${emailBody}`;
+
+			// Show confirmation message
+			alert('Your email client should open now. If it doesn\'t, please send an email to codeforlifes@gmail.com with the information you entered.');
+		}
+	</script>
+</body>
+</html>
