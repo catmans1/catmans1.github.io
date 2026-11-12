@@ -1,66 +1,399 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="description" content="Hung Le (Rocky) - Mobile Engineer and App Developer. Creator of educational apps, puzzle games, and mobile applications.">
-	<meta name="author" content="Hung Le">
-
-	<title>Hung Le | Mobile Engineer & App Developer</title>
-
-	<link rel="icon" href="favicon.ico" type="image/png" />
-
-	<link href="https://fonts.googleapis.com/css?family=Reem+Kufi|Roboto:300" rel="stylesheet">
-	<link href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" rel="stylesheet">
-	<link rel="stylesheet" href="css/reset.css">
-	<link rel="stylesheet" href="css/styles.css">
-	<link rel="stylesheet" href="css/themes/indigo-white.css">
-	<style>
-		.support-link {
-			position: fixed;
-			bottom: 20px;
-			right: 20px;
-			background: rgba(79, 70, 229, 0.9);
-			color: white;
-			padding: 12px 20px;
-			border-radius: 25px;
-			text-decoration: none;
-			font-size: 14px;
-			font-weight: 500;
-			box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-			transition: all 0.3s ease;
-			z-index: 1000;
-		}
-		.support-link:hover {
-			background: rgba(79, 70, 229, 1);
-			transform: translateY(-2px);
-			box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-		}
-		.support-link i {
-			margin-right: 6px;
-		}
-		@media (max-width: 600px) {
-			.support-link {
-				bottom: 15px;
-				right: 15px;
-				padding: 10px 16px;
-				font-size: 12px;
-			}
-		}
-	</style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hung Le | Mobile Engineer</title>
+<meta name="description" content="Hung Le, mobile engineer. Small, focused apps for iPhone and Android.">
+<link rel="icon" href="favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #4a2f22; --ink-soft: #7a5440; --paper: #fff4e2; }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0; overflow: hidden; background: #c98a3a; color: var(--ink);
+    font-family: "DotGothic16", "Osaka-Mono", "MS Gothic", ui-monospace, monospace;
+  }
+  #scene {
+    position: fixed; top: 0; left: 0;
+    image-rendering: pixelated; image-rendering: crisp-edges;
+  }
+  .intro { position: fixed; left: 0; right: 0; top: 7vh; z-index: 2; text-align: center; padding-inline: 16px; }
+  .season { margin: 0 0 8px; font-size: 1.05rem; color: var(--ink-soft); letter-spacing: .2em; }
+  h1 {
+    margin: 0; font-weight: 400; line-height: 1.15; letter-spacing: .02em;
+    font-size: clamp(2rem, 6.5vw, 4rem);
+    text-shadow: 3px 3px 0 rgba(255, 244, 226, .85);
+  }
+  .tagline { margin: 10px 0 22px; font-size: clamp(1rem, 2.4vw, 1.35rem); color: var(--ink-soft); }
+  .links { display: inline-flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
+  .links a {
+    display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px;
+    color: var(--ink); background: var(--paper); text-decoration: none; font-size: 1rem;
+    border: 3px solid var(--ink); box-shadow: 4px 4px 0 var(--ink);
+    transition: transform .08s steps(2), box-shadow .08s steps(2);
+  }
+  .links a:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink); }
+  .links a:active { transform: translate(4px, 4px); box-shadow: 0 0 0 var(--ink); }
+  .links a:focus-visible { outline: 3px dashed #c2410c; outline-offset: 4px; }
+  .made-by {
+    position: fixed; left: 0; right: 0; z-index: 2; text-align: center; margin: 0;
+    bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+    font-size: .95rem; letter-spacing: .12em; color: var(--paper);
+    text-shadow: 2px 2px 0 rgba(74, 47, 34, .75);
+  }
+  .links svg { width: 16px; height: 16px; fill: currentColor; shape-rendering: crispEdges; }
+</style>
 </head>
 <body>
-	<main>
-		<div class="intro">Hello, I'm HungLe!</div>
-		<div class="tagline">Mobile Engineer</div>
-		<!-- Find your icons from here - https://fontawesome.com/icons?d=gallery&s=brands -->
-		<div class="icons-social">
-			<a target="_blank" href="https://github.com/catmans1" aria-label="GitHub Profile"><i class="fab fa-github"></i></a>
-		</div>
-	</main>
-	<a href="support.html" class="support-link" aria-label="Support">
-		<i class="fas fa-life-ring"></i> Support
-	</a>
+<canvas id="scene" aria-hidden="true"></canvas>
+
+<main class="intro">
+  <p class="season">秋 · autumn</p>
+  <h1>Hello, I'm HungLe!</h1>
+  <p class="tagline">Mobile Engineer</p>
+  <nav class="links">
+    <a href="/apps/">▶ My apps</a>
+    <a href="https://github.com/catmans1" target="_blank" rel="noopener">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      GitHub
+    </a>
+  </nav>
+</main>
+
+<footer class="made-by">Made by AI</footer>
+
+<script>
+(function () {
+  'use strict';
+  var canvas = document.getElementById('scene');
+  var ctx = canvas.getContext('2d');
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---------- palette ----------
+  var C = {
+    sky: ['#fdebd3', '#fbdcb4', '#f9cb9a', '#f6b882', '#f2a76e'],
+    sunCore: '#fff3d6', sunRing: '#ffd99c',
+    cloud: '#fff3e4', cloudShade: '#f6dcc4',
+    mtnFar: '#dcbfc4', mtn: '#c9a5b6',
+    hill: '#d98a52', hillTree: '#c4703c', near: '#e2a258',
+    rail: '#6f5248', wire: '#7d5e52', embankment: '#c27a47',
+    path: '#d2a678', pathEdge: '#b98757', pebble: '#e6c39c',
+    field: '#e9b75e', fieldRow: '#d89a3f', fieldDeep: '#cf8f38',
+    pole: '#5b3d2e', wood: '#6b4330',
+    plaster: '#efe6d2', beam: '#4a3326', shoji: '#ffe7a8', shojiGrid: '#c9a77a', engawa: '#9a6b47', stone: '#8f8478',
+    thatch: '#a08865', thatchDark: '#86704f', thatchEdge: '#c4ad84', thatchShade: '#6e5a40', ridge: '#4a3a2e', gableVent: '#2e241d',
+    kuraWall: '#f4efe4', namako: '#e9e4d8', tile: '#3d3a40',
+    canopy: '#9b6a3b', canopyDark: '#7f552f', kaki: '#f17a1b',
+    stem: '#b78a4a', plume: '#fbecd0', ground: '#c98a3a',
+    trainBody: '#f3e6c8', trainStripe: '#c8502a', trainRoof: '#8d8a93', trainWin: '#ffe08a', trainUnder: '#5b4a46',
+    leaves: ['#d9480f', '#e8590c', '#f08c00', '#c92a2a'],
+    fly: '#d6331f', flyHead: '#a8261a', wing: '#fff8ee'
+  };
+
+  // ---------- cat sprite (22 x 12), facing right ----------
+  var CAT_COLORS = { O: '#f0943f', D: '#c86a28', W: '#fde7cc', K: '#3a2418', P: '#e0676c' };
+  var CAT_BODY = [
+    '..............O...O...',
+    '.............OOO.OOO..',
+    '.............OOOOOOOO.',
+    '..O..........OOOOOKOO.',
+    '.O...........OOOOOOWWP',
+    '.O..OOOOOOOOOOOOOOWWW.',
+    '..OOODOODOODOOOOOOO...',
+    '...OOOOOOOOOOOOOOOO...',
+    '....OOWWWWWWWWWWOO....'
+  ];
+  var CAT_LEGS = [
+    ['..OO...........OO.....', '.OO.............OO....', '.WW..............WW...'], // stretched
+    ['....OO.......OO.......', '....OO.......OO.......', '....WW.......WW.......'], // passing
+    ['.....OOO...OOO........', '......WW...WW.........', '......................'], // gathered (airborne)
+    ['....OO.......OO.......', '....OO.......OO.......', '....WW.......WW.......']
+  ];
+  var CAT_W = 22, CAT_H = 12;
+
+  // ---------- state ----------
+  var S = 4, W = 0, H = 0, HZ = 0;   // pixel scale, logical size, horizon row
+  var skyLayer, backLayer, midLayer, frontLayer;
+  var leaves = [], susuki = [];
+
+  function rng(seed) { return function () { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }; }
+  function layer() { var c = document.createElement('canvas'); c.width = W; c.height = H; var x = c.getContext('2d'); return { c: c, x: x }; }
+  function rect(g, x, y, w, h, col) { g.fillStyle = col; g.fillRect(Math.round(x), Math.round(y), w, h); }
+  function disc(g, cx, cy, r, col) {
+    g.fillStyle = col;
+    for (var dy = -r; dy <= r; dy++) { var dx = Math.floor(Math.sqrt(r * r - dy * dy)); g.fillRect(Math.round(cx - dx), Math.round(cy + dy), dx * 2 + 1, 1); }
+  }
+  var BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5];
+  function hex(c) { return [parseInt(c.slice(1, 3), 16), parseInt(c.slice(3, 5), 16), parseInt(c.slice(5, 7), 16)]; }
+
+  // ---------- static layers ----------
+  function buildSky() {
+    var L = layer(), img = L.x.createImageData(W, H), d = img.data, bands = C.sky.map(hex);
+    for (var y = 0; y < H; y++) {
+      var t = Math.min(1, y / (HZ * 0.98)) * (bands.length - 1), i = Math.floor(t), f = t - i;
+      for (var x = 0; x < W; x++) {
+        var useNext = f * 16 > BAYER[(y & 3) * 4 + (x & 3)];
+        var c = bands[Math.min(bands.length - 1, i + (useNext ? 1 : 0))], p = (y * W + x) * 4;
+        d[p] = c[0]; d[p + 1] = c[1]; d[p + 2] = c[2]; d[p + 3] = 255;
+      }
+    }
+    L.x.putImageData(img, 0, 0);
+    var sx = Math.round(W * 0.8), sy = HZ - 40;
+    disc(L.x, sx, sy, 14, C.sunRing); disc(L.x, sx, sy, 11, C.sunCore);
+    return L;
+  }
+
+  function buildBack() {  // far mountains and the railway (the train runs on it)
+    var L = layer(), g = L.x, r = rng(7);
+    for (var x = 0; x < W; x++) {
+      var h1 = 30 + 9 * Math.sin(x / 37) + 6 * Math.sin(x / 13 + 1);
+      rect(g, x, HZ - 18 - h1, 1, h1 + 18, C.mtnFar);
+      var h2 = 20 + 8 * Math.sin(x / 29 + 2) + 4 * Math.sin(x / 9);
+      rect(g, x, HZ - 14 - h2, 1, h2 + 14, C.mtn);
+    }
+    return L;
+  }
+
+  function buildMid() {  // hills with tree clumps, and the railway on their foot
+    var L = layer(), g = L.x, r = rng(42), x;
+    for (x = 0; x < W; x++) {
+      var h = 13 + 4 * Math.sin(x / 23) + 2 * Math.sin(x / 7 + 3);
+      rect(g, x, HZ - h, 1, h, C.hill);
+    }
+    for (x = 8; x < W; x += 26 + Math.floor(r() * 30)) {   // tree clumps on the hills
+      var cy = HZ - 13 - 4 * Math.sin(x / 23);
+      disc(g, x, cy, 4, C.hillTree); disc(g, x + 5, cy - 1, 5, C.hillTree); disc(g, x + 10, cy + 1, 3, C.hillTree);
+    }
+    rect(g, 0, HZ - 5, W, 5, C.near);
+    var ty = trainY();
+    rect(g, 0, ty + 1, W, 2, C.embankment);
+    rect(g, 0, ty, W, 1, C.rail);
+    return L;
+  }
+
+  function buildFront() {  // house, kura, persimmon tree, poles, path, rice field
+    var L = layer(), g = L.x, r = rng(43), x, y, i;
+
+    // minka: thatched farmhouse (kayabuki, irimoya top), plaster walls, lit shoji, engawa veranda
+    var hx = Math.round(W * 0.2), wallTop = HZ - 12;
+    rect(g, hx - 2, HZ - 2, 34, 2, C.stone);                       // stone base
+    rect(g, hx - 1, HZ - 4, 32, 2, C.engawa);                      // engawa
+    rect(g, hx, wallTop, 30, 8, C.plaster);
+    for (i = 0; i <= 30; i += 6) rect(g, hx + i - (i === 30 ? 1 : 0), wallTop, 1, 8, C.beam);
+    rect(g, hx, wallTop, 30, 1, C.beam);
+    for (i = 1; i < 25; i += 6) {                                   // shoji panels glowing at dusk
+      rect(g, hx + i, wallTop + 2, 5, 5, C.shoji);
+      rect(g, hx + i + 2, wallTop + 2, 1, 5, C.shojiGrid); rect(g, hx + i, wallTop + 4, 5, 1, C.shojiGrid);
+    }
+    rect(g, hx + 25, wallTop + 2, 4, 6, C.beam);                    // dark doorway
+    for (i = 0; i < 13; i++) {                                      // thick thatch roof
+      var rw = 40 - i * 2, rx = hx - 5 + i;
+      rect(g, rx, wallTop - 1 - i, rw, 1, C.thatch);
+      for (var k = (i & 1); k < rw; k += 3) rect(g, rx + k, wallTop - 1 - i, 1, 1, C.thatchDark);
+    }
+    rect(g, hx - 5, wallTop - 1, 40, 1, C.thatchEdge);              // cut edge of the eaves
+    rect(g, hx - 5, wallTop, 40, 1, C.thatchShade);
+    var ridgeY = wallTop - 14;
+    rect(g, hx + 7, ridgeY, 16, 2, C.ridge);                        // ridge cap
+    rect(g, hx + 12, ridgeY + 2, 6, 1, C.ridge); rect(g, hx + 13, ridgeY + 3, 4, 1, C.ridge); // small gable (irimoya)
+    rect(g, hx + 14, ridgeY + 2, 2, 1, C.gableVent);
+
+    // kura: white storehouse with dark tiled roof and namako lattice
+    var kx = hx + 38;
+    rect(g, kx, HZ - 13, 11, 13, C.kuraWall);
+    for (var ky = HZ - 4; ky < HZ; ky++) for (var kxx = 0; kxx < 11; kxx++) if ((kxx + ky) % 3 === 0) rect(g, kx + kxx, ky, 1, 1, C.namako); else rect(g, kx + kxx, ky, 1, 1, C.beam);
+    rect(g, kx + 4, HZ - 11, 3, 3, C.beam);
+    rect(g, kx - 2, HZ - 15, 15, 2, C.tile); rect(g, kx, HZ - 16, 11, 1, C.tile); rect(g, kx - 2, HZ - 14, 1, 1, C.tile); rect(g, kx + 12, HZ - 14, 1, 1, C.tile);
+
+    // persimmon tree
+    var tx = Math.round(W * 0.74);  // persimmon tree
+    rect(g, tx, HZ - 16, 3, 16, C.wood); rect(g, tx + 3, HZ - 14, 5, 2, C.wood);
+    disc(g, tx - 4, HZ - 22, 7, C.canopyDark); disc(g, tx + 5, HZ - 25, 8, C.canopy); disc(g, tx + 11, HZ - 19, 6, C.canopy); disc(g, tx + 1, HZ - 17, 6, C.canopy);
+    [[-7, -24], [-2, -19], [3, -28], [8, -22], [12, -17], [0, -14], [6, -16], [-5, -16]].forEach(function (k) { rect(g, tx + k[0], HZ + k[1], 2, 2, C.kaki); });
+
+    // telephone poles and sagging wires
+    var poles = [0.12, 0.5, 0.9].map(function (f) { return Math.round(W * f); }), top = HZ - 34;
+    var anchors = [-60].concat(poles, [W + 60]);
+    for (var w = 0; w < 2; w++) {
+      for (var s = 0; s < anchors.length - 1; s++) {
+        var a = anchors[s], b = anchors[s + 1], wy = top + 3 + w * 3;
+        for (x = Math.max(0, a); x <= Math.min(W - 1, b); x++) {
+          var t = (x - a) / (b - a), sag = 4 * 4 * t * (1 - t);
+          rect(g, x, wy + Math.round(sag), 1, 1, C.wire);
+        }
+      }
+    }
+    poles.forEach(function (px) { rect(g, px, top, 2, HZ - top, C.pole); rect(g, px - 4, top + 3, 10, 1, C.pole); rect(g, px - 3, top + 6, 8, 1, C.pole); });
+
+    // path
+    var pathH = 7;
+    rect(g, 0, HZ, W, pathH, C.path); rect(g, 0, HZ + pathH - 1, W, 1, C.pathEdge);
+    for (i = 0; i < W / 4; i++) rect(g, Math.floor(r() * W), HZ + 1 + Math.floor(r() * (pathH - 2)), 1, 1, C.pebble);
+
+    // rice field with planted rows, darker towards the bottom
+    var fy = HZ + pathH;
+    rect(g, 0, fy, W, H - fy, C.field);
+    for (y = fy + 2; y < H; y += 4) {
+      var off = (y * 3) % 7;
+      for (x = off; x < W; x += 7) rect(g, x, y, 4, 1, C.fieldRow);
+    }
+    for (y = Math.round(fy + (H - fy) * 0.55); y < H; y++)
+      for (x = (y & 1); x < W; x += 2) if (((x >> 1) + y) % 3 === 0) rect(g, x, y, 1, 1, C.fieldDeep);
+    rect(g, 0, H - 4, W, 4, C.ground);
+    return L;
+  }
+
+  function trainY() { return HZ - 7; }
+
+  // ---------- animated pieces ----------
+  function drawClouds(t) {
+    [[0.08, 0.14, 1], [0.6, 0.24, 0.7]].forEach(function (c, i) {
+      var span = W + 60, x = ((c[0] * W + t * 2.2 * c[2]) % span) - 40, y = Math.round(c[1] * HZ);
+      x = Math.round(x);
+      rect(ctx, x, y, 26, 4, C.cloud); rect(ctx, x + 5, y - 3, 10, 3, C.cloud); rect(ctx, x + 14, y - 2, 7, 2, C.cloud);
+      rect(ctx, x + 2, y + 3, 22, 1, C.cloudShade);
+    });
+  }
+
+  // Train wrap art (ラッピング電車): small pixel motifs painted on the lower body.
+  var MOTIF_COLORS = { O: '#f0943f', K: '#3a2418', R: '#d6331f', b: '#6b4330', g: '#5f8a3a', o: '#f17a1b', P: '#e0676c' };
+  var MOTIFS = {
+    cat:  ['O...O', 'OOOOO', 'OKOKO', '.OPO.'],
+    leaf: ['..R..', 'RRRRR', '.RRR.', '..b..'],
+    kaki: ['.gg..', '.ooo.', 'ooooo', '.ooo.']
+  };
+  var WRAP = [['cat', 'leaf'], ['kaki', 'cat'], ['leaf', 'kaki']];
+  function drawMotif(name, x, y) {
+    var m = MOTIFS[name];
+    for (var ry = 0; ry < m.length; ry++) for (var rx = 0; rx < m[ry].length; rx++) {
+      var ch = m[ry].charAt(rx); if (ch !== '.') rect(ctx, x + rx, y + ry, 1, 1, MOTIF_COLORS[ch]);
+    }
+  }
+
+  var TRAIN_CARS = 3, CAR_W = 30, CAR_H = 11, TRAIN_SPEED = 24, TRAIN_GAP_S = 6;
+  function drawTrain(t) {
+    var len = TRAIN_CARS * (CAR_W + 1), travel = W + len + 20, period = travel / TRAIN_SPEED + TRAIN_GAP_S;
+    var p = reduceMotion ? 0.5 * (travel / TRAIN_SPEED) : t % period;
+    if (p * TRAIN_SPEED > travel) return;
+    var x0 = Math.round(W + 10 - p * TRAIN_SPEED), y = trainY() - CAR_H;   // right to left
+    for (var c = 0; c < TRAIN_CARS; c++) {
+      var x = x0 + c * (CAR_W + 1);
+      rect(ctx, x + 1, y, CAR_W - 2, 1, C.trainRoof);                       // roof
+      rect(ctx, x, y + 1, CAR_W, CAR_H - 2, C.trainBody);                   // body
+      for (var wx = 3; wx < CAR_W - 3; wx += 4) rect(ctx, x + wx, y + 2, 3, 2, C.trainWin);  // lit windows
+      rect(ctx, x, y + 4, CAR_W, 1, C.trainStripe);                         // red stripe
+      drawMotif(WRAP[c][0], x + 5, y + 5);                                  // wrap art
+      drawMotif(WRAP[c][1], x + CAR_W - 10, y + 5);
+      rect(ctx, x + 1, y + CAR_H - 1, CAR_W - 2, 1, C.trainUnder);          // underframe
+      rect(ctx, x + 4, y + CAR_H - 1, 3, 1, '#2e2420'); rect(ctx, x + CAR_W - 7, y + CAR_H - 1, 3, 1, '#2e2420'); // bogies
+      if (c === 0) {                                                        // cab: front window and headlight
+        rect(ctx, x, y + 1, 1, 1, C.trainRoof);
+        rect(ctx, x, y + 2, 2, 2, '#9fc6d9');
+        rect(ctx, x, y + 7, 1, 1, '#fff6c2');
+      }
+      if (c === 1) { rect(ctx, x + 12, y - 3, 1, 3, C.rail); rect(ctx, x + 16, y - 3, 1, 3, C.rail); rect(ctx, x + 11, y - 4, 7, 1, C.rail); } // pantograph
+    }
+  }
+
+  function drawCat(t) {
+    var dur = 11, travel = W + CAT_W + 8;
+    var x = reduceMotion ? Math.round(W / 2 - CAT_W / 2) : Math.round(((t % dur) / dur) * travel - CAT_W - 4);
+    var frame = reduceMotion ? 1 : Math.floor(t * 12) % 4;
+    var y = HZ - CAT_H + 1 - (frame === 2 ? 1 : 0);
+    rect(ctx, x + 4, HZ + 1, 14, 1, 'rgba(110,60,25,.35)');   // shadow on the path
+    var rows = CAT_BODY.concat(CAT_LEGS[frame]);
+    for (var ry = 0; ry < rows.length; ry++) {
+      var row = rows[ry];
+      for (var rx = 0; rx < CAT_W; rx++) { var ch = row.charAt(rx); if (ch !== '.') rect(ctx, x + rx, y + ry, 1, 1, CAT_COLORS[ch]); }
+    }
+    if (!reduceMotion && Math.floor(t * 3) % 2) rect(ctx, x + 1, y + 2, 1, 1, CAT_COLORS.O);  // tail flick
+  }
+
+  function drawSusuki(t) {
+    susuki.forEach(function (s) {
+      var sway = reduceMotion ? 0 : Math.round(Math.sin(t * 1.4 + s.phase) * 1.4);
+      for (var i = 0; i < s.h; i++) {
+        var lean = Math.round((i / s.h) * (s.lean + sway));
+        rect(ctx, s.x + lean, H - 1 - i, 1, 1, C.stem);
+      }
+      var tx = s.x + s.lean + sway, ty = H - s.h;
+      rect(ctx, tx, ty - 6, 2, 6, C.plume); rect(ctx, tx + 1, ty - 8, 1, 2, C.plume); rect(ctx, tx - 1, ty - 4, 1, 3, C.plume);
+    });
+  }
+
+  function drawLeaves(dt, t) {
+    leaves.forEach(function (l) {
+      l.y += l.vy * dt;
+      if (l.y > H + 4) { l.y = -4; l.x = Math.random() * W; }
+      var x = Math.round(l.x + Math.sin(t * l.f + l.phase) * 6), y = Math.round(l.y);
+      var flip = Math.floor(t * l.f * 2 + l.phase) % 2;
+      rect(ctx, x, y, 2, 2, l.col);
+      rect(ctx, flip ? x + 2 : x - 1, y + (flip ? 0 : 1), 1, 1, l.col);
+    });
+  }
+
+  function drawDragonflies(t) {
+    [[0.2, 0.42, 0.9, 0], [0.7, 0.5, 0.7, 2]].forEach(function (d) {
+      var x = Math.round(W * d[0] + Math.sin(t * 0.35 * d[2] + d[3]) * W * 0.12);
+      var y = Math.round(HZ * d[1] + Math.sin(t * 0.9 * d[2] + d[3]) * 8);
+      var dir = Math.cos(t * 0.35 * d[2] + d[3]) >= 0 ? 1 : -1;
+      for (var i = 0; i < 6; i++) rect(ctx, x + i * dir, y, 1, 1, C.fly);
+      rect(ctx, x + 6 * dir, y, 1, 1, C.flyHead);
+      var up = Math.floor(t * 20) % 2;
+      rect(ctx, x + 3 * dir, y - 1 - up, 1, 1 + up, C.wing); rect(ctx, x + 4 * dir, y + 1, 1, 1 + (1 - up), C.wing);
+    });
+  }
+
+  // ---------- setup and loop ----------
+  function setup() {
+    var vw = window.innerWidth, vh = window.innerHeight;
+    S = Math.max(2, Math.round(vh / 190));
+    W = Math.ceil(vw / S); H = Math.ceil(vh / S);
+    HZ = Math.round(H * (vw < 600 ? 0.6 : 0.56));
+    canvas.width = W; canvas.height = H;
+    canvas.style.width = W * S + 'px'; canvas.style.height = H * S + 'px';
+    ctx.imageSmoothingEnabled = false;
+    skyLayer = buildSky(); backLayer = buildBack(); midLayer = buildMid(); frontLayer = buildFront();
+
+    var r = rng(99);
+    susuki = [];
+    for (var x = 4; x < W; x += 10 + Math.floor(r() * 26)) susuki.push({ x: x, h: 14 + Math.floor(r() * 16), lean: 2 + Math.floor(r() * 3), phase: r() * 6 });
+    leaves = [];
+    var n = reduceMotion ? 0 : Math.round(W / 22);
+    for (var i = 0; i < n; i++) leaves.push({ x: Math.random() * W, y: Math.random() * H, vy: 7 + Math.random() * 9, f: 0.8 + Math.random() * 1.2, phase: Math.random() * 6, col: C.leaves[i % C.leaves.length] });
+  }
+
+  var last = null, start = null;
+  var tOffset = parseFloat(new URLSearchParams(location.search).get('t')) || 0;
+  function frame(now) {
+    if (start === null) start = last = now;   // rAF timestamps can be slightly earlier than performance.now()
+    var dt = Math.min(0.1, Math.max(0, (now - last) / 1000)), t = Math.max(0, (now - start) / 1000) + tOffset;
+    last = now;
+    ctx.drawImage(skyLayer.c, 0, 0);
+    drawClouds(t);
+    ctx.drawImage(backLayer.c, 0, 0);
+    ctx.drawImage(midLayer.c, 0, 0);
+    drawTrain(t);
+    ctx.drawImage(frontLayer.c, 0, 0);
+    drawDragonflies(t);
+    drawCat(t);
+    drawSusuki(t);
+    drawLeaves(dt, t);
+    if (!reduceMotion) requestAnimationFrame(frame);
+  }
+
+  var resizeTimer;
+  window.addEventListener('resize', function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function () { setup(); if (reduceMotion) frame(performance.now()); }, 120);
+  });
+  setup();
+  requestAnimationFrame(frame);
+})();
+</script>
 </body>
 </html>

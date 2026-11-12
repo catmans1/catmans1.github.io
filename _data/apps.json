@@ -1,0 +1,40 @@
+{
+  "site": {
+    "name": "Hung Le Apps",
+    "tagline": "Small, focused apps for iPhone and Android.",
+    "url": "https://catmans1.github.io",
+    "feedbackEndpoint": ""
+  },
+  "apps": [
+    {
+      "id": "example-wallet",
+      "draft": true,
+      "name": "Example Wallet",
+      "tagline": "Track spending in seconds.",
+      "description": "Replace this entry with a real app. Draft entries are only built with --drafts, so they never go live by accident.",
+      "icon": "",
+      "features": ["Add an expense in two taps", "Monthly overview", "Works offline"],
+      "screenshots": [],
+      "appStoreUrl": "https://apps.apple.com/app/id0000000000",
+      "appStoreId": "",
+      "googlePlayUrl": "",
+      "privacyUrl": "/privacy-wallet.html",
+      "termsUrl": "/term-wallet.html"
+    },
+    {
+      "id": "example-car-match",
+      "draft": true,
+      "name": "Example Car Match",
+      "tagline": "A relaxing car matching game.",
+      "description": "Second example entry so you can see the grid with more than one app.",
+      "icon": "",
+      "features": ["Hundreds of levels", "No timer, no stress"],
+      "screenshots": [],
+      "appStoreUrl": "",
+      "appStoreId": "",
+      "googlePlayUrl": "https://play.google.com/store/apps/details?id=com.example.carmatch",
+      "privacyUrl": "/privacy-car",
+      "termsUrl": ""
+    }
+  ]
+}
