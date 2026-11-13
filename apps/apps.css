@@ -1,3 +1,7 @@
+/* Author rules like .form { display: grid } beat the browser's [hidden] style, so restate it. */
+[hidden] { display: none !important; }
+
+
 :root {
   --accent: #303f9f;
   --accent-ink: #fafafa;
