@@ -45,6 +45,7 @@
     font-size: .95rem; letter-spacing: .12em; color: var(--paper);
     text-shadow: 2px 2px 0 rgba(74, 47, 34, .75);
   }
+  html[data-season="winter"] .made-by, html[data-season="spring"] .made-by { color: var(--ink); text-shadow: 2px 2px 0 rgba(255, 255, 255, .8); }
   .links svg { width: 16px; height: 16px; fill: currentColor; shape-rendering: crispEdges; }
 </style>
 </head>
@@ -72,27 +73,95 @@
   var canvas = document.getElementById('scene');
   var ctx = canvas.getContext('2d');
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var params = new URLSearchParams(location.search);
 
-  // ---------- palette ----------
-  var C = {
-    sky: ['#fdebd3', '#fbdcb4', '#f9cb9a', '#f6b882', '#f2a76e'],
-    sunCore: '#fff3d6', sunRing: '#ffd99c',
-    cloud: '#fff3e4', cloudShade: '#f6dcc4',
-    mtnFar: '#dcbfc4', mtn: '#c9a5b6',
-    hill: '#d98a52', hillTree: '#c4703c', near: '#e2a258',
-    rail: '#6f5248', wire: '#7d5e52', embankment: '#c27a47',
-    path: '#d2a678', pathEdge: '#b98757', pebble: '#e6c39c',
-    field: '#e9b75e', fieldRow: '#d89a3f', fieldDeep: '#cf8f38',
-    pole: '#5b3d2e', wood: '#6b4330',
+  // ---------- colours shared by every season ----------
+  var BASE = {
+    rail: '#6f5248', wire: '#7d5e52', pole: '#5b3d2e', wood: '#6b4330',
     plaster: '#efe6d2', beam: '#4a3326', shoji: '#ffe7a8', shojiGrid: '#c9a77a', engawa: '#9a6b47', stone: '#8f8478',
     thatch: '#a08865', thatchDark: '#86704f', thatchEdge: '#c4ad84', thatchShade: '#6e5a40', ridge: '#4a3a2e', gableVent: '#2e241d',
     kuraWall: '#f4efe4', namako: '#e9e4d8', tile: '#3d3a40',
-    canopy: '#9b6a3b', canopyDark: '#7f552f', kaki: '#f17a1b',
-    stem: '#b78a4a', plume: '#fbecd0', ground: '#c98a3a',
     trainBody: '#f3e6c8', trainStripe: '#c8502a', trainRoof: '#8d8a93', trainWin: '#ffe08a', trainUnder: '#5b4a46',
-    leaves: ['#d9480f', '#e8590c', '#f08c00', '#c92a2a'],
-    fly: '#d6331f', flyHead: '#a8261a', wing: '#fff8ee'
+    snow: '#f8f9fd', snowShade: '#dfe4ef'
   };
+
+  // ---------- one scene per Japanese season ----------
+  var SEASONS = {
+    spring: {
+      label: '春 · spring', bodyBg: '#8fb563',
+      sky: ['#eaf4fb', '#e2eff9', '#ece8f4', '#f7dfe8', '#fbe5da'], sunCore: '#fffbe8', sunRing: '#fbe7cc', cloud: '#ffffff', cloudShade: '#e2ebf5',
+      mtnFar: '#c8d4e7', mtn: '#a9bfd8', snowcap: '#f3f6fb',
+      hill: '#a8cf7e', hillTree: '#f4b8c8', near: '#b9da8c', embankment: '#93ba68',
+      path: '#d9c3a0', pathEdge: '#bfa47d', pebble: '#ead9bd',
+      fieldStyle: 'paddy', field: '#bcd9ea', fieldRow: '#7fb35a', fieldDeep: '#d6e9f4', ground: '#8fb563',
+      tree: 'sakura', canopy: '#f6c1cf', canopyDark: '#eaa3b8', fruit: '#fde3ea',
+      plants: 'nanohana', stem: '#6fa04a', bloom: '#f7d33c',
+      particles: 'petals', particleColors: ['#fbd3de', '#f6b8c9', '#ffe4ec'], particleDensity: 16,
+      flyer: 'butterfly', fly: '#ffffff', wing: '#fff3a8', flyHead: '#4a3a2e',
+      wrap: [['cat', 'sakura'], ['sakura', 'cat'], ['cat', 'sakura']], shadow: 'rgba(80,90,60,.3)'
+    },
+    summer: {
+      label: '夏 · summer', bodyBg: '#4a8a36',
+      sky: ['#bfe0f6', '#c8e5f7', '#d3eaf6', '#e1f0f2', '#eef6ea'], sunCore: '#fffde8', sunRing: '#fff1b8', cloud: '#ffffff', cloudShade: '#dbe8f2',
+      bigCloud: true,
+      mtnFar: '#a7c4dc', mtn: '#79a596', snowcap: null,
+      hill: '#62a14c', hillTree: '#3f7f3a', near: '#7cb658', embankment: '#548c40',
+      path: '#d8c29a', pathEdge: '#b9a27a', pebble: '#e8d8b8',
+      fieldStyle: 'rows', field: '#7cc05a', fieldRow: '#5ea845', fieldDeep: '#4f9a3e', ground: '#4a8a36',
+      tree: 'green', canopy: '#4f8f3f', canopyDark: '#3c7334', fruit: null,
+      plants: 'sunflower', stem: '#4f8a32', bloom: '#f9c22e',
+      particles: null, particleDensity: 0,
+      flyer: 'dragonfly', fly: '#3d7fc4', flyHead: '#2c5f99', wing: '#ffffff',
+      wrap: [['cat', 'sunflower'], ['sunflower', 'cat'], ['cat', 'sunflower']], shadow: 'rgba(40,70,30,.3)'
+    },
+    autumn: {
+      label: '秋 · autumn', bodyBg: '#c98a3a',
+      sky: ['#fdebd3', '#fbdcb4', '#f9cb9a', '#f6b882', '#f2a76e'], sunCore: '#fff3d6', sunRing: '#ffd99c', cloud: '#fff3e4', cloudShade: '#f6dcc4',
+      mtnFar: '#dcbfc4', mtn: '#c9a5b6', snowcap: null,
+      hill: '#d98a52', hillTree: '#c4703c', near: '#e2a258', embankment: '#c27a47',
+      path: '#d2a678', pathEdge: '#b98757', pebble: '#e6c39c',
+      fieldStyle: 'rows', field: '#e9b75e', fieldRow: '#d89a3f', fieldDeep: '#cf8f38', ground: '#c98a3a',
+      tree: 'kaki', canopy: '#9b6a3b', canopyDark: '#7f552f', fruit: '#f17a1b',
+      plants: 'susuki', stem: '#b78a4a', bloom: '#fbecd0',
+      particles: 'leaves', particleColors: ['#d9480f', '#e8590c', '#f08c00', '#c92a2a'], particleDensity: 22,
+      flyer: 'dragonfly', fly: '#d6331f', flyHead: '#a8261a', wing: '#fff8ee',
+      wrap: [['cat', 'leaf'], ['kaki', 'cat'], ['leaf', 'kaki']], shadow: 'rgba(110,60,25,.35)'
+    },
+    winter: {
+      label: '冬 · winter', bodyBg: '#cdd3e2',
+      sky: ['#eef0f6', '#e4e4f1', '#ddd6e9', '#e7d0dd', '#f0d4d3'], sunCore: '#fff4ea', sunRing: '#f6d6d2', cloud: '#ffffff', cloudShade: '#dedfee',
+      mtnFar: '#cdcfe3', mtn: '#aeb0cc', snowcap: '#f7f8fc',
+      hill: '#dde2ee', hillTree: '#5e6e6a', near: '#eceff6', embankment: '#c3c8da',
+      path: '#f3f4f9', pathEdge: '#c9cede', pebble: '#d9dde8',
+      fieldStyle: 'snow', field: '#f7f8fb', fieldRow: '#e2e6f0', fieldDeep: '#d5dbe8', ground: '#cdd3e2',
+      tree: 'bare', canopy: '#5a4134', canopyDark: '#4a3328', fruit: '#f17a1b',
+      plants: 'stalks', stem: '#8c7a66', bloom: '#ffffff',
+      particles: 'snow', particleColors: ['#ffffff', '#f4f6fc'], particleDensity: 7,
+      flyer: null,
+      wrap: [['cat', 'snow'], ['snow', 'cat'], ['cat', 'snow']], shadow: 'rgba(90,100,140,.28)', snowRoof: true
+    }
+  };
+
+  // Season in Japan by the solar terms (二十四節気): 立春 ~Feb 4, 立夏 ~May 5, 立秋 ~Aug 7, 立冬 ~Nov 7.
+  // ?season=winter (or spring/summer/autumn) previews a season.
+  function japanSeason() {
+    var q = params.get('season');
+    if (q && SEASONS[q]) return q;
+    var parts = new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Tokyo', month: 'numeric', day: 'numeric' }).formatToParts(new Date());
+    var m = 0, d = 0;
+    parts.forEach(function (p) { if (p.type === 'month') m = +p.value; if (p.type === 'day') d = +p.value; });
+    var md = m * 100 + d;
+    if (md >= 1107 || md < 204) return 'winter';
+    if (md >= 807) return 'autumn';
+    if (md >= 505) return 'summer';
+    return 'spring';
+  }
+  var SEASON = japanSeason();
+  var C = Object.assign({}, BASE, SEASONS[SEASON]);
+  document.documentElement.setAttribute('data-season', SEASON);
+  document.body.style.background = C.bodyBg;
+  var labelEl = document.querySelector('.season');
+  if (labelEl) labelEl.textContent = C.label;
 
   // ---------- cat sprite (22 x 12), facing right ----------
   var CAT_COLORS = { O: '#f0943f', D: '#c86a28', W: '#fde7cc', K: '#3a2418', P: '#e0676c' };
@@ -107,18 +176,21 @@
     '...OOOOOOOOOOOOOOOO...',
     '....OOWWWWWWWWWWOO....'
   ];
-  var CAT_LEGS = [
-    ['..OO...........OO.....', '.OO.............OO....', '.WW..............WW...'], // stretched
-    ['....OO.......OO.......', '....OO.......OO.......', '....WW.......WW.......'], // passing
-    ['.....OOO...OOO........', '......WW...WW.........', '......................'], // gathered (airborne)
-    ['....OO.......OO.......', '....OO.......OO.......', '....WW.......WW.......']
+  // Four legs, each one a step out of phase, so the cat gallops. Near legs are drawn last (on top),
+  // far legs are a darker orange. A pose is the x offset of the leg in each of the 3 leg rows (null = lifted).
+  var LEG_POSES = [[0, 1, 2], [0, 0, 0], [0, -1, -2], [0, 1, null]];   // reach forward, plant, push back, tuck
+  var LEGS = [
+    { hip: 7,  phase: 1, near: false },  // far hind
+    { hip: 16, phase: 3, near: false },  // far fore
+    { hip: 4,  phase: 0, near: true },   // near hind
+    { hip: 13, phase: 2, near: true }    // near fore
   ];
   var CAT_W = 22, CAT_H = 12;
 
   // ---------- state ----------
   var S = 4, W = 0, H = 0, HZ = 0;   // pixel scale, logical size, horizon row
   var skyLayer, backLayer, midLayer, frontLayer;
-  var leaves = [], susuki = [];
+  var particles = [], plants = [];
 
   function rng(seed) { return function () { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }; }
   function layer() { var c = document.createElement('canvas'); c.width = W; c.height = H; var x = c.getContext('2d'); return { c: c, x: x }; }
@@ -144,16 +216,23 @@
     L.x.putImageData(img, 0, 0);
     var sx = Math.round(W * 0.8), sy = HZ - 40;
     disc(L.x, sx, sy, 14, C.sunRing); disc(L.x, sx, sy, 11, C.sunCore);
+    if (C.bigCloud) {   // summer: towering cumulonimbus (入道雲) behind the mountains
+      var cx = Math.round(W * 0.16), by = HZ - 30;
+      [[0, 0, 13], [14, -4, 15], [28, 2, 11], [8, -18, 12], [20, -24, 10], [13, -34, 8]].forEach(function (b) { disc(L.x, cx + b[0], by + b[1], b[2], C.cloud); });
+      for (var k = -12; k < 40; k++) if ((k & 1) === 0) rect(L.x, cx + k, by + 8, 1, 1, C.cloudShade);
+    }
     return L;
   }
 
-  function buildBack() {  // far mountains and the railway (the train runs on it)
-    var L = layer(), g = L.x, r = rng(7);
+  function buildBack() {  // far mountains (with snowcaps in winter and early spring)
+    var L = layer(), g = L.x;
     for (var x = 0; x < W; x++) {
-      var h1 = 30 + 9 * Math.sin(x / 37) + 6 * Math.sin(x / 13 + 1);
-      rect(g, x, HZ - 18 - h1, 1, h1 + 18, C.mtnFar);
-      var h2 = 20 + 8 * Math.sin(x / 29 + 2) + 4 * Math.sin(x / 9);
-      rect(g, x, HZ - 14 - h2, 1, h2 + 14, C.mtn);
+      var h1 = 30 + 9 * Math.sin(x / 37) + 6 * Math.sin(x / 13 + 1), top1 = Math.round(HZ - 18 - h1);
+      rect(g, x, top1, 1, HZ - top1, C.mtnFar);
+      if (C.snowcap && h1 > 31) rect(g, x, top1, 1, Math.round((h1 - 31) / 2) + 2, C.snowcap);
+      var h2 = 20 + 8 * Math.sin(x / 29 + 2) + 4 * Math.sin(x / 9), top2 = Math.round(HZ - 14 - h2);
+      rect(g, x, top2, 1, HZ - top2, C.mtn);
+      if (C.snowcap && SEASON === 'winter' && h2 > 22) rect(g, x, top2, 1, Math.round((h2 - 22) / 2) + 1, C.snowcap);
     }
     return L;
   }
@@ -167,6 +246,7 @@
     for (x = 8; x < W; x += 26 + Math.floor(r() * 30)) {   // tree clumps on the hills
       var cy = HZ - 13 - 4 * Math.sin(x / 23);
       disc(g, x, cy, 4, C.hillTree); disc(g, x + 5, cy - 1, 5, C.hillTree); disc(g, x + 10, cy + 1, 3, C.hillTree);
+      if (SEASON === 'winter') { rect(g, x - 2, cy - 4, 5, 1, C.snow); rect(g, x + 3, cy - 6, 5, 1, C.snow); rect(g, x + 9, cy - 2, 3, 1, C.snow); }
     }
     rect(g, 0, HZ - 5, W, 5, C.near);
     var ty = trainY();
@@ -175,45 +255,90 @@
     return L;
   }
 
-  function buildFront() {  // house, kura, persimmon tree, poles, path, rice field
+  function drawTree(g, tx, r) {
+    if (C.tree === 'bare') {   // winter persimmon: bare branches, snow on top, a few fruits left (木守り)
+      rect(g, tx, HZ - 16, 3, 16, C.canopy);
+      var branches = [[-1, -1, 9], [1, -1, 9], [0, -1, 11], [-1, 0, 5], [1, 0, 5]];
+      var ends = [];
+      branches.forEach(function (b, n) {
+        var bx = tx + 1, by = HZ - 15 - (n > 2 ? 4 : 0);
+        for (var i = 0; i < b[2]; i++) {
+          bx += b[0]; by += (i % 2 === 0 || b[0] === 0) ? -1 : 0;
+          rect(g, bx, by, 1, 1, C.canopyDark);
+          if (i % 2 === 0) rect(g, bx, by - 1, 1, 1, C.snow);
+        }
+        ends.push([bx, by]);
+      });
+      [ends[0], ends[2], ends[4]].forEach(function (e) { rect(g, e[0] - 1, e[1] + 1, 2, 2, C.fruit); });
+      return;
+    }
+    rect(g, tx, HZ - 16, 3, 16, C.wood); rect(g, tx + 3, HZ - 14, 5, 2, C.wood);
+    disc(g, tx - 4, HZ - 22, 7, C.canopyDark); disc(g, tx + 5, HZ - 25, 8, C.canopy); disc(g, tx + 11, HZ - 19, 6, C.canopy); disc(g, tx + 1, HZ - 17, 6, C.canopy);
+    if (C.tree === 'kaki') {
+      [[-7, -24], [-2, -19], [3, -28], [8, -22], [12, -17], [0, -14], [6, -16], [-5, -16]].forEach(function (k) { rect(g, tx + k[0], HZ + k[1], 2, 2, C.fruit); });
+    } else if (C.tree === 'sakura') {
+      for (var i = 0; i < 40; i++) rect(g, tx - 10 + Math.floor(r() * 26), HZ - 32 + Math.floor(r() * 20), 1, 1, C.fruit);
+    }
+  }
+
+  // Shrine gate (鳥居) in vermilion, with the shrine grove (鎮守の森) behind it.
+  function drawTorii(g, x) {
+    var red = '#d9452b', redDark = '#a8321e', black = '#2e2420', top = HZ - 22;
+    var grove = SEASON === 'winter' ? '#4f5f58' : '#4f6a45';
+    disc(g, x + 4, HZ - 14, 9, grove); disc(g, x + 15, HZ - 17, 10, grove); disc(g, x + 24, HZ - 12, 7, grove);
+    if (SEASON === 'winter') { rect(g, x - 2, HZ - 23, 9, 1, C.snow); rect(g, x + 9, HZ - 27, 11, 1, C.snow); rect(g, x + 20, HZ - 19, 7, 1, C.snow); }
+    rect(g, x + 4, top + 3, 2, HZ - top - 3, red); rect(g, x + 16, top + 3, 2, HZ - top - 3, red);   // pillars (hashira)
+    rect(g, x + 5, top + 3, 1, HZ - top - 3, redDark); rect(g, x + 17, top + 3, 1, HZ - top - 3, redDark);
+    rect(g, x + 3, HZ - 2, 4, 2, black); rect(g, x + 15, HZ - 2, 4, 2, black);                     // black footings (kamaki)
+    rect(g, x + 2, top + 7, 18, 2, red);                                                            // lower tie beam (nuki)
+    rect(g, x + 10, top + 3, 2, 4, red);                                                            // centre strut (gakuzuka)
+    rect(g, x, top + 1, 22, 2, red);                                                                // upper beam (kasagi)
+    rect(g, x - 1, top, 24, 1, black); rect(g, x - 2, top - 1, 2, 1, black); rect(g, x + 22, top - 1, 2, 1, black); // black cap, upturned ends
+    if (SEASON === 'winter') { rect(g, x - 1, top - 1, 24, 1, C.snow); rect(g, x + 2, top + 6, 18, 1, C.snow); }
+  }
+
+  function buildFront() {  // house, kura, torii, tree, poles, path, field
     var L = layer(), g = L.x, r = rng(43), x, y, i;
+
+    // torii first, so its grove sits behind the house and kura
+    drawTorii(g, Math.round(W * (W >= 260 ? 0.6 : 0.7)));
 
     // minka: thatched farmhouse (kayabuki, irimoya top), plaster walls, lit shoji, engawa veranda
     var hx = Math.round(W * 0.2), wallTop = HZ - 12;
-    rect(g, hx - 2, HZ - 2, 34, 2, C.stone);                       // stone base
-    rect(g, hx - 1, HZ - 4, 32, 2, C.engawa);                      // engawa
+    rect(g, hx - 2, HZ - 2, 34, 2, C.stone);
+    rect(g, hx - 1, HZ - 4, 32, 2, C.engawa);
     rect(g, hx, wallTop, 30, 8, C.plaster);
     for (i = 0; i <= 30; i += 6) rect(g, hx + i - (i === 30 ? 1 : 0), wallTop, 1, 8, C.beam);
     rect(g, hx, wallTop, 30, 1, C.beam);
-    for (i = 1; i < 25; i += 6) {                                   // shoji panels glowing at dusk
+    for (i = 1; i < 25; i += 6) {
       rect(g, hx + i, wallTop + 2, 5, 5, C.shoji);
       rect(g, hx + i + 2, wallTop + 2, 1, 5, C.shojiGrid); rect(g, hx + i, wallTop + 4, 5, 1, C.shojiGrid);
     }
-    rect(g, hx + 25, wallTop + 2, 4, 6, C.beam);                    // dark doorway
-    for (i = 0; i < 13; i++) {                                      // thick thatch roof
+    rect(g, hx + 25, wallTop + 2, 4, 6, C.beam);
+    for (i = 0; i < 13; i++) {
       var rw = 40 - i * 2, rx = hx - 5 + i;
       rect(g, rx, wallTop - 1 - i, rw, 1, C.thatch);
       for (var k = (i & 1); k < rw; k += 3) rect(g, rx + k, wallTop - 1 - i, 1, 1, C.thatchDark);
+      if (C.snowRoof && i >= 4) rect(g, rx, wallTop - 1 - i, rw, 1, C.snow);
+      if (C.snowRoof && i === 3) for (k = 0; k < rw; k += 2) rect(g, rx + k, wallTop - 1 - i, 1, 1, C.snowShade);
     }
-    rect(g, hx - 5, wallTop - 1, 40, 1, C.thatchEdge);              // cut edge of the eaves
+    rect(g, hx - 5, wallTop - 1, 40, 1, C.thatchEdge);
     rect(g, hx - 5, wallTop, 40, 1, C.thatchShade);
     var ridgeY = wallTop - 14;
-    rect(g, hx + 7, ridgeY, 16, 2, C.ridge);                        // ridge cap
-    rect(g, hx + 12, ridgeY + 2, 6, 1, C.ridge); rect(g, hx + 13, ridgeY + 3, 4, 1, C.ridge); // small gable (irimoya)
+    rect(g, hx + 7, ridgeY, 16, 2, C.ridge);
+    rect(g, hx + 12, ridgeY + 2, 6, 1, C.ridge); rect(g, hx + 13, ridgeY + 3, 4, 1, C.ridge);
     rect(g, hx + 14, ridgeY + 2, 2, 1, C.gableVent);
+    if (C.snowRoof) { rect(g, hx + 6, ridgeY - 1, 18, 2, C.snow); for (i = 0; i < 40; i += 5) rect(g, hx - 4 + i, wallTop + 1, 1, 1 + (i % 3 === 0 ? 1 : 0), '#e8eef8'); } // ridge snow, icicles
 
     // kura: white storehouse with dark tiled roof and namako lattice
     var kx = hx + 38;
     rect(g, kx, HZ - 13, 11, 13, C.kuraWall);
-    for (var ky = HZ - 4; ky < HZ; ky++) for (var kxx = 0; kxx < 11; kxx++) if ((kxx + ky) % 3 === 0) rect(g, kx + kxx, ky, 1, 1, C.namako); else rect(g, kx + kxx, ky, 1, 1, C.beam);
+    for (var ky = HZ - 4; ky < HZ; ky++) for (var kxx = 0; kxx < 11; kxx++) rect(g, kx + kxx, ky, 1, 1, (kxx + ky) % 3 === 0 ? C.namako : C.beam);
     rect(g, kx + 4, HZ - 11, 3, 3, C.beam);
     rect(g, kx - 2, HZ - 15, 15, 2, C.tile); rect(g, kx, HZ - 16, 11, 1, C.tile); rect(g, kx - 2, HZ - 14, 1, 1, C.tile); rect(g, kx + 12, HZ - 14, 1, 1, C.tile);
+    if (C.snowRoof) { rect(g, kx - 1, HZ - 17, 13, 2, C.snow); rect(g, kx - 2, HZ - 15, 15, 1, C.snow); }
 
-    // persimmon tree
-    var tx = Math.round(W * 0.74);  // persimmon tree
-    rect(g, tx, HZ - 16, 3, 16, C.wood); rect(g, tx + 3, HZ - 14, 5, 2, C.wood);
-    disc(g, tx - 4, HZ - 22, 7, C.canopyDark); disc(g, tx + 5, HZ - 25, 8, C.canopy); disc(g, tx + 11, HZ - 19, 6, C.canopy); disc(g, tx + 1, HZ - 17, 6, C.canopy);
-    [[-7, -24], [-2, -19], [3, -28], [8, -22], [12, -17], [0, -14], [6, -16], [-5, -16]].forEach(function (k) { rect(g, tx + k[0], HZ + k[1], 2, 2, C.kaki); });
+    if (W >= 260) drawTree(g, Math.round(W * 0.74), r);   // phones are too narrow for both the torii and the tree
 
     // telephone poles and sagging wires
     var poles = [0.12, 0.5, 0.9].map(function (f) { return Math.round(W * f); }), top = HZ - 34;
@@ -227,22 +352,31 @@
         }
       }
     }
-    poles.forEach(function (px) { rect(g, px, top, 2, HZ - top, C.pole); rect(g, px - 4, top + 3, 10, 1, C.pole); rect(g, px - 3, top + 6, 8, 1, C.pole); });
+    poles.forEach(function (px) {
+      rect(g, px, top, 2, HZ - top, C.pole); rect(g, px - 4, top + 3, 10, 1, C.pole); rect(g, px - 3, top + 6, 8, 1, C.pole);
+      if (C.snowRoof) { rect(g, px, top - 1, 2, 1, C.snow); rect(g, px - 4, top + 2, 10, 1, C.snow); rect(g, px - 3, top + 5, 8, 1, C.snow); }
+    });
 
     // path
     var pathH = 7;
     rect(g, 0, HZ, W, pathH, C.path); rect(g, 0, HZ + pathH - 1, W, 1, C.pathEdge);
     for (i = 0; i < W / 4; i++) rect(g, Math.floor(r() * W), HZ + 1 + Math.floor(r() * (pathH - 2)), 1, 1, C.pebble);
 
-    // rice field with planted rows, darker towards the bottom
+    // field
     var fy = HZ + pathH;
     rect(g, 0, fy, W, H - fy, C.field);
-    for (y = fy + 2; y < H; y += 4) {
-      var off = (y * 3) % 7;
-      for (x = off; x < W; x += 7) rect(g, x, y, 4, 1, C.fieldRow);
+    if (C.fieldStyle === 'rows') {          // rice: golden in autumn, green in summer
+      for (y = fy + 2; y < H; y += 4) { var off = (y * 3) % 7; for (x = off; x < W; x += 7) rect(g, x, y, 4, 1, C.fieldRow); }
+      for (y = Math.round(fy + (H - fy) * 0.55); y < H; y++)
+        for (x = (y & 1); x < W; x += 2) if (((x >> 1) + y) % 3 === 0) rect(g, x, y, 1, 1, C.fieldDeep);
+    } else if (C.fieldStyle === 'paddy') {  // spring: flooded paddy reflecting the sky, rows of young seedlings
+      for (i = 0; i < W / 3; i++) rect(g, Math.floor(r() * W), fy + Math.floor(r() * (H - fy)), 3 + Math.floor(r() * 6), 1, C.fieldDeep);
+      for (y = fy + 3; y < H - 4; y += 4) for (x = (y % 8 === 0 ? 1 : 3); x < W; x += 5) rect(g, x, y, 1, 2, C.fieldRow);
+    } else if (C.fieldStyle === 'snow') {   // winter: fields under snow with soft furrow shadows
+      for (y = fy + 3; y < H; y += 5) { var o2 = (y * 5) % 9; for (x = o2; x < W; x += 9) rect(g, x, y, 6, 1, C.fieldRow); }
+      for (y = Math.round(fy + (H - fy) * 0.6); y < H; y++)
+        for (x = (y & 1); x < W; x += 2) if (((x >> 1) + y) % 4 === 0) rect(g, x, y, 1, 1, C.fieldDeep);
     }
-    for (y = Math.round(fy + (H - fy) * 0.55); y < H; y++)
-      for (x = (y & 1); x < W; x += 2) if (((x >> 1) + y) % 3 === 0) rect(g, x, y, 1, 1, C.fieldDeep);
     rect(g, 0, H - 4, W, 4, C.ground);
     return L;
   }
@@ -251,22 +385,24 @@
 
   // ---------- animated pieces ----------
   function drawClouds(t) {
-    [[0.08, 0.14, 1], [0.6, 0.24, 0.7]].forEach(function (c, i) {
-      var span = W + 60, x = ((c[0] * W + t * 2.2 * c[2]) % span) - 40, y = Math.round(c[1] * HZ);
-      x = Math.round(x);
+    [[0.08, 0.14, 1], [0.6, 0.24, 0.7]].forEach(function (c) {
+      var span = W + 60, x = Math.round(((c[0] * W + t * 2.2 * c[2]) % span) - 40), y = Math.round(c[1] * HZ);
       rect(ctx, x, y, 26, 4, C.cloud); rect(ctx, x + 5, y - 3, 10, 3, C.cloud); rect(ctx, x + 14, y - 2, 7, 2, C.cloud);
       rect(ctx, x + 2, y + 3, 22, 1, C.cloudShade);
     });
   }
 
-  // Train wrap art (ラッピング電車): small pixel motifs painted on the lower body.
-  var MOTIF_COLORS = { O: '#f0943f', K: '#3a2418', R: '#d6331f', b: '#6b4330', g: '#5f8a3a', o: '#f17a1b', P: '#e0676c' };
+  // Train wrap art (ラッピング電車): small pixel motifs on the lower body, changing with the season.
+  var MOTIF_COLORS = { O: '#f0943f', K: '#3a2418', R: '#d6331f', b: '#6b4330', g: '#5f8a3a', o: '#f17a1b', P: '#e0676c',
+                       S: '#ef8fab', w: '#ffffff', B: '#7fa7d6', y: '#f5b81e', n: '#6b4226' };
   var MOTIFS = {
-    cat:  ['O...O', 'OOOOO', 'OKOKO', '.OPO.'],
-    leaf: ['..R..', 'RRRRR', '.RRR.', '..b..'],
-    kaki: ['.gg..', '.ooo.', 'ooooo', '.ooo.']
+    cat:       ['O...O', 'OOOOO', 'OKOKO', '.OPO.'],
+    leaf:      ['..R..', 'RRRRR', '.RRR.', '..b..'],
+    kaki:      ['.gg..', '.ooo.', 'ooooo', '.ooo.'],
+    sakura:    ['.S.S.', 'SSSSS', '.SwS.', '..S..'],
+    sunflower: ['.yyy.', 'yynyy', '.yyy.', '..g..'],
+    snow:      ['B.B.B', '.BBB.', 'BBwBB', '.BBB.', 'B.B.B']
   };
-  var WRAP = [['cat', 'leaf'], ['kaki', 'cat'], ['leaf', 'kaki']];
   function drawMotif(name, x, y) {
     var m = MOTIFS[name];
     for (var ry = 0; ry < m.length; ry++) for (var rx = 0; rx < m[ry].length; rx++) {
@@ -282,20 +418,16 @@
     var x0 = Math.round(W + 10 - p * TRAIN_SPEED), y = trainY() - CAR_H;   // right to left
     for (var c = 0; c < TRAIN_CARS; c++) {
       var x = x0 + c * (CAR_W + 1);
-      rect(ctx, x + 1, y, CAR_W - 2, 1, C.trainRoof);                       // roof
-      rect(ctx, x, y + 1, CAR_W, CAR_H - 2, C.trainBody);                   // body
-      for (var wx = 3; wx < CAR_W - 3; wx += 4) rect(ctx, x + wx, y + 2, 3, 2, C.trainWin);  // lit windows
-      rect(ctx, x, y + 4, CAR_W, 1, C.trainStripe);                         // red stripe
-      drawMotif(WRAP[c][0], x + 5, y + 5);                                  // wrap art
-      drawMotif(WRAP[c][1], x + CAR_W - 10, y + 5);
-      rect(ctx, x + 1, y + CAR_H - 1, CAR_W - 2, 1, C.trainUnder);          // underframe
-      rect(ctx, x + 4, y + CAR_H - 1, 3, 1, '#2e2420'); rect(ctx, x + CAR_W - 7, y + CAR_H - 1, 3, 1, '#2e2420'); // bogies
-      if (c === 0) {                                                        // cab: front window and headlight
-        rect(ctx, x, y + 1, 1, 1, C.trainRoof);
-        rect(ctx, x, y + 2, 2, 2, '#9fc6d9');
-        rect(ctx, x, y + 7, 1, 1, '#fff6c2');
-      }
-      if (c === 1) { rect(ctx, x + 12, y - 3, 1, 3, C.rail); rect(ctx, x + 16, y - 3, 1, 3, C.rail); rect(ctx, x + 11, y - 4, 7, 1, C.rail); } // pantograph
+      rect(ctx, x + 1, y, CAR_W - 2, 1, C.snowRoof ? C.snow : C.trainRoof);
+      rect(ctx, x, y + 1, CAR_W, CAR_H - 2, C.trainBody);
+      for (var wx = 3; wx < CAR_W - 3; wx += 4) rect(ctx, x + wx, y + 2, 3, 2, C.trainWin);
+      rect(ctx, x, y + 4, CAR_W, 1, C.trainStripe);
+      drawMotif(C.wrap[c][0], x + 5, y + 5);
+      drawMotif(C.wrap[c][1], x + CAR_W - 10, y + 5);
+      rect(ctx, x + 1, y + CAR_H - 1, CAR_W - 2, 1, C.trainUnder);
+      rect(ctx, x + 4, y + CAR_H - 1, 3, 1, '#2e2420'); rect(ctx, x + CAR_W - 7, y + CAR_H - 1, 3, 1, '#2e2420');
+      if (c === 0) { rect(ctx, x, y + 1, 1, 1, C.trainRoof); rect(ctx, x, y + 2, 2, 2, '#9fc6d9'); rect(ctx, x, y + 7, 1, 1, '#fff6c2'); }
+      if (c === 1) { rect(ctx, x + 12, y - 3, 1, 3, C.rail); rect(ctx, x + 16, y - 3, 1, 3, C.rail); rect(ctx, x + 11, y - 4, 7, 1, C.rail); }
     }
   }
 
@@ -303,47 +435,76 @@
     var dur = 11, travel = W + CAT_W + 8;
     var x = reduceMotion ? Math.round(W / 2 - CAT_W / 2) : Math.round(((t % dur) / dur) * travel - CAT_W - 4);
     var frame = reduceMotion ? 1 : Math.floor(t * 12) % 4;
-    var y = HZ - CAT_H + 1 - (frame === 2 ? 1 : 0);
-    rect(ctx, x + 4, HZ + 1, 14, 1, 'rgba(110,60,25,.35)');   // shadow on the path
-    var rows = CAT_BODY.concat(CAT_LEGS[frame]);
-    for (var ry = 0; ry < rows.length; ry++) {
-      var row = rows[ry];
+    var y = HZ - CAT_H + 1 - (frame % 2);   // small bob every other step
+    rect(ctx, x + 4, HZ + 1, 14, 1, C.shadow);
+    for (var ry = 0; ry < CAT_BODY.length; ry++) {
+      var row = CAT_BODY[ry];
       for (var rx = 0; rx < CAT_W; rx++) { var ch = row.charAt(rx); if (ch !== '.') rect(ctx, x + rx, y + ry, 1, 1, CAT_COLORS[ch]); }
     }
-    if (!reduceMotion && Math.floor(t * 3) % 2) rect(ctx, x + 1, y + 2, 1, 1, CAT_COLORS.O);  // tail flick
+    LEGS.forEach(function (leg) {
+      var pose = LEG_POSES[(frame + leg.phase) % 4];
+      for (var r = 0; r < 3; r++) {
+        if (pose[r] === null) continue;
+        var foot = r === 2 || pose[r + 1] === null;
+        var col = leg.near ? (foot ? CAT_COLORS.W : CAT_COLORS.O) : CAT_COLORS.D;
+        rect(ctx, x + leg.hip + pose[r], y + CAT_BODY.length + r, 2, 1, col);
+      }
+    });
+    if (!reduceMotion && Math.floor(t * 3) % 2) rect(ctx, x + 1, y + 2, 1, 1, CAT_COLORS.O);
   }
 
-  function drawSusuki(t) {
-    susuki.forEach(function (s) {
-      var sway = reduceMotion ? 0 : Math.round(Math.sin(t * 1.4 + s.phase) * 1.4);
-      for (var i = 0; i < s.h; i++) {
-        var lean = Math.round((i / s.h) * (s.lean + sway));
-        rect(ctx, s.x + lean, H - 1 - i, 1, 1, C.stem);
-      }
+  function drawPlants(t) {
+    plants.forEach(function (s) {
+      var amp = C.plants === 'sunflower' ? 0.6 : C.plants === 'stalks' ? 0.7 : 1.4;
+      var sway = reduceMotion ? 0 : Math.round(Math.sin(t * 1.4 + s.phase) * amp);
+      for (var i = 0; i < s.h; i++) rect(ctx, s.x + Math.round((i / s.h) * (s.lean + sway)), H - 1 - i, 1, 1, C.stem);
       var tx = s.x + s.lean + sway, ty = H - s.h;
-      rect(ctx, tx, ty - 6, 2, 6, C.plume); rect(ctx, tx + 1, ty - 8, 1, 2, C.plume); rect(ctx, tx - 1, ty - 4, 1, 3, C.plume);
+      if (C.plants === 'susuki') {
+        rect(ctx, tx, ty - 6, 2, 6, C.bloom); rect(ctx, tx + 1, ty - 8, 1, 2, C.bloom); rect(ctx, tx - 1, ty - 4, 1, 3, C.bloom);
+      } else if (C.plants === 'stalks') {
+        rect(ctx, tx - 1, ty - 2, 3, 2, C.bloom); rect(ctx, tx, ty - 3, 1, 1, C.bloom);
+      } else if (C.plants === 'nanohana') {
+        rect(ctx, tx - 1, ty - 3, 3, 3, C.bloom); rect(ctx, tx, ty - 4, 1, 1, C.bloom); rect(ctx, tx - 2, ty - 1, 1, 1, C.bloom);
+        rect(ctx, s.x + 1, H - Math.round(s.h / 2), 2, 1, C.stem);
+      } else if (C.plants === 'sunflower') {
+        rect(ctx, tx - 2, ty - 4, 5, 5, C.bloom); rect(ctx, tx - 1, ty - 5, 3, 1, C.bloom); rect(ctx, tx - 1, ty + 1, 3, 1, C.bloom);
+        rect(ctx, tx - 1, ty - 3, 3, 3, '#6b4226');
+        rect(ctx, s.x - 2, H - Math.round(s.h / 2), 2, 1, C.stem); rect(ctx, s.x + 1, H - Math.round(s.h / 3), 2, 1, C.stem);
+      }
     });
   }
 
-  function drawLeaves(dt, t) {
-    leaves.forEach(function (l) {
+  function drawParticles(dt, t) {
+    particles.forEach(function (l) {
       l.y += l.vy * dt;
       if (l.y > H + 4) { l.y = -4; l.x = Math.random() * W; }
-      var x = Math.round(l.x + Math.sin(t * l.f + l.phase) * 6), y = Math.round(l.y);
+      var amp = C.particles === 'petals' ? 10 : C.particles === 'snow' ? 3 : 6;
+      var x = Math.round(l.x + Math.sin(t * l.f + l.phase) * amp), y = Math.round(l.y);
       var flip = Math.floor(t * l.f * 2 + l.phase) % 2;
+      if (C.particles === 'snow') { rect(ctx, x, y, l.size, l.size, l.col); return; }
+      if (C.particles === 'petals') { rect(ctx, x, y, flip ? 2 : 1, flip ? 1 : 2, l.col); return; }
       rect(ctx, x, y, 2, 2, l.col);
       rect(ctx, flip ? x + 2 : x - 1, y + (flip ? 0 : 1), 1, 1, l.col);
     });
   }
 
-  function drawDragonflies(t) {
-    [[0.2, 0.42, 0.9, 0], [0.7, 0.5, 0.7, 2]].forEach(function (d) {
+  function drawFlyers(t) {
+    if (!C.flyer) return;
+    [[0.2, 0.42, 0.9, 0], [0.7, 0.5, 0.7, 2]].forEach(function (d, n) {
       var x = Math.round(W * d[0] + Math.sin(t * 0.35 * d[2] + d[3]) * W * 0.12);
-      var y = Math.round(HZ * d[1] + Math.sin(t * 0.9 * d[2] + d[3]) * 8);
       var dir = Math.cos(t * 0.35 * d[2] + d[3]) >= 0 ? 1 : -1;
+      var up = Math.floor(t * (C.flyer === 'butterfly' ? 6 : 20)) % 2;
+      if (C.flyer === 'butterfly') {   // low over the paddies and flowers
+        var by = Math.round(HZ + (H - HZ) * (0.25 + n * 0.15) + Math.sin(t * 1.6 + d[3]) * 5);
+        var col = n === 0 ? C.fly : C.wing;
+        rect(ctx, x, by, 1, 2, C.flyHead);
+        if (up) { rect(ctx, x - 2, by - 1, 2, 2, col); rect(ctx, x + 1, by - 1, 2, 2, col); }
+        else { rect(ctx, x - 1, by - 2, 1, 2, col); rect(ctx, x + 1, by - 2, 1, 2, col); }
+        return;
+      }
+      var y = Math.round(HZ * d[1] + Math.sin(t * 0.9 * d[2] + d[3]) * 8);
       for (var i = 0; i < 6; i++) rect(ctx, x + i * dir, y, 1, 1, C.fly);
       rect(ctx, x + 6 * dir, y, 1, 1, C.flyHead);
-      var up = Math.floor(t * 20) % 2;
       rect(ctx, x + 3 * dir, y - 1 - up, 1, 1 + up, C.wing); rect(ctx, x + 4 * dir, y + 1, 1, 1 + (1 - up), C.wing);
     });
   }
@@ -359,16 +520,28 @@
     ctx.imageSmoothingEnabled = false;
     skyLayer = buildSky(); backLayer = buildBack(); midLayer = buildMid(); frontLayer = buildFront();
 
-    var r = rng(99);
-    susuki = [];
-    for (var x = 4; x < W; x += 10 + Math.floor(r() * 26)) susuki.push({ x: x, h: 14 + Math.floor(r() * 16), lean: 2 + Math.floor(r() * 3), phase: r() * 6 });
-    leaves = [];
-    var n = reduceMotion ? 0 : Math.round(W / 22);
-    for (var i = 0; i < n; i++) leaves.push({ x: Math.random() * W, y: Math.random() * H, vy: 7 + Math.random() * 9, f: 0.8 + Math.random() * 1.2, phase: Math.random() * 6, col: C.leaves[i % C.leaves.length] });
+    var r = rng(99), x;
+    var step = { susuki: [10, 26], stalks: [8, 18], nanohana: [5, 9], sunflower: [14, 20] }[C.plants];
+    var tall = { susuki: [14, 16], stalks: [10, 12], nanohana: [8, 12], sunflower: [20, 12] }[C.plants];
+    plants = [];
+    for (x = 4; x < W; x += step[0] + Math.floor(r() * step[1])) plants.push({ x: x, h: tall[0] + Math.floor(r() * tall[1]), lean: 2 + Math.floor(r() * 3), phase: r() * 6 });
+
+    particles = [];
+    var n = (reduceMotion || !C.particles) ? 0 : Math.round(W / C.particleDensity);
+    for (var i = 0; i < n; i++) {
+      var snow = C.particles === 'snow';
+      particles.push({
+        x: Math.random() * W, y: Math.random() * H,
+        vy: snow ? 6 + Math.random() * 8 : C.particles === 'petals' ? 5 + Math.random() * 5 : 7 + Math.random() * 9,
+        f: 0.8 + Math.random() * 1.2, phase: Math.random() * 6,
+        size: Math.random() < 0.3 ? 2 : 1,
+        col: C.particleColors[i % C.particleColors.length]
+      });
+    }
   }
 
   var last = null, start = null;
-  var tOffset = parseFloat(new URLSearchParams(location.search).get('t')) || 0;
+  var tOffset = parseFloat(params.get('t')) || 0;   // ?t=5 starts the scene 5 s in (handy for screenshots)
   function frame(now) {
     if (start === null) start = last = now;   // rAF timestamps can be slightly earlier than performance.now()
     var dt = Math.min(0.1, Math.max(0, (now - last) / 1000)), t = Math.max(0, (now - start) / 1000) + tOffset;
@@ -379,10 +552,10 @@
     ctx.drawImage(midLayer.c, 0, 0);
     drawTrain(t);
     ctx.drawImage(frontLayer.c, 0, 0);
-    drawDragonflies(t);
+    drawFlyers(t);
     drawCat(t);
-    drawSusuki(t);
-    drawLeaves(dt, t);
+    drawPlants(t);
+    drawParticles(dt, t);
     if (!reduceMotion) requestAnimationFrame(frame);
   }
 
