@@ -159,7 +159,7 @@
 
         <h2>About Our Apps & Games</h2>
         <div class="contact-section">
-            <p>This support page covers all mobile applications and games developed by Hung Le (Rocky). Whether you're using our educational apps, puzzle games, or utility apps, we're here to help!</p>
+            <p>This support page covers all mobile applications and games developed by Hung Le (Maneki). Whether you're using our educational apps, puzzle games, or utility apps, we're here to help!</p>
             <p style="margin-top: 10px;">If you need help with a specific app, please mention the app name in your email or use the in-app feedback feature.</p>
         </div>
 
@@ -211,16 +211,16 @@
         <div class="faq-item">
             <div class="faq-question">How do I restore my purchases?</div>
             <div class="faq-answer">
-                Go to the app's Settings → In-App Purchases → Restore Purchases. This will restore any previous purchases you made on your Apple ID.
+                Open the app's Settings and tap <strong>Restore Purchases</strong> (in the Pro / in-app purchase section — for example in PixelPop: Settings → PixelPop Pro → Restore Purchases). One-time purchases come back on any device signed in with the same Apple ID or Google account you bought them with.
             </div>
         </div>
 
         <div class="faq-item">
-            <div class="faq-question">I purchased "Remove Ads" but still see ads. What should I do?</div>
+            <div class="faq-question">I bought Pro (or "Remove Ads") but still see ads. What should I do?</div>
             <div class="faq-answer">
                 <ol>
                     <li>Try tapping "Restore Purchases" in Settings</li>
-                    <li>Make sure you're signed in with the same Apple ID you used to purchase</li>
+                    <li>Make sure you're signed in with the same Apple ID or Google account you used to purchase</li>
                     <li>If ads still appear, contact us with your purchase receipt</li>
                 </ol>
             </div>
@@ -229,7 +229,7 @@
         <div class="faq-item">
             <div class="faq-question">How do I reset my progress/data?</div>
             <div class="faq-answer">
-                Most apps have a "Reset" or "Clear Data" option in Settings → Data Management. <strong>Warning:</strong> This action cannot be undone. Make sure you want to delete all your data before proceeding.
+                Some apps have a "Reset" option in Settings. Apps that keep everything on your device (such as PixelPop) have no account: deleting and reinstalling the app clears all progress, drawings and stars. Purchases are not lost — use "Restore Purchases" afterwards. <strong>Warning:</strong> deleted progress cannot be recovered.
             </div>
         </div>
 
@@ -240,8 +240,8 @@
                 <ul>
                     <li>Close the app completely and reopen it</li>
                     <li>Restart your device</li>
-                    <li>Update the app from the App Store</li>
-                    <li>Update your iOS to the latest version</li>
+                    <li>Update the app from the App Store or Google Play</li>
+                    <li>Update your device to the latest iOS / Android version</li>
                     <li>If the problem persists, contact us with details</li>
                 </ul>
             </div>
@@ -250,19 +250,19 @@
         <div class="faq-item">
             <div class="faq-question">How do I change the language?</div>
             <div class="faq-answer">
-                Go to Settings → Language & Region → Language. Available languages vary by app (typically English and Japanese).
+                Many of our apps let you pick the language in the app's own Settings (for example PixelPop: Settings → Language — English, Tiếng Việt, 日本語). Other apps follow your device language. Available languages vary by app.
             </div>
         </div>
 
         <div class="faq-item">
             <div class="faq-question">I want a refund for my purchase. How do I request it?</div>
             <div class="faq-answer">
-                For refunds, please contact Apple Support directly through:
+                Refunds are handled by the store you bought from:
                 <ul>
-                    <li><a href="https://reportaproblem.apple.com" target="_blank">reportaproblem.apple.com</a></li>
-                    <li>Or use the "Report a Problem" link in your purchase receipt email</li>
+                    <li><strong>Apple:</strong> <a href="https://reportaproblem.apple.com" target="_blank">reportaproblem.apple.com</a>, or the "Report a Problem" link in your receipt email</li>
+                    <li><strong>Google Play:</strong> <a href="https://support.google.com/googleplay/answer/2479637" target="_blank">Google Play refund help</a></li>
                 </ul>
-                Apple handles all refund requests for in-app purchases.
+                We cannot issue refunds directly, but we are happy to help if something does not work — email us first.
             </div>
         </div>
 
@@ -271,12 +271,12 @@
             <div class="contact-item">
                 <strong>Privacy Policy</strong>
                 <p>Our privacy policy covers all our apps and games. It explains how we collect, use, and protect your data.</p>
-                <p style="margin-top: 5px;"><a href="#" onclick="alert('Add your privacy policy URL here'); return false;">View Privacy Policy</a></p>
+                <p style="margin-top: 5px;"><a href="privacy.html">View Privacy Policy</a></p>
             </div>
             <div class="contact-item">
                 <strong>Terms of Service</strong>
                 <p>By using our apps, you agree to our Terms of Service.</p>
-                <p style="margin-top: 5px;"><a href="#" onclick="alert('Add your terms of service URL here'); return false;">View Terms of Service</a></p>
+                <p style="margin-top: 5px;"><a href="terms.html">View Terms of Service</a></p>
             </div>
         </div>
 
@@ -285,7 +285,7 @@
         <a href="mailto:codeforlifes@gmail.com?subject=Support Request" class="button" id="sendEmailButton">Send Email</a>
 
         <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; color: #999; font-size: 14px;">
-            <p><strong>Developer:</strong> Hung Le (Rocky)</p>
+            <p><strong>Developer:</strong> Hung Le (Maneki)</p>
             <p><strong>Email:</strong> codeforlifes@gmail.com</p>
             <p style="margin-top: 10px;">© <span id="currentYear"></span> All rights reserved.</p>
         </div>
@@ -395,27 +395,6 @@
                 }
             }
 
-            // Update privacy and terms links automatically
-            function updatePrivacyLinks() {
-                const privacyLinks = document.querySelectorAll('a[onclick*="privacy policy"]');
-                privacyLinks.forEach(link => {
-                    link.onclick = function() {
-                        window.location.href = 'privacy.html';
-                        return false;
-                    };
-                    link.href = 'privacy.html';
-                });
-
-                const termsLinks = document.querySelectorAll('a[onclick*="terms of service"]');
-                termsLinks.forEach(link => {
-                    link.onclick = function() {
-                        window.location.href = 'term.html';
-                        return false;
-                    };
-                    link.href = 'term.html';
-                });
-            }
-
             // Set current year automatically
             function setCurrentYear() {
                 const yearElement = document.getElementById('currentYear');
@@ -428,7 +407,6 @@
             document.addEventListener('DOMContentLoaded', function() {
                 setCurrentYear();
                 updateEmailLinks();
-                updatePrivacyLinks();
 
                 // Log device info for debugging (can be removed in production)
                 console.log('Device Info:', getDeviceInfo());
