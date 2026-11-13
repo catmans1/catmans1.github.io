@@ -3,7 +3,7 @@
     "name": "Hung Le Apps",
     "tagline": "Small, focused apps for iPhone and Android.",
     "url": "https://catmans1.github.io",
-    "feedbackEndpoint": ""
+    "feedbackEndpoint": "https://app-feedback.viethung232.workers.dev/feedback"
   },
   "apps": [
     {
